@@ -37,7 +37,7 @@ public abstract class Object {
 	public void setImage(BufferedImage image) {
 		this.image = image;
 	}
-	protected abstract void MovePlayer(Player player);
+	public abstract void MovePlayer(Player player);
 	
 	
 	

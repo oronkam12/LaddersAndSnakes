@@ -1,5 +1,6 @@
 package Controller;
 import Model.* ;
+import Model.Object;
 import Viewers.*;
 
 

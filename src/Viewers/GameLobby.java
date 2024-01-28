@@ -32,6 +32,7 @@ public class GameLobby extends JFrame {
     private ArrayList<CustomTextField> playersNames;
     private boolean flag;
     private CustomButton selectedButton;
+    
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
