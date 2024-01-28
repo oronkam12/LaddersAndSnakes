@@ -1,3 +1,4 @@
+package Model;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;

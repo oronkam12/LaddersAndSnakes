@@ -1,8 +1,14 @@
+package Controller;
+import Model.* ;
+import Viewers.*;
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-
 import javax.swing.Timer;
+
+
 
 public class GameController {
     private final GuiBoard guiBoard;

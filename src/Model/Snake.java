@@ -1,7 +1,10 @@
+package Model;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+
+import Viewers.ObjectInterface;
 
 public abstract class Snake extends Object implements ObjectInterface {
 

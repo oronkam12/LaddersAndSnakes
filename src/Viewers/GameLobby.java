@@ -1,3 +1,4 @@
+package Viewers;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -12,6 +13,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Model.BoardCreation;
+import Model.CustomButton;
+import Model.CustomTextField;
+
 import javax.swing.ImageIcon;
 
 public class GameLobby extends JFrame {

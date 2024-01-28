@@ -1,3 +1,4 @@
+package Model;
 public class Cell {
     private int row;
     private int col;
