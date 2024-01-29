@@ -11,6 +11,7 @@ import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -28,7 +29,7 @@ public class GameLobby extends JFrame {
     private ArrayList<String> selectedColors;
     private ArrayList<String> allColors;
     private ArrayList<JComboBox<String>> allComboBoxes;
-    public HashMap<JComboBox<String>,String> selectedBoxColor;
+//    public HashMap<JComboBox<String>,String> selectedBoxColor;
     private ArrayList<CustomTextField> playersNames;
     private boolean flag;
     private CustomButton selectedButton;
@@ -58,10 +59,10 @@ public class GameLobby extends JFrame {
         allColors = new ArrayList<>();
         allComboBoxes = new ArrayList<>();
         playersNames = new ArrayList<>();
-        selectedBoxColor = new HashMap<JComboBox<String>, String>();
+//        selectedBoxColor = new HashMap<JComboBox<String>, String>();
 
-        String[] temp = new String[]{"Red", "Green", "Black", "Blue", "Pink"};
-        for(int i=0;i<temp.length-1;i++) {
+        String[] temp = new String[]{"Red", "Green", "Black", "Blue", "Pink", "Orange"};
+        for(int i=0;i<temp.length;i++) {
         	allColors.add(temp[i]);
         }
         selectedColors = new ArrayList<>();
@@ -202,45 +203,49 @@ public class GameLobby extends JFrame {
 			            int size;
 			            BoardCreation boardCreation = null;
 			            ArrayList<Integer> snakesDis = new ArrayList<>();
+			            
+			            try {
+			            	if (selectedButton.getText().equals("Easy")) {
+				                size = 7;
+				                cellSize = 94;
+				                snakesDis.addAll(Arrays.asList(1, 1, 1, 1));
+				                boardCreation = new BoardCreation(7, 7, cellSize, snakesDis, 4);
+				            } else if (selectedButton.getText().equals("Medium")) {
+				                size = 10;
+				                cellSize = 66;
+				                snakesDis.addAll(Arrays.asList(2, 1, 2, 1));
+				                boardCreation = new BoardCreation(10, 10, cellSize, snakesDis, 6);
+				            } else if (selectedButton.getText().equals("Hard")) {
+				                size = 13;
+				                cellSize = 50;
+				                snakesDis.addAll(Arrays.asList(2, 2, 2, 2));
+				                boardCreation = new BoardCreation(13, 13, cellSize, snakesDis, 8);
+				            } else {
+				                // Default to hard if an invalid difficulty is entered
+				                size = 13;
+				                cellSize = 50;
+				                snakesDis.addAll(Arrays.asList(2, 2, 2, 2));
+				                boardCreation = new BoardCreation(13, 13, cellSize, snakesDis, 8);
+				            }
+				            ArrayList<String> players = new ArrayList<String>();
+				            for(int j=0;j<playersNames.size();j++) {
+								
+					            players.add(playersNames.get(j).getText());
 
-			            if (selectedButton.getText().equals("Easy")) {
-			                size = 7;
-			                cellSize = 94;
-			                snakesDis.addAll(Arrays.asList(1, 1, 1, 1));
-			                boardCreation = new BoardCreation(7, 7, cellSize, snakesDis, 4);
-			            } else if (selectedButton.getText().equals("Medium")) {
-			                size = 10;
-			                cellSize = 66;
-			                snakesDis.addAll(Arrays.asList(2, 1, 2, 1));
-			                boardCreation = new BoardCreation(10, 10, cellSize, snakesDis, 6);
-			            } else if (selectedButton.getText().equals("Hard")) {
-			                size = 13;
-			                cellSize = 50;
-			                snakesDis.addAll(Arrays.asList(2, 2, 2, 2));
-			                boardCreation = new BoardCreation(13, 13, cellSize, snakesDis, 8);
-			            } else {
-			                // Default to hard if an invalid difficulty is entered
-			                size = 13;
-			                cellSize = 50;
-			                snakesDis.addAll(Arrays.asList(2, 2, 2, 2));
-			                boardCreation = new BoardCreation(13, 13, cellSize, snakesDis, 8);
-			            }
-			            ArrayList<String> players = new ArrayList<String>();
-			            for(int j=0;j<playersNames.size();j++) {
-							
-				            players.add(playersNames.get(j).getText());
-
-						}
-			            ArrayList<String> colors = new ArrayList<String>();
-			            for(JComboBox<String> comboBox: allComboBoxes) {
-			            	colors.add((String) comboBox.getSelectedItem());
-			            	System.out.println((String) comboBox.getSelectedItem());
+							}
+				            ArrayList<String> colors = new ArrayList<String>();
+				            for(JComboBox<String> comboBox: allComboBoxes) {
+				            	colors.add((String) comboBox.getSelectedItem());
+				            	System.out.println((String) comboBox.getSelectedItem());
+				            }
+				            
+				            GuiBoard guiBoard = new GuiBoard(size,size,boardCreation.getSnakes(),boardCreation.getLadders(),boardCreation.getBoard(),cellSize,players,colors);
+				            guiBoard.setVisible(true);
+				            setVisible(false);
+			            } catch (Exception e1) {
+			            	JOptionPane.showMessageDialog(null, "Select Difficulty!", "Problem!", JOptionPane.INFORMATION_MESSAGE);
 			            }
 			            
-			            GuiBoard guiBoard = new GuiBoard(size,size,boardCreation.getSnakes(),boardCreation.getLadders(),boardCreation.getBoard(),cellSize,players,colors);
-			            guiBoard.setVisible(true);
-			            setVisible(false);
-
 						
 					}
             	);

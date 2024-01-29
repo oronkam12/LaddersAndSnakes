@@ -70,6 +70,10 @@ public class GuiBoard extends JFrame {
         		Player p = new Player(rows-1,cols-1,players.get(i),board,Color.PINK);
 	            allPlayers.add(p);
         	}
+        	else if(colors.get(i).equals("Orange")) {
+        		Player p = new Player(rows-1,cols-1,players.get(i),board,Color.ORANGE);
+	            allPlayers.add(p);
+        	}
 	        	
         }
         
@@ -178,7 +182,7 @@ public class GuiBoard extends JFrame {
         	
         }
         
-        // function to paint the board with colors (repaint)
+        // function to paint the board with colors (repaint) -- In every change repaint the board again.
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -195,7 +199,7 @@ public class GuiBoard extends JFrame {
                     g.setColor(getColorForCell(currentCell.getValue()));
                     g.fillRect(x, y, cellSize, cellSize);
                     g.setColor(Color.BLACK); // color of the border of the whole board
-                    g.drawRect(x + borderWidth, y + borderWidth, cellSize - 2 * borderWidth, cellSize - 2 * borderWidth);
+                    g.drawRect(x + borderWidth, y + borderWidth, cellSize - 1 * borderWidth, cellSize - 1 * borderWidth);
 
                     // ----------------- draw cell value ----------------------
                     g.setColor(Color.BLACK);
