@@ -119,7 +119,7 @@ public class BoardCreation {
     
     private void addYellowSnake(int row1,int row2) {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || board[0][0]==cell1)
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
     		cell1 = GenerateCell(row1);
     	int col = random.nextInt(this.rows-1);
     	while(Math.abs(col- cell1.getCol()) >2 && col-cell1.getCol()!=0) {
@@ -134,7 +134,7 @@ public class BoardCreation {
     
     private void addGreenSnake(int row1,int row2) {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || board[0][0]==cell1)
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
     		cell1 = GenerateCell(row1);
     	int col = random.nextInt(this.rows-1);
     	while(Math.abs(col- cell1.getCol()) >3 && col-cell1.getCol()!=0) {
@@ -150,7 +150,7 @@ public class BoardCreation {
     
     private void addBlueSnake(int row1,int row2) {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || board[0][0]==cell1)
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
     		cell1 = GenerateCell(row1);
     	int col = random.nextInt(this.rows-1);
     	while(Math.abs(col- cell1.getCol()) >4 && col-cell1.getCol()!=0) {
@@ -166,7 +166,7 @@ public class BoardCreation {
     
     private void addRedSnake(int row1) {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || board[0][0]==cell1)
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
     		cell1 = GenerateCell(row1);
     	Snake s = new RedSnake(cell1,cell1,rows);
     	cell1.setSnakeOrLadder(s);

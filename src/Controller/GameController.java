@@ -7,6 +7,8 @@ import Viewers.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 
@@ -52,8 +54,11 @@ public class GameController {
 
     private void checkForWin(Player player) {
         if (player.getCol() == 0 && player.getRow() == 0) {
-            System.out.println("Player: "+ player.getName() + " has won the game!");
-        }
+        	
+        	String message = player.getName() + " has won the game!";
+
+        	// Show a pop-up message
+        	JOptionPane.showMessageDialog(null, message);        }
     }
     //--------- checking snakes or ladders ----------------
 	private void isObject(Player player) {
