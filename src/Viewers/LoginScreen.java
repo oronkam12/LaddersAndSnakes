@@ -84,14 +84,13 @@ public class LoginScreen extends JFrame {
 		CustomButton startBtn = new CustomButton("START", 295, 338, 200, 50, e ->{
 			LoginScreen.this.setVisible(false);
 			GameLobby gameLobby = new GameLobby();
-			InstructionsPage ip = new InstructionsPage();
-			ip.setVisible(true);
+			
 			gameLobby.setVisible(true);
 			
 			
 			// opening back the last page
-		    ip.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			ip.addWindowListener(new WindowAdapter() {
+			gameLobby.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			gameLobby.addWindowListener(new WindowAdapter() {
 		        @Override
 		        public void windowClosed(WindowEvent e) {
 		            // This code is executed when InstructionsPage is closed
@@ -103,7 +102,21 @@ public class LoginScreen extends JFrame {
 		contentPane.add(startBtn);
 		
 		CustomButton instructionsBtn = new CustomButton("instructions",295, 405, 200, 60,e->{
-			System.out.println("a");
+			LoginScreen.this.setVisible(false);
+			InstructionsPage ip = new InstructionsPage();
+			
+			ip.setVisible(true);
+			
+			
+			// opening back the last page
+			ip.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			ip.addWindowListener(new WindowAdapter() {
+		        @Override
+		        public void windowClosed(WindowEvent e) {
+		            // This code is executed when InstructionsPage is closed
+		            LoginScreen.this.setVisible(true);
+		        }
+		    });
 		});
 		contentPane.add(instructionsBtn);
 		
