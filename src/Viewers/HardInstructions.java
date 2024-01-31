@@ -9,6 +9,10 @@ import javax.swing.border.EmptyBorder;
 
 public class HardInstructions extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -41,7 +45,7 @@ public class HardInstructions extends JFrame {
 		
 		ImageIcon hardLogoImage = new ImageIcon("Images/hardLogo.png"); 
 	    JLabel hardLogoLabel = new JLabel(hardLogoImage);
-	    hardLogoLabel.setLocation(142, 39);
+	    hardLogoLabel.setLocation(135, 39);
 	    hardLogoLabel.setSize(562, 128);
 	    hardLogoLabel.setVisible(true);
 	    contentPane.setLayout(null);
@@ -49,21 +53,21 @@ public class HardInstructions extends JFrame {
 	    
 		ImageIcon hardRulesImage = new ImageIcon("Images/hardRules.png");
 		JLabel hardRulesLabel = new JLabel(hardRulesImage);
-		hardRulesLabel.setLocation(20, 276);
+		hardRulesLabel.setLocation(160, 276);
 		hardRulesLabel.setSize(224, 343);
 		hardRulesLabel.setVisible(true);		
 		contentPane.add(hardRulesLabel);
 		
 		ImageIcon hardSnakes = new ImageIcon("Images/hardSnakes.png");
 		JLabel hardSnakesLabel = new JLabel(hardSnakes);
-		hardSnakesLabel.setLocation(195, 349);
+		hardSnakesLabel.setLocation(325, 270);
 		hardSnakesLabel.setSize(407, 72);
 		hardSnakesLabel.setVisible(true);		
 		contentPane.add(hardSnakesLabel);
 		
 		ImageIcon hardLadders = new ImageIcon("Images/hardLadders.png");
 		JLabel hardLaddersLabel = new JLabel(hardLadders);
-		hardLaddersLabel.setLocation(162, 276);
+		hardLaddersLabel.setLocation(310, 340);
 		hardLaddersLabel.setSize(407, 72);
 		hardLaddersLabel.setVisible(true);		
 		contentPane.add(hardLaddersLabel);
@@ -75,7 +79,7 @@ public class HardInstructions extends JFrame {
 		hardBSLabel.setVisible(true);		
 		contentPane.add(hardBSLabel);
 	    
-		ImageIcon backgroundImage = new ImageIcon("Images/backGround.jpg"); 
+		ImageIcon backgroundImage = new ImageIcon("Images/InsBackground.jpg"); 
 	    JLabel backgroundLabel = new JLabel(backgroundImage);
 	    backgroundLabel.setBounds(0, 0, 800, 800);
 	    contentPane.add(backgroundLabel);

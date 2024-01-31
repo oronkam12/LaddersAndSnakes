@@ -3,7 +3,6 @@ import javax.swing.*;
 
 import java.awt.event.*;
 import java.awt.Font;
-import java.awt.Button;
 import java.awt.Color;
 
 public class InstructionsPage extends JFrame {
@@ -24,12 +23,18 @@ public class InstructionsPage extends JFrame {
 
         // Initialize components
         easyBtn = new JButton("Easy");
+        easyBtn.setBackground(new Color(205, 133, 63));
+        easyBtn.setForeground(new Color(238, 232, 170));
         easyBtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
         easyBtn.setBounds(21, 485, 120, 30);
         mediumBtn = new JButton("Medium");
+        mediumBtn.setForeground(new Color(240, 230, 140));
+        mediumBtn.setBackground(new Color(160, 82, 45));
         mediumBtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
         mediumBtn.setBounds(21, 526, 120, 30);
         hardBtn = new JButton("Hard");
+        hardBtn.setBackground(new Color(153, 51, 0));
+        hardBtn.setForeground(new Color(240, 230, 140));
         hardBtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
         hardBtn.setBounds(21, 567, 120, 30);
 
@@ -63,7 +68,7 @@ public class InstructionsPage extends JFrame {
         panel.setLayout(null);
         btnQuestionsInst = new JButton();
         btnQuestionsInst.setLocation(455, 350);
-        btnQuestionsInst.setBounds(300, 468, 158, 30);
+        btnQuestionsInst.setBounds(379, 455, 40, 40);
         btnQuestionsInst.setVisible(true);
         btnDiceInst = new JButton();
         btnDiceInst.setLocation(500, 468);
@@ -71,7 +76,7 @@ public class InstructionsPage extends JFrame {
         btnDiceInst.setVisible(true);
         btnSnakeInst = new JButton();
         //btnSnakeInst.setLocation(500, 468);
-        btnSnakeInst.setBounds(250, 580, 130, 30);
+        btnSnakeInst.setBounds(250, 600, 130, 30);
         btnSnakeInst.setVisible(true);
         
         panel.add(btnQuestionsInst);
@@ -146,7 +151,7 @@ public class InstructionsPage extends JFrame {
         ImageIcon blackSnakeImage = new ImageIcon("Images/blackSnake.png");
         JLabel lblSnakeGoal = new JLabel(blackSnakeImage);
         lblSnakeGoal.setSize(200, 200);
-        lblSnakeGoal.setLocation(180, 430);
+        lblSnakeGoal.setLocation(180, 440);
         lblSnakeGoal.setVisible(true);
         panel.add(lblSnakeGoal);
         
@@ -160,7 +165,8 @@ public class InstructionsPage extends JFrame {
 			}
 		});
         
-        ImageIcon blackLadderImage = new ImageIcon("Images/blackLadder.png");        JLabel lblLadderGoal = new JLabel(blackLadderImage);
+        ImageIcon blackLadderImage = new ImageIcon("Images/blackLadder.png");      
+        JLabel lblLadderGoal = new JLabel(blackLadderImage);
         lblLadderGoal.setSize(200, 200);
         lblLadderGoal.setLocation(405, 430);
         lblLadderGoal.setVisible(true);
@@ -197,7 +203,7 @@ public class InstructionsPage extends JFrame {
         lblQuestionGoal.setVisible(true);
         panel.add(lblQuestionGoal);
         
-        ImageIcon quesInstImage = new ImageIcon("Images/btnQuestionsInst.png");
+        ImageIcon quesInstImage = new ImageIcon("Images/btnInfo.png");
         btnQuestionsInst.setIcon(quesInstImage);
         btnQuestionsInst.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -221,7 +227,7 @@ public class InstructionsPage extends JFrame {
         lblsurContent.setVisible(true);
         panel.add(lblsurContent);
         
-        ImageIcon backgroundImage = new ImageIcon("Images/backGround.jpg"); 
+        ImageIcon backgroundImage = new ImageIcon("Images/InsBackground.jpg"); 
         JLabel backgroundLabel = new JLabel(backgroundImage);
         backgroundLabel.setBounds(0, 0, 800, 800);
         panel.add(backgroundLabel);

@@ -69,8 +69,7 @@ public class GameController {
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Ladder)
 				o = (Ladder)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
 			System.out.println(o);
-			o.MovePlayer(player);
-			
+			o.MovePlayer(player);	
 			
 		}
 	}
