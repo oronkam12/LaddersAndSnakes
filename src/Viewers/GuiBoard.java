@@ -85,9 +85,9 @@ public class GuiBoard extends JFrame {
         questions=gameController.loadQuesitons();
 
         Question q = questions.get("1").get(0);
-
+        
       
-        gameController.deleteQuestion("test");
+        gameController.deleteQuestion("q1");
         setTitle("Snake and Ladder Board");
         setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

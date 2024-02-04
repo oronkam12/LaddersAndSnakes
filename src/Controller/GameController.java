@@ -210,19 +210,19 @@ public class GameController {
         public  boolean deleteQuestion(String question) {
             ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
             File file = new File(questionsPath);
-	        ObjectNode rootNode;
             try {
-                rootNode = (ObjectNode) objectMapper.readTree(file);
+            	JsonNode rootNode = objectMapper.readTree(file);
                 ArrayNode questionsNode = (ArrayNode) rootNode.path("questions");
                 List<Question> questions = objectMapper.convertValue(questionsNode, new TypeReference<List<Question>>(){});
 
-
                 // Remove the question that matches the criterion
-                boolean removed = questions.removeIf(question1 -> question1.getQuestion().equals(question));
+                boolean removed = questions.removeIf(q -> q.getQuestion().equals(question));
 
                 if (removed) {
-                    // Serialize the updated data structure back to JSON and write it to the file
-                    objectMapper.writeValue(file, questions);
+                    // Convert the updated list back to a JsonNode and set it in the rootNode
+                    ((ObjectNode) rootNode).set("questions", objectMapper.valueToTree(questions));
+                    // Serialize the updated rootNode back to the file
+                    objectMapper.writeValue(file, rootNode);
                 }
 
                 return removed;
