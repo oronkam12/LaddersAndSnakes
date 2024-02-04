@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,7 @@ public class GuiBoard extends JFrame {
     private double heightFactor;
     private double widthFactor;
     private ArrayList<String> colors;
+    private HashMap<String,ArrayList<Question>> questions;
     
     // constructor of Gui Board
    
@@ -79,6 +81,13 @@ public class GuiBoard extends JFrame {
         
         this.currentPlayer = null;
         gameController = new GameController(this);
+        
+        questions=gameController.loadQuesitons();
+
+        Question q = questions.get("1").get(0);
+
+      
+        gameController.deleteQuestion("test");
         setTitle("Snake and Ladder Board");
         setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

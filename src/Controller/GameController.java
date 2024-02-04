@@ -21,6 +21,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 
 
@@ -130,7 +132,7 @@ public class GameController {
 		try {
           	// Read the JSON file into a JsonNode tree
               JsonNode rootNode = objectMapper.readTree(new File(questionsPath));
-              
+
               // Extract the "questions" array node
               JsonNode questionsNode = rootNode.get("questions");
               
@@ -160,31 +162,76 @@ public class GameController {
 	
 	public void addQuestion(Question question)
 	{
-		ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-        File file = new File(questionsPath);
-        List<Question> questions = new ArrayList<>();
 
-        // Only read the existing file if it exists and is not empty to avoid overwriting
-        if (file.exists() && file.length() > 0) {
+		 ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+	        File file = new File(questionsPath);
+	        ObjectNode rootNode;
+	        List<Question> questions = new ArrayList<>();
+
+	        if (file.exists() && file.length() > 0) {
+	            try {
+	                rootNode = (ObjectNode) objectMapper.readTree(file);
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                return; // Exit if reading fails
+	            }
+	        } else {
+	            // Initialize rootNode as an empty ObjectNode if the file doesn't exist or is empty
+	            rootNode = objectMapper.createObjectNode();
+	            rootNode.putArray("questions"); // Initialize questions as an empty array
+	        }
+
+	        // Retrieve or create the questions array node
+	        ArrayNode questionsNode = (ArrayNode) rootNode.path("questions");
+	        if (!questionsNode.isArray()) {
+	            questionsNode = rootNode.putArray("questions");
+	        }
+
+	        // Deserialize existing questions, if any
+	        if (questionsNode.size() > 0) {
+	            questions = objectMapper.convertValue(questionsNode, new TypeReference<List<Question>>() {});
+	        }
+
+	        // Add the new question to the list
+	        questions.add(question);
+
+	        // Replace the existing questions array with the updated list
+	        rootNode.set("questions", objectMapper.valueToTree(questions));
+
+	        // Serialize the rootNode (which now includes the updated questions list) back to JSON and write it to the file
+	        try {
+	            objectMapper.writeValue(file, rootNode);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+	}
+	
+        public  boolean deleteQuestion(String question) {
+            ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+            File file = new File(questionsPath);
+	        ObjectNode rootNode;
             try {
-                // Deserialize existing content into your data structure
-                questions = objectMapper.readValue(file, new TypeReference<List<Question>>() {});
+                rootNode = (ObjectNode) objectMapper.readTree(file);
+                ArrayNode questionsNode = (ArrayNode) rootNode.path("questions");
+                List<Question> questions = objectMapper.convertValue(questionsNode, new TypeReference<List<Question>>(){});
+
+
+                // Remove the question that matches the criterion
+                boolean removed = questions.removeIf(question1 -> question1.getQuestion().equals(question));
+
+                if (removed) {
+                    // Serialize the updated data structure back to JSON and write it to the file
+                    objectMapper.writeValue(file, questions);
+                }
+
+                return removed;
             } catch (IOException e) {
                 e.printStackTrace();
-                return; // Exit if reading fails
             }
+            return false;
         }
-
-        // Add new question
-        questions.add(question);
-
-        // Serialize the updated data structure back to JSON and write it to the file
-        try {
-            objectMapper.writeValue(file, questions);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    
 	
 	
 	
