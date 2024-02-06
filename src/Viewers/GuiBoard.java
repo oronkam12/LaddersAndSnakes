@@ -82,9 +82,11 @@ public class GuiBoard extends JFrame {
         this.currentPlayer = null;
         gameController = new GameController(this);
         
-        questions=gameController.loadQuesitons();
-
-        Question q = questions.get("1").get(0);
+      //  questions=gameController.loadQuesitons();
+       // Question q = new Question();
+        //q.setQuestion("test");
+        //gameController.addQuestion(q);
+       // Question q = questions.get("1").get(0);
         
       
         gameController.deleteQuestion("q1");
