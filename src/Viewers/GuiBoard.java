@@ -81,15 +81,25 @@ public class GuiBoard extends JFrame {
         
         this.currentPlayer = null;
         gameController = new GameController(this);
+        gameController.loadQuesitons();
+//        gameController.deleteQuestion("sss");
+
+        Question q = new Question();
+
+        q.setQuestion("sss");
+        q.setDifficulty("1");
+
+        gameController.addQuestion(q);
+        if(gameController.getQuestions("1")!=null) {
+        	
+        	ArrayList<Question> z = gameController.getQuestions("1");
+            System.out.println(z);
+        }
+        else {
+        	System.out.println("no questions");
+        }
         
-      //  questions=gameController.loadQuesitons();
-       // Question q = new Question();
-        //q.setQuestion("test");
-        //gameController.addQuestion(q);
-       // Question q = questions.get("1").get(0);
-        
-      
-        gameController.deleteQuestion("q1");
+//      
         setTitle("Snake and Ladder Board");
         setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

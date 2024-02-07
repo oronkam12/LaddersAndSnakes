@@ -44,6 +44,12 @@ public class Question {
 	public void setDifficulty(String difficulty) {
 		this.difficulty = difficulty;
 	}
+
+	@Override
+	public String toString() {
+		return "Question [question=" + question + ", answers=" + answers + ", correct_ans=" + correct_ans
+				+ ", difficulty=" + difficulty + "]";
+	}
 	
 	
 }

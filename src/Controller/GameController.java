@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class GameController {
 	private String questionsPath = "questionsFormat.txt";
     private final GuiBoard guiBoard;
+    private HashMap<String, ArrayList<Question>> questions;
 
     public GameController(GuiBoard guiBoard) {
         this.guiBoard = guiBoard;
@@ -125,7 +126,7 @@ public class GameController {
 	}
 	
 	
-	public HashMap<String, ArrayList<Question>> loadQuesitons()
+	public void loadQuesitons()
 	{
 		HashMap<String,ArrayList<Question>> questionsMap = new HashMap<>();
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -135,33 +136,44 @@ public class GameController {
 
               // Extract the "questions" array node
               JsonNode questionsNode = rootNode.get("questions");
-              
-              // Check if the "questions" node is indeed an array
-              if (questionsNode.isArray()) {
-                  // Deserialize "questions" node into a list of Question objects
-                  List<Question> questionsList = objectMapper.convertValue(questionsNode, new TypeReference<List<Question>>(){});
-                  
-                  // Iterate over and print questions (or do whatever you need with them)
-                  for (Question question : questionsList) {
-                      //if(question.getDifficulty().equals(selectedButton.getText()))
-                      {
-                    	  if(questionsMap.get(question.getDifficulty())==null)
-                    		  questionsMap.put(question.getDifficulty(),new ArrayList<Question>());
-                    	  questionsMap.get(question.getDifficulty()).add(question);
-                    	  
+              if(questionsNode!=null) {
+            	// Check if the "questions" node is indeed an array
+                  if (questionsNode.isArray()) {
+                      // Deserialize "questions" node into a list of Question objects
+                      List<Question> questionsList = objectMapper.convertValue(questionsNode, new TypeReference<List<Question>>(){});
+                      
+                      // Iterate over and print questions (or do whatever you need with them)
+                      for (Question question : questionsList) {
+                          //if(question.getDifficulty().equals(selectedButton.getText()))
+                          {
+                        	  if(questionsMap.get(question.getDifficulty())==null)
+                        		  questionsMap.put(question.getDifficulty(),new ArrayList<Question>());
+                        	  questionsMap.get(question.getDifficulty()).add(question);
+                        	  
+                          }
+                          	
                       }
-                      	
-                  }
               }
-          } catch (IOException e2) {
-              e2.printStackTrace();
-          }
-		return questionsMap;	
+              
+              
+              }
+              
+              
+          } catch (Exception e2) {
+        	  System.out.println("creating new ");
+        	  this.questions = questionsMap;
+        	  }
+		this.questions = questionsMap;
 	}
 	
 	
 	public void addQuestion(Question question)
 	{
+		if(this.questions.get(question.getDifficulty())==null)
+			this.questions.put(question.getDifficulty(), new ArrayList<Question>());
+		ArrayList<Question> temp = this.questions.get(question.getDifficulty());
+		temp.add(question);
+		this.questions.put(question.getDifficulty(),temp );
 
 		 ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 	        File file = new File(questionsPath);
@@ -231,6 +243,11 @@ public class GameController {
             }
             return false;
         }
+
+
+		public ArrayList<Question> getQuestions(String difficulty) {
+			return this.questions.get(difficulty);
+		}
     
 	
 	
