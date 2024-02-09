@@ -135,23 +135,11 @@ public class LoginScreen extends JFrame {
 		});
 		contentPane.add(exitBtn);
 
-		
-	
-	
-	
-		
 		screenImage  = new ImageIcon("Assets/wS62pVGA.jpg");
 		JLabel screenLabel = new JLabel(screenImage);
 		screenLabel.setBounds(0,0,800,800);
 		screenLabel.setVisible(true);
 		contentPane.add(screenLabel);
-		
-		
-		
-		
-		
-		
-		
 
 	}
 

@@ -107,9 +107,6 @@ public class GameLobby extends JFrame {
         getContentPane().add(mediumButton);
         getContentPane().add(hardButton);
 
-
-
- 
         
         numOfPlayerBox = new JComboBox<String>();
         for (int i = 2; i <= 6; i++) {
@@ -208,23 +205,23 @@ public class GameLobby extends JFrame {
 			            try {
 			            	if (selectedButton.getText().equals("Easy")) {
 				                size = 7;
-				                cellSize = 94;
+				                cellSize = 84;
 				                snakesDis.addAll(Arrays.asList(1, 1, 1, 1));
 				                boardCreation = new BoardCreation(7, 7, cellSize, snakesDis, 4);
 				            } else if (selectedButton.getText().equals("Medium")) {
 				                size = 10;
-				                cellSize = 66;
+				                cellSize = 60;
 				                snakesDis.addAll(Arrays.asList(2, 1, 2, 1));
 				                boardCreation = new BoardCreation(10, 10, cellSize, snakesDis, 6);
 				            } else if (selectedButton.getText().equals("Hard")) {
 				                size = 13;
-				                cellSize = 50;
+				                cellSize = 45;
 				                snakesDis.addAll(Arrays.asList(2, 2, 2, 2));
 				                boardCreation = new BoardCreation(13, 13, cellSize, snakesDis, 8);
 				            } else {
 				                // Default to hard if an invalid difficulty is entered
 				                size = 13;
-				                cellSize = 50;
+				                cellSize = 45;
 				                snakesDis.addAll(Arrays.asList(2, 2, 2, 2));
 				                boardCreation = new BoardCreation(13, 13, cellSize, snakesDis, 8);
 				            }

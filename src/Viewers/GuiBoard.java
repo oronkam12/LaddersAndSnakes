@@ -18,7 +18,11 @@ import java.awt.event.ActionEvent;
 
 public class GuiBoard extends JFrame {
 
-    private final int rows;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final int rows;
     private final int cols;
     private final ArrayList<Snake> snakes;
     private final ArrayList<Ladder> ladders;
@@ -34,10 +38,11 @@ public class GuiBoard extends JFrame {
     private double widthFactor;
     private ArrayList<String> colors;
     private HashMap<String,ArrayList<Question>> questions;
+    private JLabel[] playerLabels;
+    private JLabel[] markTurnsLabels;
+
     
     // constructor of Gui Board
-   
-    
     public GuiBoard(int rows, int cols, ArrayList<Snake> snakes,ArrayList<Ladder>ladders, Cell[][] board,int cellSize,ArrayList<String> players,ArrayList<String> colors) {
         this.rows = rows;
         this.cols = cols;
@@ -82,7 +87,7 @@ public class GuiBoard extends JFrame {
         this.currentPlayer = null;
         gameController = new GameController(this);
         gameController.loadQuesitons();
-//        gameController.deleteQuestion("sss");
+//      gameController.deleteQuestion("sss");
 
         Question q = new Question();
 
@@ -100,16 +105,15 @@ public class GuiBoard extends JFrame {
         }
         
 //      
-        setTitle("Snake and Ladder Board");
-        setSize(800, 800);
+        setTitle("Snakes and Ladders Board");
+        setSize(1000,800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(false);
         getContentPane().setLayout(null);
         
         // creating custom swing Props
         JPanel panel = new JPanel();
-        panel.setBounds(43, 34, 660, 660);
+        panel.setBounds(200, 77, 600, 600);
         getContentPane().add(panel);  // Add the panel to the frame
 
         // Add the BoardPanel to the panel, not directly to the content pane
@@ -117,12 +121,59 @@ public class GuiBoard extends JFrame {
         panel.add(boardPanel);
         
         
+        int enter = 0; 
+        // creating the display of players turns
+        playerLabels = new JLabel[allPlayers.size()];
+        for (int i = 0; i < allPlayers.size(); i++) {
+        	String con = allPlayers.get(i).getName();
+            playerLabels[i] = new JLabel(con);
+            playerLabels[i].setBounds(30, 100+enter, 100, 50);
+            playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
+            enter += 40; 
+            playerLabels[i].setVisible(true);
+            getContentPane().add(playerLabels[i]);
+    }
         
-        JButton DiceRoll = new JButton("Roll the dice");
-        DiceRoll.addActionListener(new ActionListener() {
+       enter = 0;
+       ImageIcon markerIcon = new ImageIcon("Images/markerIcon.png"); 
+       // creating the markers of the turns
+       markTurnsLabels = new JLabel[allPlayers.size()];
+       for (int i = 0; i < allPlayers.size(); i++) {
+    	   markTurnsLabels[i] = new JLabel("");
+    	   markTurnsLabels[i].setBounds(10, 100+enter, 100, 50);
+    	   enter += 20;
+    	   markTurnsLabels[i].setIcon(markerIcon);
+    	   markTurnsLabels[i].setVisible(false);
+    	   getContentPane().add(markTurnsLabels[i]);
+       }
+
+        
+        playerLabels[0].setFont(new Font("Segoe UI", Font.BOLD, 24));
+        markTurnsLabels[0].setVisible(true);
+        
+
+        JButton btnDiceRoll = new JButton("");
+        btnDiceRoll.setBounds(10, 643, 140, 100);
+        btnDiceRoll.setForeground(new Color(0, 0, 0));
+        ImageIcon DiceRollImage = new ImageIcon("Images/diceIcon.png"); 
+        btnDiceRoll.setIcon(DiceRollImage);
+        btnDiceRoll.setOpaque(false);
+        btnDiceRoll.setContentAreaFilled(false);
+        btnDiceRoll.addActionListener(new ActionListener() {
         	 public void actionPerformed(ActionEvent e) {
         	        // ---------------- game rules checks ---------------------------
         	        currentPlayer = nextPlayer(currentPlayer);
+        	        // mark which player is playing now 
+        	        for(int i=0; i<playerLabels.length; i++) {
+        	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
+        	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+        	        		markTurnsLabels[i].setVisible(true);
+        	        	}
+        	        	else {
+        	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
+        	        		markTurnsLabels[i].setVisible(false);
+						}
+        	        }
         	        int movement = rollDice();
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
         	        boardPanel.repaint();// repaint for ladders or snakes cases
@@ -171,20 +222,58 @@ public class GuiBoard extends JFrame {
              }
         });
         
+        getContentPane().add(btnDiceRoll);
         
-        DiceRoll.setBounds(235, 699, 129, 28);
-        getContentPane().add(DiceRoll);
+        JButton btnPause = new JButton("");
+        btnPause.setBounds(10, 10, 50, 50);
+        ImageIcon pauseIcon = new ImageIcon("Images/pauseIcon.png"); 
+        btnPause.setIcon(pauseIcon);
+        btnPause.setOpaque(false);
+        btnPause.setContentAreaFilled(false);
+        getContentPane().add(btnPause);
         
+        JButton btnPlay = new JButton("");
+        btnPlay.setBounds(80, 10, 50, 50);
+        ImageIcon playIcon = new ImageIcon("Images/playIcon.png"); 
+        btnPlay.setIcon(playIcon);
+        btnPlay.setOpaque(false);
+        btnPlay.setContentAreaFilled(false);
+        btnPlay.setVisible(false);
+        getContentPane().add(btnPlay);
         
-        
+        JLabel lblPlayersTurn = new JLabel("Players");
+        lblPlayersTurn.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
+        lblPlayersTurn.setBounds(30, 70, 140, 44);
+        getContentPane().add(lblPlayersTurn);
+        btnPause.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				btnDiceRoll.setEnabled(false);
+				btnPause.setEnabled(false);
+				btnPlay.setVisible(true);
+			}
+		});
+        btnPlay.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				btnDiceRoll.setEnabled(true);
+				btnPause.setEnabled(true);
+				btnPlay.setVisible(false);
+			}
+		});
     }
     
-
-	
-
     // board creating as a class 
 	public class BoardPanel extends JPanel {
-        private ImageIcon crownIcon;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private ImageIcon crownIcon;
 
         public BoardPanel() {
         	
@@ -197,9 +286,7 @@ public class GuiBoard extends JFrame {
         	}
         	catch (IOException e) {
         	    e.printStackTrace();
-        	}  
-        	
-        	
+        	}    	
         	
         }
         
@@ -251,7 +338,6 @@ public class GuiBoard extends JFrame {
                 int playerY = player.getRow() * cellSize;
                 g.fillOval(playerX, playerY, cellSize, cellSize);
             }
- 
         }
 
         @Override
@@ -300,8 +386,6 @@ public class GuiBoard extends JFrame {
 	public Cell[][] getBoard() {
 		return board;
 	}
-	
-
 	
     public static void main(String[] args) {
        

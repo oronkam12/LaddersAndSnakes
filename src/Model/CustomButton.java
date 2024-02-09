@@ -8,7 +8,14 @@ import javax.swing.border.EmptyBorder;
 
 public class CustomButton extends JButton {
 
-    public CustomButton(String text, int x, int y, int width, int height, ActionListener actionListener) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+
+	public CustomButton(String text, int x, int y, int width, int height, ActionListener actionListener) {
         super(text);
 
         // Set custom properties
