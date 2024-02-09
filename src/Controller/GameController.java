@@ -126,7 +126,7 @@ public class GameController {
 	}
 	
 	
-	public void loadQuesitons()
+	public HashMap<String, ArrayList<Question>> loadQuesitons()
 	{
 		HashMap<String,ArrayList<Question>> questionsMap = new HashMap<>();
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -136,35 +136,30 @@ public class GameController {
 
               // Extract the "questions" array node
               JsonNode questionsNode = rootNode.get("questions");
-              if(questionsNode!=null) {
-            	// Check if the "questions" node is indeed an array
-                  if (questionsNode.isArray()) {
-                      // Deserialize "questions" node into a list of Question objects
-                      List<Question> questionsList = objectMapper.convertValue(questionsNode, new TypeReference<List<Question>>(){});
-                      
-                      // Iterate over and print questions (or do whatever you need with them)
-                      for (Question question : questionsList) {
-                          //if(question.getDifficulty().equals(selectedButton.getText()))
-                          {
-                        	  if(questionsMap.get(question.getDifficulty())==null)
-                        		  questionsMap.put(question.getDifficulty(),new ArrayList<Question>());
-                        	  questionsMap.get(question.getDifficulty()).add(question);
-                        	  
-                          }
-                          	
+              
+              // Check if the "questions" node is indeed an array
+              if (questionsNode.isArray()) {
+                  // Deserialize "questions" node into a list of Question objects
+                  List<Question> questionsList = objectMapper.convertValue(questionsNode, new TypeReference<List<Question>>(){});
+                  
+                  // Iterate over and print questions (or do whatever you need with them)
+                  for (Question question : questionsList) {
+                      //if(question.getDifficulty().equals(selectedButton.getText()))
+                      {
+                    	  if(questionsMap.get(question.getDifficulty())==null)
+                    		  questionsMap.put(question.getDifficulty(),new ArrayList<Question>());
+                    	  questionsMap.get(question.getDifficulty()).add(question);
+                    	  
                       }
+                      	
+                  }
               }
-              
-              
-              }
-              
-              
-          } catch (Exception e2) {
-        	  System.out.println("creating new ");
-        	  this.questions = questionsMap;
-        	  }
-		this.questions = questionsMap;
+          } catch (IOException e2) {
+              e2.printStackTrace();
+          }
+		return questionsMap;	
 	}
+	
 	
 	
 	public void addQuestion(Question question)
