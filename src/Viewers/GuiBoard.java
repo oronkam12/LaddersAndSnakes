@@ -82,16 +82,19 @@ public class GuiBoard extends JFrame {
         this.currentPlayer = null;
         gameController = new GameController(this);
         
-      //  questions=gameController.loadQuesitons();
-       // Question q = new Question();
-        //q.setQuestion("test");
-        //gameController.addQuestion(q);
+        questions=gameController.loadQuesitons();
+        Question q = new Question();
+        q.setQuestion("test");
+       // gameController.deleteQuestion("test");
+        //gameController.deleteQuestion("test");
+
+        gameController.addQuestion(q);
        // Question q = questions.get("1").get(0);
         
       
         gameController.deleteQuestion("q1");
         setTitle("Snake and Ladder Board");
-        setSize(800, 800);
+        setSize(1000, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -106,7 +109,7 @@ public class GuiBoard extends JFrame {
         BoardPanel boardPanel = new BoardPanel(); 
         panel.add(boardPanel);
         
-        
+       
         
         JButton DiceRoll = new JButton("Roll the dice");
         DiceRoll.addActionListener(new ActionListener() {
