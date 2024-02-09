@@ -1,408 +1,58 @@
 {
-  "questions" : [ {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  }, {
-    "question" : "sss",
-    "answers" : null,
-    "correct_ans" : null,
-    "difficulty" : "1"
-  } ]
+    "questions": [
+        {
+            "question": "q1",
+            "answers": ["answer1", "answer2", "answer3", "answer4"],
+            "correct_ans": "2",
+            "difficulty": "1"
+        },
+        {
+            "question": "q2",
+            "answers": ["answer1", "answer2", "answer3", "answer4"],
+            "correct_ans": "1",
+            "difficulty": "1"
+        },
+        {
+            "question": "q3",
+            "answers": ["answer1", "answer2", "answer3", "answer4"],
+            "correct_ans": "3",
+            "difficulty": "1"
+        },
+        {
+            "question": "q4",
+            "answers": ["answer1", "answer2", "answer3", "answer4"],
+            "correct_ans": "2",
+            "difficulty": "2"
+        },
+        {
+            "question": "q5",
+            "answers": ["answer1", "answer2", "answer3", "answer4"],
+            "correct_ans": "1",
+            "difficulty": "2"
+        },
+        {
+            "question": "q6",
+            "answers": ["answer1", "answer2", "answer3", "answer4"],
+            "correct_ans": "4",
+            "difficulty": "2"
+        },
+        {
+            "question": "q7",
+            "answers": ["answer1", "answer2", "answer3", "answer4"],
+            "correct_ans": "3",
+            "difficulty": "3"
+        },
+        {
+            "question": "q8",
+            "answers": ["answer1", "answer2", "answer3", "answer4"],
+            "correct_ans": "4",
+            "difficulty": "3"
+        },
+        {
+            "question": "q9",
+            "answers": ["answer1", "answer2", "answer3", "answer4"],
+            "correct_ans": "2",
+            "difficulty": "3"
+        }
+    ]
 }
