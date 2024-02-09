@@ -86,24 +86,24 @@ public class GuiBoard extends JFrame {
         
         this.currentPlayer = null;
         gameController = new GameController(this);
-        gameController.loadQuesitons();
-//      gameController.deleteQuestion("sss");
-
-        Question q = new Question();
-
-        q.setQuestion("sss");
-        q.setDifficulty("1");
-
-        gameController.addQuestion(q);
-        if(gameController.getQuestions("1")!=null) {
-        	
-        	ArrayList<Question> z = gameController.getQuestions("1");
-            System.out.println(z);
-        }
-        else {
-        	System.out.println("no questions");
-        }
-        
+//        gameController.loadQuesitons();
+////      gameController.deleteQuestion("sss");
+//
+//        Question q = new Question();
+//
+//        q.setQuestion("sss");
+//        q.setDifficulty("1");
+//
+//        gameController.addQuestion(q);
+//        if(gameController.getQuestions("1")!=null) {
+//        	
+//        	ArrayList<Question> z = gameController.getQuestions("1");
+//            System.out.println(z);
+//        }
+//        else {
+//        	System.out.println("no questions");
+//        }
+//        
 //      
         setTitle("Snakes and Ladders Board");
         setSize(1000,800);
@@ -141,7 +141,7 @@ public class GuiBoard extends JFrame {
        for (int i = 0; i < allPlayers.size(); i++) {
     	   markTurnsLabels[i] = new JLabel("");
     	   markTurnsLabels[i].setBounds(10, 100+enter, 100, 50);
-    	   enter += 20;
+    	   enter += 40;
     	   markTurnsLabels[i].setIcon(markerIcon);
     	   markTurnsLabels[i].setVisible(false);
     	   getContentPane().add(markTurnsLabels[i]);
