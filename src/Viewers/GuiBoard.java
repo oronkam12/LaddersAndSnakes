@@ -1,5 +1,6 @@
 package Viewers;
 import Model.*;
+import Model.Object;
 import Controller.*;
 
 import javax.imageio.ImageIO;
@@ -84,7 +85,7 @@ public class GuiBoard extends JFrame {
 	        	
         }
         
-        this.currentPlayer = null;
+        this.currentPlayer = allPlayers.get(0);
         gameController = new GameController(this);
 //        gameController.loadQuesitons();
 ////      gameController.deleteQuestion("sss");
@@ -163,17 +164,7 @@ public class GuiBoard extends JFrame {
         	 public void actionPerformed(ActionEvent e) {
         	        // ---------------- game rules checks ---------------------------
         	        currentPlayer = nextPlayer(currentPlayer);
-        	        // mark which player is playing now 
-        	        for(int i=0; i<playerLabels.length; i++) {
-        	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
-        	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
-        	        		markTurnsLabels[i].setVisible(true);
-        	        	}
-        	        	else {
-        	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
-        	        		markTurnsLabels[i].setVisible(false);
-						}
-        	        }
+        	        
         	        int movement = rollDice();
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
         	        boardPanel.repaint();// repaint for ladders or snakes cases
@@ -274,7 +265,7 @@ public class GuiBoard extends JFrame {
 		 */
 		private static final long serialVersionUID = 1L;
 		private ImageIcon crownIcon;
-
+		private ImageIcon presentIcon;
         public BoardPanel() {
         	
         	// loading assets to the board
@@ -286,7 +277,16 @@ public class GuiBoard extends JFrame {
         	}
         	catch (IOException e) {
         	    e.printStackTrace();
-        	}    	
+        	}   
+        	
+        	try {
+        		BufferedImage image = ImageIO.read(new File("Assets/present.png"));
+        	    Image resizedImage = image.getScaledInstance(cellSize, cellSize, Image.SCALE_SMOOTH);
+        	    presentIcon = new ImageIcon(resizedImage);
+        	}
+        	catch (IOException e) {
+        	    e.printStackTrace();
+        	}   
         	
         }
         
@@ -294,6 +294,8 @@ public class GuiBoard extends JFrame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+            
+         
 
             int borderWidth = 1;
 
@@ -321,8 +323,23 @@ public class GuiBoard extends JFrame {
                         // Draw the crown icon at the calculated position
                         crownIcon.paintIcon(this, g, crownX, crownY);
                     }
+                    if(board[i][j].getSnakeOrLadder() instanceof Present) {
+                    	Present temp = (Present)board[i][j].getSnakeOrLadder();
+                    	if(temp.isMovement()==true) {
+                        	int presentX = x + (cellSize - presentIcon.getIconWidth()) / 2;
+                            int presentY = y + (cellSize - presentIcon.getIconHeight()) / 2;
+                        	presentIcon.paintIcon(this, g, presentX, presentY);
+                    	}
+                    	
+
+                    }
+                    
+                    
+                    
+                    
                 }
             }
+            
 
             for (Snake snake : snakes) {
                 snake.draw((Graphics2D) g, cellSize);
@@ -338,6 +355,17 @@ public class GuiBoard extends JFrame {
                 int playerY = player.getRow() * cellSize;
                 g.fillOval(playerX, playerY, cellSize, cellSize);
             }
+         // mark which player is playing now 
+	        for(int i=0; i<playerLabels.length; i++) {
+	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
+	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+	        		markTurnsLabels[i].setVisible(true);
+	        	}
+	        	else {
+	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
+	        		markTurnsLabels[i].setVisible(false);
+				}
+	        }
         }
 
         @Override
