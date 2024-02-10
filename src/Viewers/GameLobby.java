@@ -55,7 +55,7 @@ public class GameLobby extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
-        this.numOfPlayers=2;
+        this.numOfPlayers=1;
         this.flag = false;
         allColors = new ArrayList<>();
         allComboBoxes = new ArrayList<>();
@@ -110,6 +110,9 @@ public class GameLobby extends JFrame {
         
         numOfPlayerBox = new JComboBox<String>();
         for (int i = 2; i <= 6; i++) {
+        	if(i==2) {
+                numOfPlayerBox.addItem("Bot");
+        	}
             numOfPlayerBox.addItem(String.valueOf(i));
         }
         JLabel numPlayerLbl = new JLabel("Players Count");
@@ -119,12 +122,18 @@ public class GameLobby extends JFrame {
 
         numOfPlayerBox.setBounds(440, 340, 100, 20);
         contentPane.add(numOfPlayerBox);
-        numOfPlayerBox.setSelectedIndex(numOfPlayers-2);
+        numOfPlayerBox.setSelectedIndex(numOfPlayers-1);
 
         numOfPlayerBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	numOfPlayers = Integer.valueOf((String) numOfPlayerBox.getSelectedItem());
+            	if(numOfPlayerBox.getSelectedItem().equals("Bot")==true){
+            		numOfPlayers=1;
+            		}
+            	else {
+                	numOfPlayers = Integer.valueOf((String) numOfPlayerBox.getSelectedItem());
+
+            	}
             	flag=false;
                 updatePlayerComponents();
             }
@@ -229,13 +238,21 @@ public class GameLobby extends JFrame {
 				            for(int j=0;j<playersNames.size();j++) {
 								
 					            players.add(playersNames.get(j).getText());
-
+					            if(playersNames.size()==1) {
+					            	players.add("bot");
+					            }
 							}
+				            
 				            ArrayList<String> colors = new ArrayList<String>();
 				            for(JComboBox<String> comboBox: allComboBoxes) {
 				            	colors.add((String) comboBox.getSelectedItem());
-				            	System.out.println((String) comboBox.getSelectedItem());
+				            	
 				            }
+				            if(playersNames.size()==1) {
+				            	colors.add("Pink");
+
+				            }
+				            System.out.println(playersNames);
 				            
 				            GuiBoard guiBoard = new GuiBoard(size,size,boardCreation.getSnakes(),boardCreation.getLadders(),boardCreation.getBoard(),cellSize,players,colors);
 				            guiBoard.setVisible(true);

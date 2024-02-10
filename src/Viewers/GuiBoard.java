@@ -29,7 +29,7 @@ public class GuiBoard extends JFrame {
     private final ArrayList<Ladder> ladders;
     private final Cell[][] board;
     private Player player; // Add a Player object to represent the character
-    private boolean playerFlag; // to create players only 1 time and not every board refresh
+    private boolean botFlag; // to create players only 1 time and not every board refresh
     private final GameController gameController;
     private int cellSize;
     private ArrayList<String> players;
@@ -52,7 +52,10 @@ public class GuiBoard extends JFrame {
         this.cellSize = cellSize;
         this.ladders = ladders;
         this.players = players; // array of players string names
-        this.playerFlag = false;
+        this.botFlag = false;
+        if(players.contains("bot"))
+            this.botFlag = true;
+
         this.colors = colors;
         this.allPlayers = new ArrayList<Player>(); // array of players objects
         this.heightFactor=1;
@@ -163,8 +166,8 @@ public class GuiBoard extends JFrame {
         btnDiceRoll.addActionListener(new ActionListener() {
         	 public void actionPerformed(ActionEvent e) {
         	        // ---------------- game rules checks ---------------------------
-        	        currentPlayer = nextPlayer(currentPlayer);
-        	        
+
+
         	        int movement = rollDice();
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
         	        boardPanel.repaint();// repaint for ladders or snakes cases
@@ -174,16 +177,21 @@ public class GuiBoard extends JFrame {
         	            @Override
         	            public void actionPerformed(ActionEvent e) {
         	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
+        	                	
         	                	int movement = rollDice();
         	                    currentPlayer = nextPlayer(currentPlayer);
-        	                    System.out.println(currentPlayer);
         	                    gameController.movePlayer(currentPlayer, boardPanel,movement);
         	                    boardPanel.repaint();
+        			 	        currentPlayer = nextPlayer(currentPlayer);
+
         	                }
         	            }
         	        });
         	        timer.setRepeats(false); // Ensure the timer only fires once
         	        timer.start();
+	        		 if(botFlag==false)
+				 	        currentPlayer = nextPlayer(currentPlayer);
+
         	    }
         	 
         	 
