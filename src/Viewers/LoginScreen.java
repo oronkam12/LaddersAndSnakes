@@ -123,6 +123,13 @@ public class LoginScreen extends JFrame {
 		CustomButton questionsBtn = new CustomButton("Questions",295,470,200,60,e->{
 			System.out.println("b");
 		});
+		questionsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				QuizMaster qm = new QuizMaster();
+				qm.setVisible(true);
+				setVisible(false);
+			}
+		});
 		contentPane.add(questionsBtn);
 		
 		CustomButton historyBtn = new CustomButton("HISTORY",295,540,200,60,e->{

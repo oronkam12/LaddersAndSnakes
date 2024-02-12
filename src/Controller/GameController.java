@@ -46,13 +46,13 @@ public class GameController {
             public void actionPerformed(ActionEvent e) {
             	//----- in case need to move forward on the board -----
                 if (movesLeft > 0) {
-                    movesLeft = Move(player, 1, boardPanel,movesLeft);
+                    movesLeft = Move(player, 1 ,movesLeft);
                     boardPanel.repaint();
                 }
                 else {
                 	//----- in case passed last col of winning and need to go back -------
                 	if(movesLeft<0) {
-                		MoveBackWards(player,1,boardPanel,movesLeft);
+                		MoveBackWards(player,1,movesLeft);
                 		boardPanel.repaint();
                 	}
                     moveTimer.stop();
@@ -90,7 +90,7 @@ public class GameController {
 		}
 	}
 	
-	public int Move(Player player ,int i, GuiBoard.BoardPanel boardPanel,int movesLeft) {
+	public int Move(Player player ,int i, int movesLeft) {
 		//----- checking how much to go back if needed--------------
 		if(player.getCol()-movesLeft<0 && player.getRow()== 0) {
 			System.out.println("rolled: " + i +" which is too high.");
@@ -107,7 +107,7 @@ public class GameController {
 			    player.setCol(player.getCol() - 1);  // Assuming player and boardPanel are defined elsewhere in your code
 				return movesLeft-1;
 	}
-	public int MoveBackWards(Player player ,int i, GuiBoard.BoardPanel boardPanel,int movesLeft) {
+	public int MoveBackWards(Player player ,int i, int movesLeft) {
 		 if(player.getCol()+i >getBoardCols() )
 		{
 			player.setRow(player.getRow()+1);

@@ -51,7 +51,7 @@ public class GuiBoard extends JFrame {
     JLabel lblTurnTime;
     public static Timer countDown;
     public static Timer duration;
-    
+    public BoardPanel boardPanel;
     // constructor of Gui Board
     public GuiBoard(int rows, int cols, ArrayList<Snake> snakes,ArrayList<Ladder>ladders, Cell[][] board,int cellSize,ArrayList<String> players,ArrayList<String> colors) {
         this.rows = rows;
@@ -99,7 +99,7 @@ public class GuiBoard extends JFrame {
         
         normalTimer();
         duration.start();
-        
+        System.out.println(allPlayers);
         this.currentPlayer = allPlayers.get(0);
         gameController = new GameController(this);
 //        gameController.loadQuesitons();
@@ -133,7 +133,7 @@ public class GuiBoard extends JFrame {
         getContentPane().add(panel);  // Add the panel to the frame
 
         // Add the BoardPanel to the panel, not directly to the content pane
-        BoardPanel boardPanel = new BoardPanel(); 
+        boardPanel = new BoardPanel(); 
         panel.add(boardPanel);
         
         
@@ -212,7 +212,7 @@ public class GuiBoard extends JFrame {
         	 public void actionPerformed(ActionEvent e) {
         	        // ---------------- game rules checks ---------------------------
 
-        		 	btnDiceRoll.setEnabled(false);
+
         	        int movement = rollDice();
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
         	        lblTimer.setText(currentPlayer.getName() + " - Time left:");
@@ -221,44 +221,27 @@ public class GuiBoard extends JFrame {
         	        timerActiovation();
         	        
         	        // Delay before bot's move
-        	        Timer timer = new Timer(150 * (movement + 1), new ActionListener() {
+        	        Timer timer = new Timer(150*(movement+1), new ActionListener() { // Adjust the delay time in milliseconds (e.g., 2000 for 2 seconds)
         	            @Override
         	            public void actionPerformed(ActionEvent e) {
         	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
-        	                    int botMovement = rollDice();
+        	                	
+        	                	int movement = rollDice();
         	                    currentPlayer = nextPlayer(currentPlayer);
-        	                    gameController.movePlayer(currentPlayer, boardPanel, botMovement);
+        	                    gameController.movePlayer(currentPlayer, boardPanel,movement);
         	                    boardPanel.repaint();
-        	                    currentPlayer = nextPlayer(currentPlayer);
-        	                    timerActiovation();
-
-        	                    // Disable the button again for the specified time
-        	                    btnDiceRoll.setEnabled(false);
-
-        	                    // New Timer to enable the button after the specified time
-        	                    Timer enableButtonTimer = new Timer(150 * (botMovement + 1), new ActionListener() {
-        	                        @Override
-        	                        public void actionPerformed(ActionEvent e) {
-        	                            btnDiceRoll.setEnabled(true);
-        	                        }
-        	                    });
-        	                    enableButtonTimer.setRepeats(false);
-        	                    enableButtonTimer.start();
-        	                } else {
-        	                    // Enable the button immediately if the next player is not a bot
-        	                    btnDiceRoll.setEnabled(true);
+        			 	        currentPlayer = nextPlayer(currentPlayer);
+        			 	        timerActiovation();
         	                }
         	            }
         	        });
         	        timer.setRepeats(false); // Ensure the timer only fires once
-
-        	        if (botFlag == false) {
-        	            currentPlayer = nextPlayer(currentPlayer);
-        	        }
-
         	        timer.start();
+	        		 if(botFlag==false)
+				 	        currentPlayer = nextPlayer(currentPlayer);
 
-        	 }
+        	    }
+        	 
         	 
         	 
         	 private int rollDice() {
