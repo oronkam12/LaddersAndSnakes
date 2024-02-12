@@ -49,6 +49,8 @@ public class BoardCreation {
                 board[i][j] = new Cell(i, j, counter--,null);
             }
         }
+        addPresent();
+
         //----- create 4 types of snakes ----------
         for(int i=0;i<snakesDis.size();i++) {
         	int distance = i;
@@ -79,7 +81,6 @@ public class BoardCreation {
 	        }
         	
         }
-        System.out.println(snakes);
         
         int generatedLadders=0;
         int distance=1;
@@ -111,18 +112,47 @@ public class BoardCreation {
             
             
         }
-        System.out.println(ladders);
            
     }
         
+	private void addPresent() {
+		if(rows<10) {
+			return;
+		}
+    	Cell cell1 = GenerateCell(new Random().nextInt(rows));
+    	while(cell1.getRow()==0 || cell1.getRow()== rows) {
+        	cell1 = GenerateCell(new Random().nextInt(rows));
 
+    	}
+    	Present p = new Present(cell1,cell1,rows,cols);
+    	board[cell1.getRow()][cell1.getCol()].setSnakeOrLadder(p);
+
+    	int colMax;
+    	int rowMax;
+    	if(cell1.getCol()+10>cols ) {
+    		colMax = cell1.getCol()+10-cols;
+    		rowMax = cell1.getRow()-1;
+    		
+    	}
+    	else {
+    		colMax = cell1.getCol()+10;
+    		rowMax = cell1.getRow();
+    	}
+
+    	Present pTop = new Present(board[rowMax][colMax],board[rowMax][colMax],rows,cols);
+    	pTop.setMovement(false);
+    	board[rowMax][colMax].setSnakeOrLadder(pTop);
+    	
+    	
+    	
+    }
     
     private void addYellowSnake(int row1,int row2) {
     	Cell cell1 = GenerateCell(row1);
     	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
     		cell1 = GenerateCell(row1);
     	int col = random.nextInt(this.rows-1);
-    	while(Math.abs(col- cell1.getCol()) >2 && col-cell1.getCol()!=0) {
+    	while(Math.abs(col- cell1.getCol()) >2 && col-cell1.getCol()!=0 || board[row2][col].getSnakeOrLadder()!=null) {
     		col = random.nextInt(this.rows-1);
     	}
     	Cell cell2 = new Cell(row2, col,board[row2][col].getValue(),null);
@@ -137,7 +167,7 @@ public class BoardCreation {
     	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
     		cell1 = GenerateCell(row1);
     	int col = random.nextInt(this.rows-1);
-    	while(Math.abs(col- cell1.getCol()) >3 && col-cell1.getCol()!=0) {
+    	while(Math.abs(col- cell1.getCol()) >3 && col-cell1.getCol()!=0 || board[row2][col].getSnakeOrLadder()!=null) {
     		col = random.nextInt(this.rows-1);
     	}
     			
@@ -153,7 +183,7 @@ public class BoardCreation {
     	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
     		cell1 = GenerateCell(row1);
     	int col = random.nextInt(this.rows-1);
-    	while(Math.abs(col- cell1.getCol()) >4 && col-cell1.getCol()!=0) {
+    	while(Math.abs(col- cell1.getCol()) >4 && col-cell1.getCol()!=0 || board[row2][col].getSnakeOrLadder()!=null) {
     		col = random.nextInt(this.rows-1);
     	}
     			
@@ -187,7 +217,6 @@ public class BoardCreation {
     		if(counter<=0)
     			throw new Exception();
     	}
-    	System.out.println(cell2.getCol() +" " +  cell1.getCol());
     	Ladder l = new Ladder(cell2,cell1);
     	cell1.setSnakeOrLadder(l);
     	board[cell1.getRow()][cell1.getCol()] = cell1;

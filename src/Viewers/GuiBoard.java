@@ -1,5 +1,6 @@
 package Viewers;
 import Model.*;
+import Model.Object;
 import Controller.*;
 
 import javax.imageio.ImageIO;
@@ -8,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -28,7 +30,7 @@ public class GuiBoard extends JFrame {
     private final ArrayList<Ladder> ladders;
     private final Cell[][] board;
     private Player player; // Add a Player object to represent the character
-    private boolean playerFlag; // to create players only 1 time and not every board refresh
+    private boolean botFlag; // to create players only 1 time and not every board refresh
     private final GameController gameController;
     private int cellSize;
     private ArrayList<String> players;
@@ -41,6 +43,14 @@ public class GuiBoard extends JFrame {
     private JLabel[] playerLabels;
     private JLabel[] markTurnsLabels;
 
+    //Nadav
+    int CTsecond = 5, CTminute = 0, Dsecond = 0, Dminute = 0;
+    String CTddSecond, CTddMinute, DddSecond, DddMinute;
+    DecimalFormat dFormat = new DecimalFormat("00");
+    JLabel lblTime;
+    JLabel lblTurnTime;
+    public static Timer countDown;
+    public static Timer duration;
     
     // constructor of Gui Board
     public GuiBoard(int rows, int cols, ArrayList<Snake> snakes,ArrayList<Ladder>ladders, Cell[][] board,int cellSize,ArrayList<String> players,ArrayList<String> colors) {
@@ -51,7 +61,10 @@ public class GuiBoard extends JFrame {
         this.cellSize = cellSize;
         this.ladders = ladders;
         this.players = players; // array of players string names
-        this.playerFlag = false;
+        this.botFlag = false;
+        if(players.contains("bot"))
+            this.botFlag = true;
+
         this.colors = colors;
         this.allPlayers = new ArrayList<Player>(); // array of players objects
         this.heightFactor=1;
@@ -84,7 +97,10 @@ public class GuiBoard extends JFrame {
 	        	
         }
         
-        this.currentPlayer = null;
+        normalTimer();
+        duration.start();
+        
+        this.currentPlayer = allPlayers.get(0);
         gameController = new GameController(this);
 //        gameController.loadQuesitons();
 ////      gameController.deleteQuestion("sss");
@@ -151,6 +167,39 @@ public class GuiBoard extends JFrame {
         playerLabels[0].setFont(new Font("Segoe UI", Font.BOLD, 24));
         markTurnsLabels[0].setVisible(true);
         
+        
+        BufferedImage clockIcon = null;
+        try {
+        	clockIcon = ImageIO.read(new File("Images/clockIcon.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        JLabel lblDuration = new JLabel("");
+        lblDuration.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
+        lblDuration.setBounds(237, 10, 60, 60);
+        Image dimg = clockIcon.getScaledInstance(lblDuration.getWidth(), lblDuration.getHeight(),Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(dimg);
+        lblDuration.setIcon(imageIcon);
+        getContentPane().add(lblDuration);
+        
+        lblTime = new JLabel("00:00");
+        lblTime.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTime.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblTime.setBounds(322, 25, 96, 34);
+        getContentPane().add(lblTime);
+        
+        lblTurnTime = new JLabel("00:00");
+        lblTurnTime.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTurnTime.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblTurnTime.setBounds(704, 26, 96, 34);
+        getContentPane().add(lblTurnTime);
+        
+        JLabel lblTimer = new JLabel("Player - Time left:");
+        lblTimer.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
+        lblTimer.setBounds(487, 26, 207, 34);
+        getContentPane().add(lblTimer);
+        
 
         JButton btnDiceRoll = new JButton("");
         btnDiceRoll.setBounds(10, 643, 140, 100);
@@ -162,37 +211,35 @@ public class GuiBoard extends JFrame {
         btnDiceRoll.addActionListener(new ActionListener() {
         	 public void actionPerformed(ActionEvent e) {
         	        // ---------------- game rules checks ---------------------------
-        	        currentPlayer = nextPlayer(currentPlayer);
-        	        // mark which player is playing now 
-        	        for(int i=0; i<playerLabels.length; i++) {
-        	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
-        	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
-        	        		markTurnsLabels[i].setVisible(true);
-        	        	}
-        	        	else {
-        	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
-        	        		markTurnsLabels[i].setVisible(false);
-						}
-        	        }
+
+
         	        int movement = rollDice();
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
+        	        lblTimer.setText(currentPlayer.getName() + " - Time left:");
         	        boardPanel.repaint();// repaint for ladders or snakes cases
-
+        	      
+        	        timerActiovation();
+        	        
         	        // Delay before bot's move
         	        Timer timer = new Timer(150*(movement+1), new ActionListener() { // Adjust the delay time in milliseconds (e.g., 2000 for 2 seconds)
         	            @Override
         	            public void actionPerformed(ActionEvent e) {
         	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
+        	                	
         	                	int movement = rollDice();
         	                    currentPlayer = nextPlayer(currentPlayer);
-        	                    System.out.println(currentPlayer);
         	                    gameController.movePlayer(currentPlayer, boardPanel,movement);
         	                    boardPanel.repaint();
+        			 	        currentPlayer = nextPlayer(currentPlayer);
+        			 	        timerActiovation();
         	                }
         	            }
         	        });
         	        timer.setRepeats(false); // Ensure the timer only fires once
         	        timer.start();
+	        		 if(botFlag==false)
+				 	        currentPlayer = nextPlayer(currentPlayer);
+
         	    }
         	 
         	 
@@ -222,6 +269,8 @@ public class GuiBoard extends JFrame {
              }
         });
         
+        
+        
         getContentPane().add(btnDiceRoll);
         
         JButton btnPause = new JButton("");
@@ -230,15 +279,32 @@ public class GuiBoard extends JFrame {
         btnPause.setIcon(pauseIcon);
         btnPause.setOpaque(false);
         btnPause.setContentAreaFilled(false);
+        btnPause.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				duration.stop();
+				countDown.stop();	
+			}
+		});
         getContentPane().add(btnPause);
         
         JButton btnPlay = new JButton("");
         btnPlay.setBounds(80, 10, 50, 50);
-        ImageIcon playIcon = new ImageIcon("Images/playIcon.png"); 
+        ImageIcon playIcon = new ImageIcon("Images/playIcon.png");
         btnPlay.setIcon(playIcon);
         btnPlay.setOpaque(false);
         btnPlay.setContentAreaFilled(false);
         btnPlay.setVisible(false);
+        btnPlay.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				duration.start();
+				countDown.start();
+				
+			}
+		});
         getContentPane().add(btnPlay);
         
         JLabel lblPlayersTurn = new JLabel("Players");
@@ -274,7 +340,7 @@ public class GuiBoard extends JFrame {
 		 */
 		private static final long serialVersionUID = 1L;
 		private ImageIcon crownIcon;
-
+		private ImageIcon presentIcon;
         public BoardPanel() {
         	
         	// loading assets to the board
@@ -286,7 +352,16 @@ public class GuiBoard extends JFrame {
         	}
         	catch (IOException e) {
         	    e.printStackTrace();
-        	}    	
+        	}   
+        	
+        	try {
+        		BufferedImage image = ImageIO.read(new File("Assets/present.png"));
+        	    Image resizedImage = image.getScaledInstance(cellSize, cellSize, Image.SCALE_SMOOTH);
+        	    presentIcon = new ImageIcon(resizedImage);
+        	}
+        	catch (IOException e) {
+        	    e.printStackTrace();
+        	}   
         	
         }
         
@@ -294,6 +369,8 @@ public class GuiBoard extends JFrame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+            
+         
 
             int borderWidth = 1;
 
@@ -321,8 +398,23 @@ public class GuiBoard extends JFrame {
                         // Draw the crown icon at the calculated position
                         crownIcon.paintIcon(this, g, crownX, crownY);
                     }
+                    if(board[i][j].getSnakeOrLadder() instanceof Present) {
+                    	Present temp = (Present)board[i][j].getSnakeOrLadder();
+                    	if(temp.isMovement()==true) {
+                        	int presentX = x + (cellSize - presentIcon.getIconWidth()) / 2;
+                            int presentY = y + (cellSize - presentIcon.getIconHeight()) / 2;
+                        	presentIcon.paintIcon(this, g, presentX, presentY);
+                    	}
+                    	
+
+                    }
+                    
+                    
+                    
+                    
                 }
             }
+            
 
             for (Snake snake : snakes) {
                 snake.draw((Graphics2D) g, cellSize);
@@ -338,6 +430,17 @@ public class GuiBoard extends JFrame {
                 int playerY = player.getRow() * cellSize;
                 g.fillOval(playerX, playerY, cellSize, cellSize);
             }
+         // mark which player is playing now 
+	        for(int i=0; i<playerLabels.length; i++) {
+	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
+	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+	        		markTurnsLabels[i].setVisible(true);
+	        	}
+	        	else {
+	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
+	        		markTurnsLabels[i].setVisible(false);
+				}
+	        }
         }
 
         @Override
@@ -365,6 +468,69 @@ public class GuiBoard extends JFrame {
             }
         }
     }
+	
+	
+	void timerActiovation(){
+	      //Timer activation
+    	if (countDown != null && !countDown.isRunning() ) {
+    		countdownTimer();
+    		countDown.start();
+    	}
+    	else if (countDown != null && countDown.isRunning() ){
+    		countDown.stop();
+    		countdownTimer();
+    		countDown.start();
+    		CTsecond = 30;
+    	}
+    	else {
+    		countdownTimer();
+    		countDown.start();
+    		CTsecond = 30;
+    	}
+	}
+	
+	public void countdownTimer() {
+		countDown = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				CTsecond--;
+				CTddSecond = dFormat.format(CTsecond);
+				CTddMinute = dFormat.format(CTminute);
+				lblTurnTime.setText(CTddMinute + ":" + CTddSecond);
+				
+				if (CTsecond == -1) {
+					CTsecond = 0;
+					CTddSecond = dFormat.format(CTsecond);
+					CTddMinute = dFormat.format(CTminute);
+					lblTurnTime.setText(CTddMinute + ":" + CTddSecond);
+					countDown.stop();
+				}
+			}	
+		});
+	}
+	
+	public void normalTimer() {
+		duration = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Dsecond++;
+				DddSecond = dFormat.format(Dsecond);
+				DddMinute = dFormat.format(Dminute);
+				lblTime.setText(DddMinute + ":" + DddSecond);
+				
+				if (Dsecond == 59) {
+					Dsecond = 0;
+					Dminute++;
+					DddSecond = dFormat.format(Dsecond);
+					DddMinute = dFormat.format(Dminute);
+					lblTime.setText(DddMinute + ":" + DddSecond);
+					duration.stop();
+				}
+			}	
+		});
+	}
 	
 	// getters and setters
     public Player getCurrentPlayer() {
