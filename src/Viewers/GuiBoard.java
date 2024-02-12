@@ -212,7 +212,7 @@ public class GuiBoard extends JFrame {
         	 public void actionPerformed(ActionEvent e) {
         	        // ---------------- game rules checks ---------------------------
 
-
+        		 	btnDiceRoll.setEnabled(false);
         	        int movement = rollDice();
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
         	        lblTimer.setText(currentPlayer.getName() + " - Time left:");
@@ -221,27 +221,44 @@ public class GuiBoard extends JFrame {
         	        timerActiovation();
         	        
         	        // Delay before bot's move
-        	        Timer timer = new Timer(150*(movement+1), new ActionListener() { // Adjust the delay time in milliseconds (e.g., 2000 for 2 seconds)
+        	        Timer timer = new Timer(150 * (movement + 1), new ActionListener() {
         	            @Override
         	            public void actionPerformed(ActionEvent e) {
         	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
-        	                	
-        	                	int movement = rollDice();
+        	                    int botMovement = rollDice();
         	                    currentPlayer = nextPlayer(currentPlayer);
-        	                    gameController.movePlayer(currentPlayer, boardPanel,movement);
+        	                    gameController.movePlayer(currentPlayer, boardPanel, botMovement);
         	                    boardPanel.repaint();
-        			 	        currentPlayer = nextPlayer(currentPlayer);
-        			 	        timerActiovation();
+        	                    currentPlayer = nextPlayer(currentPlayer);
+        	                    timerActiovation();
+
+        	                    // Disable the button again for the specified time
+        	                    btnDiceRoll.setEnabled(false);
+
+        	                    // New Timer to enable the button after the specified time
+        	                    Timer enableButtonTimer = new Timer(150 * (botMovement + 1), new ActionListener() {
+        	                        @Override
+        	                        public void actionPerformed(ActionEvent e) {
+        	                            btnDiceRoll.setEnabled(true);
+        	                        }
+        	                    });
+        	                    enableButtonTimer.setRepeats(false);
+        	                    enableButtonTimer.start();
+        	                } else {
+        	                    // Enable the button immediately if the next player is not a bot
+        	                    btnDiceRoll.setEnabled(true);
         	                }
         	            }
         	        });
         	        timer.setRepeats(false); // Ensure the timer only fires once
-        	        timer.start();
-	        		 if(botFlag==false)
-				 	        currentPlayer = nextPlayer(currentPlayer);
 
-        	    }
-        	 
+        	        if (botFlag == false) {
+        	            currentPlayer = nextPlayer(currentPlayer);
+        	        }
+
+        	        timer.start();
+
+        	 }
         	 
         	 
         	 private int rollDice() {
