@@ -8,8 +8,10 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.SystemColor;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
@@ -27,6 +29,7 @@ import javax.swing.border.EmptyBorder;
 
 import Controller.GameController;
 import Model.Question;
+import Model.Exceptions.IncompleteInputException;
 
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -76,6 +79,7 @@ public class QuizMaster extends JFrame {
     private JLabel answer3Label;
     private JLabel answer4Label;
     private JTextField pagesField;
+    private ArrayList<JRadioButton> answersButtons = new ArrayList<>();
     
     JTextArea answer1Txt;
     JTextArea answer2Txt;
@@ -97,6 +101,22 @@ public class QuizMaster extends JFrame {
     JButton easyBtn;
     JButton mediumBtn;
     JButton hardBtn;
+	JLabel difficultyLabel;
+	JRadioButton difficultyButton1;
+	JRadioButton difficultyButton2;
+	JRadioButton difficultyButton3;
+	JRadioButton radioButton1;
+	JRadioButton radioButton2;
+	JRadioButton radioButton3;
+	JRadioButton radioButton4;
+	ButtonGroup group;
+	private String path = "questionsFormat.txt";
+	JButton editBtn;
+	JButton saveBtn;
+	JButton addBtn;
+	JButton deleteBtn;
+
+
 
     
     
@@ -126,7 +146,6 @@ public class QuizMaster extends JFrame {
 		
 		
 		 answer1Txt = new JTextArea(currentQuestionsList.get(currentPosition).getAnswers().get(0));
-		answer1Txt.setEditable(false);
 		answer1Txt.setRows(1); // Set the height of the text area
 		answer1Txt.setColumns(20); // Set the width of the text area
 		answer1Txt.setLineWrap(true); // Enable line wrap
@@ -248,7 +267,7 @@ public class QuizMaster extends JFrame {
 		correctAnswerLabel.setBounds(164, 580, 200, 30);
 		contentPane.add(correctAnswerLabel);
 		
-		JLabel difficultyLabel;
+		 
 		difficultyLabel = new JLabel("Difficulty:");
 		difficultyLabel.setForeground(new Color(204, 153, 102));
 		difficultyLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -257,9 +276,9 @@ public class QuizMaster extends JFrame {
 		
 		
 		
-		 JRadioButton difficultyButton1 = new JRadioButton("1");
-        JRadioButton difficultyButton2 = new JRadioButton("2");
-        JRadioButton difficultyButton3 = new JRadioButton("3");
+		  difficultyButton1 = new JRadioButton("1");
+         difficultyButton2 = new JRadioButton("2");
+         difficultyButton3 = new JRadioButton("3");
         
         
         // Customize and position radio buttons
@@ -273,14 +292,26 @@ public class QuizMaster extends JFrame {
         difficultyGroup.add(difficultyButton2);
         difficultyGroup.add(difficultyButton3);
         
+        
+        difficultyLabel.setVisible(false);
+        difficultyButton1.setVisible(false);
+        difficultyButton2.setVisible(false);
+        difficultyButton3.setVisible(false);
+
+        
+        
         contentPane.add(difficultyButton1);
         contentPane.add(difficultyButton2);
         contentPane.add(difficultyButton3);
 		
-		JRadioButton radioButton1 = new JRadioButton("1");
-        JRadioButton radioButton2 = new JRadioButton("2");
-        JRadioButton radioButton3 = new JRadioButton("3");
-        JRadioButton radioButton4 = new JRadioButton("4");
+		 radioButton1 = new JRadioButton("1");
+         radioButton2 = new JRadioButton("2");
+        radioButton3 = new JRadioButton("3");
+         radioButton4 = new JRadioButton("4");
+        answersButtons.add(radioButton1);
+        answersButtons.add(radioButton2);
+        answersButtons.add(radioButton3);
+        answersButtons.add(radioButton4);
         
         correctButtons.add(radioButton1);
         correctButtons.add(radioButton2);
@@ -303,7 +334,7 @@ public class QuizMaster extends JFrame {
 
 
         // Create a button group and add radio buttons to ensure mutual exclusivity
-        ButtonGroup group = new ButtonGroup();
+        group= new ButtonGroup();
         group.add(radioButton1);
         group.add(radioButton2);
         group.add(radioButton3);
@@ -538,14 +569,29 @@ public class QuizMaster extends JFrame {
 		searchBtn.setBounds(560, 700, 100, 30);
         contentPane.add(searchBtn); 
         
-        JButton editBtn = new JButton("Edit");
+         editBtn = new JButton("Edit");
         editBtn.setForeground(new Color(240, 230, 140));
         editBtn.setBackground(new Color(160, 82, 45));
         editBtn.setFont(new Font("Segoe UI", Font.BOLD, 18));
         editBtn.setBounds(20, 360, 90, 30);
         contentPane.add(editBtn); 
         
-        JButton saveBtn = new JButton("Save");
+         saveBtn = new JButton("Save");
+        saveBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		try {
+					createQuestion();
+				} catch (IncompleteInputException e1) {
+				    JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+        		displayQuestion();
+        		addBtn.setEnabled(true);
+        	    editBtn.setEnabled(true);
+        	    deleteBtn.setEnabled(true);
+        	    saveBtn.setEnabled(false);
+
+        	}
+        });
         saveBtn.setForeground(new Color(240, 230, 140));
         saveBtn.setBackground(new Color(160, 82, 45));
         saveBtn.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -553,19 +599,48 @@ public class QuizMaster extends JFrame {
         contentPane.add(saveBtn); 
         
         
-        JButton addBtn = new JButton("Add");
+         addBtn = new JButton("Add");
+        addBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		questionArea.setText("");
+        		answer1Txt.setText("");
+        		answer2Txt.setText("");
+        		answer3Txt.setText("");
+        		answer4Txt.setText("");
+        		enableFields(true);
+        	    saveBtn.setEnabled(true);
+        	    addBtn.setEnabled(false);
+        	    editBtn.setEnabled(false);
+        	    deleteBtn.setEnabled(false);
+        	   
+
+        		
+
+        		
+
+        	}
+        });
         addBtn.setForeground(new Color(240, 230, 140));
         addBtn.setBackground(new Color(160, 82, 45));
         addBtn.setFont(new Font("Segoe UI", Font.BOLD, 18));
         addBtn.setBounds(20, 460, 90, 30);
         contentPane.add(addBtn); 
         
-        JButton deleteBtn = new JButton("Delete");
+        deleteBtn = new JButton("Delete");
         deleteBtn.setForeground(new Color(240, 230, 140));
         deleteBtn.setBackground(new Color(160, 82, 45));
         deleteBtn.setFont(new Font("Segoe UI", Font.BOLD, 18));
         deleteBtn.setBounds(20, 510, 90, 30);
         contentPane.add(deleteBtn); 
+        
+        enableFields(false);
+        saveBtn.setEnabled(false);
+	     displayQuestion();
+	     
+
+	        
+
+        
         
 		screenImage  = new ImageIcon("Assets/wS62pVGA.jpg");
 		JLabel screenLabel = new JLabel(screenImage);
@@ -581,6 +656,63 @@ public class QuizMaster extends JFrame {
 
 		
 	}
+protected void createQuestion() throws IncompleteInputException {
+	String question = questionArea.getText();
+	String answer1 = answer1Txt.getText();
+	String answer2 = answer2Txt.getText();
+	String answer3 = answer3Txt.getText();
+	String answer4 = answer4Txt.getText();
+	ArrayList<String> answers = new ArrayList<>();
+	answers.add(answer1);
+	answers.add(answer2);
+	answers.add(answer3);
+	answers.add(answer4);
+	String correctPosition = null;
+	String difficulty = null;
+	 Enumeration<AbstractButton> positionButtons = group.getElements();
+     while (positionButtons.hasMoreElements()) {
+         AbstractButton button = positionButtons.nextElement();
+         if (button.isSelected()) {
+             correctPosition= button.getText(); // Cast is safe here because we know these are JRadioButtons
+         }
+     }
+     
+     Enumeration<AbstractButton> difficultyButtons = group.getElements();
+     while (difficultyButtons.hasMoreElements()) {
+         AbstractButton button = difficultyButtons.nextElement();
+         if (button.isSelected()) {
+        	 difficulty= button.getText(); // Cast is safe here because we know these are JRadioButtons
+         }
+     }
+     
+	
+	if(question.equals("")|| answer1.equals("")||answer2.equals("")||answer3.equals("")	||answer4.equals(""))
+	{
+		throw new IncompleteInputException("please make sure you insert input in all fields");
+	}
+	
+	Question q = new Question(question,answers,correctPosition,difficulty);
+	gc.addQuestion(q, path);
+	JOptionPane.showMessageDialog(null, "Question added succefully");
+	
+	
+	}
+private void enableFields(boolean flag)
+{
+	answer1Txt.setEditable(flag);
+	difficultyLabel.setVisible(flag);
+    difficultyButton1.setVisible(flag);
+    difficultyButton2.setVisible(flag);
+    difficultyButton3.setVisible(flag);
+    questionArea.setEditable(flag);
+    answer2Txt.setEditable(flag);
+    answer3Txt.setEditable(flag);
+    answer4Txt.setEditable(flag);
+    radioButton1.setEnabled(flag);
+    radioButton2.setEnabled(flag);
+    radioButton3.setEnabled(flag);
+    radioButton4.setEnabled(flag);
+    }
 	
 private void displayQuestion()
 {
@@ -590,6 +722,13 @@ private void displayQuestion()
 	answer3Txt.setText(currentQuestion.getAnswers().get(2));
 	answer4Txt.setText(currentQuestion.getAnswers().get(3));
 	correctButtons.get(Integer.valueOf(currentQuestion.getCorrect_ans())-1).setSelected(true);
+	for(int i = 0; i<answersButtons.size(); i++)
+	{
+		if(Integer.valueOf(currentQuestion.getCorrect_ans())-1==i) answersButtons.get(i).setEnabled(true);
+		else answersButtons.get(i).setEnabled(false);
+	}
+	answersButtons.get(Integer.valueOf(currentQuestion.getCorrect_ans())-1).setEnabled(true);;
+
     difficultyButtons.get(Integer.valueOf(currentQuestion.getDifficulty())-1).setSelected(true);
 	
 
