@@ -6,8 +6,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Mor Vaknin/Downloads/jackson-core-2.16.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mor Vaknin/Downloads/jackson-databind-2.16.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mor Vaknin/Downloads/jackson-annotations-2.16.1.jar"/>
+	<classpathentry kind="src" path="JUnitTests"/>
+	<classpathentry kind="lib" path="C:/Users/BAR/Desktop/LaddersAndSnakes/jackson-annotations-2.16.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BAR/Desktop/LaddersAndSnakes/jackson-core-2.16.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BAR/Desktop/LaddersAndSnakes/jackson-databind-2.16.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

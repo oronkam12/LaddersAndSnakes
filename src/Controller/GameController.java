@@ -125,7 +125,28 @@ public class GameController {
 		return(getBoardRows() > 0) ? guiBoard.getBoard()[0].length : 0;  // This gives you the number of columns
 	}
 	
-	
+	public  ArrayList<Question> getQuestionsAsList(String path)
+	{
+		ArrayList<Question> questionsList = new ArrayList<>();
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+          	// Read the JSON file into a JsonNode tree
+              JsonNode rootNode = objectMapper.readTree(new File(path));
+
+              // Extract the "questions" array node
+              JsonNode questionsNode = rootNode.get("questions");
+              
+              // Check if the "questions" node is indeed an array
+              if (questionsNode.isArray()) {
+                  // Deserialize "questions" node into a list of Question objects
+            	  questionsList = (ArrayList<Question>) objectMapper.convertValue(questionsNode, new TypeReference<List<Question>>(){});
+              }
+		}
+	 catch (IOException e) {
+        e.printStackTrace();
+    }
+        return questionsList;
+	}	
 	public HashMap<String, ArrayList<Question>> loadQuesitons()
 	{
 		HashMap<String,ArrayList<Question>> questionsMap = new HashMap<>();
@@ -162,8 +183,9 @@ public class GameController {
 	
 	
 	
-	public void addQuestion(Question question)
+	public void addQuestion(Question question, String path)
 	{
+		questions = loadQuesitons();
 		if(this.questions.get(question.getDifficulty())==null)
 			this.questions.put(question.getDifficulty(), new ArrayList<Question>());
 		ArrayList<Question> temp = this.questions.get(question.getDifficulty());
@@ -171,7 +193,7 @@ public class GameController {
 		this.questions.put(question.getDifficulty(),temp );
 
 		 ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-	        File file = new File(questionsPath);
+	        File file = new File(path);
 	        ObjectNode rootNode;
 	        List<Question> questions = new ArrayList<>();
 
@@ -214,9 +236,9 @@ public class GameController {
 
 	}
 	
-        public  boolean deleteQuestion(String question) {
+        public  boolean deleteQuestion(String question, String path) {
             ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-            File file = new File(questionsPath);
+            File file = new File(path);
             try {
             	JsonNode rootNode = objectMapper.readTree(file);
                 ArrayNode questionsNode = (ArrayNode) rootNode.path("questions");
@@ -240,9 +262,7 @@ public class GameController {
         }
 
 
-		public ArrayList<Question> getQuestions(String difficulty) {
-			return this.questions.get(difficulty);
-		}
+		
     
 	
 	
