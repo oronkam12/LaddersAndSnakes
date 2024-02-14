@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,7 +21,11 @@ import javax.swing.ImageIcon;
 
 public class GameLobby extends JFrame {
 
-    private JPanel contentPane;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
     private JComboBox<String> numOfPlayerBox;
     private Integer numOfPlayers;
     private ArrayList<String> selectedColors;
@@ -76,8 +78,6 @@ public class GameLobby extends JFrame {
     private void updatePlayerComponents() {
         // Remove existing components
         contentPane.removeAll();
-        
-       
         
         allComboBoxes = new ArrayList<>();
         playersNames = new ArrayList<>();
@@ -132,28 +132,52 @@ public class GameLobby extends JFrame {
             		}
             	else {
                 	numOfPlayers = Integer.valueOf((String) numOfPlayerBox.getSelectedItem());
-
             	}
             	flag=false;
                 updatePlayerComponents();
             }
         });
-        
-        
+
 
         for (int i = 0; i < numOfPlayers; i++) {
 
         	JComboBox<String> colorComboBox = new JComboBox<String>();
         	
         	for(int j=0;j<allColors.size();j++) {
-        		
-    			colorComboBox.addItem(allColors.get(j));
-        		
+        	
+        		colorComboBox.addItem(allColors.get(j));
+        	
         		selectedColors.add((String) colorComboBox.getSelectedItem());
         	}
             colorComboBox.setBounds(210, 460 + i * 30, 100, 20);
             allComboBoxes.add(colorComboBox);
             contentPane.add(colorComboBox);
+            
+            final int playerIndex = i;
+            colorComboBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JComboBox<String> comboBox = (JComboBox<String>) e.getSource();
+                    String selectedColor = (String) comboBox.getSelectedItem();
+                    selectedColors.set(playerIndex, selectedColor);
+
+                    // Check if the selected color has been chosen by another player
+                    for (int k = 0; k < selectedColors.size(); k++) {
+                        if (k != playerIndex && selectedColor.equals(selectedColors.get(k))) {
+                            JOptionPane.showMessageDialog(contentPane, "Color already chosen by another player!", "Error", JOptionPane.ERROR_MESSAGE);
+                            comboBox.setSelectedIndex(-1); // Reset selection
+                            return;
+                        }
+                    }
+
+                    for (JComboBox<String> otherComboBox : allComboBoxes) {
+                        if (!otherComboBox.equals(comboBox)) {
+                            otherComboBox.removeItem(selectedColor);
+                        }
+                    }
+                }
+            });
+            
             if(flag==false) {
             	
             	if(i==0) {
@@ -187,9 +211,6 @@ public class GameLobby extends JFrame {
                 playerNameTextField.setBounds(440, 460 + i * 30, 100, 20);
                 contentPane.add(playerNameTextField);
                 playersNames.add(playerNameTextField);
-                
-
-
             }
             else {
             	JLabel nameLbl = new JLabel("Player name:");
@@ -197,7 +218,6 @@ public class GameLobby extends JFrame {
                 nameLbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, (int) (15)));  // Larger font size
                 contentPane.add(nameLbl);
                 CustomTextField playerNameTextField = playersNames.get(i);
-                
                 contentPane.add(playerNameTextField);
             }
            
@@ -205,13 +225,14 @@ public class GameLobby extends JFrame {
             
             if(i+1 == numOfPlayers) {
             	CustomButton playBtn = new CustomButton("Play", 280, 460 + (i+1) * 30, 200, 60, e -> {
-					
-						int cellSize;
-			            int size;
+						int cellSize = 0;
+			            int size = 0;
 			            BoardCreation boardCreation = null;
 			            ArrayList<Integer> snakesDis = new ArrayList<>();
 			            
 			            try {
+			            	if(selectedButton == null)
+			            		throw new Exception("Please select difficulty level!");
 			            	if (selectedButton.getText().equals("Easy")) {
 				                size = 7;
 				                cellSize = 84;
@@ -227,22 +248,33 @@ public class GameLobby extends JFrame {
 				                cellSize = 45;
 				                snakesDis.addAll(Arrays.asList(2, 2, 2, 2));
 				                boardCreation = new BoardCreation(13, 13, cellSize, snakesDis, 8);
-				            } else {
-				                // Default to hard if an invalid difficulty is entered
-				                size = 13;
-				                cellSize = 45;
-				                snakesDis.addAll(Arrays.asList(2, 2, 2, 2));
-				                boardCreation = new BoardCreation(13, 13, cellSize, snakesDis, 8);
 				            }
+				            
 				            ArrayList<String> players = new ArrayList<String>();
 				            for(int j=0;j<playersNames.size();j++) {
-								
 					            players.add(playersNames.get(j).getText());
 					            if(playersNames.size()==1) {
 					            	players.add("bot");
-					            }
+					            }    
 							}
 				            
+				            // for starting play only if all players inserted their name
+				            for (CustomTextField playersName : playersNames) {
+				                if(playersName.getText().isEmpty()) {
+					            	throw new Exception("Please insert ALL players names!");
+					            }
+				            }
+				            
+				            for (int n = 0; n < players.size(); n++) {
+				            	String currentName = players.get(n).toString();
+				            	if(n != players.size()-1) 
+				            		for(int m = n+1; m < players.size()-1; m++) {
+				            			if(players.get(m).equals(currentName))
+				            				throw new Exception("Names are equal! please change one of the names");
+				            		
+				            		}
+				            }
+				                   
 				            ArrayList<String> colors = new ArrayList<String>();
 				            for(JComboBox<String> comboBox: allComboBoxes) {
 				            	colors.add((String) comboBox.getSelectedItem());
@@ -258,8 +290,9 @@ public class GameLobby extends JFrame {
 				            guiBoard.setVisible(true);
 				            setVisible(false);
 			            } catch (Exception e1) {
-			            	JOptionPane.showMessageDialog(null, "Select Difficulty!", "Problem!", JOptionPane.INFORMATION_MESSAGE);
+			            	JOptionPane.showMessageDialog(null, e1.getMessage(), "Error!", JOptionPane.INFORMATION_MESSAGE);
 			            }
+			            
 			            
 						
 					}
@@ -281,7 +314,12 @@ public class GameLobby extends JFrame {
         contentPane.revalidate();
         contentPane.repaint();
     }
-    private void buttonClicked(CustomButton clickedButton) {
+ //   private void JOptionPane(Object object, String message, String string, int informationMessage) {
+		// TODO Auto-generated method stub
+		
+//	}
+
+	private void buttonClicked(CustomButton clickedButton) {
         // Set the color of the selected button to green
         if (selectedButton != null) {
             selectedButton.setForeground(Color.WHITE);

@@ -167,7 +167,6 @@ public class GuiBoard extends JFrame {
         playerLabels[0].setFont(new Font("Segoe UI", Font.BOLD, 24));
         markTurnsLabels[0].setVisible(true);
         
-        
         BufferedImage clockIcon = null;
         try {
         	clockIcon = ImageIO.read(new File("Images/clockIcon.png"));
@@ -211,22 +210,35 @@ public class GuiBoard extends JFrame {
         btnDiceRoll.addActionListener(new ActionListener() {
         	 public void actionPerformed(ActionEvent e) {
         	        // ---------------- game rules checks ---------------------------
-
-
         	        int movement = rollDice();
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
         	        lblTimer.setText(currentPlayer.getName() + " - Time left:");
         	        boardPanel.repaint();// repaint for ladders or snakes cases
         	      
         	        timerActiovation();
+
         	        
-        	        // Delay before bot's move
+        	        // Delay before bot's move or replacing turn 
         	        Timer timer = new Timer(150*(movement+1), new ActionListener() { // Adjust the delay time in milliseconds (e.g., 2000 for 2 seconds)
         	            @Override
         	            public void actionPerformed(ActionEvent e) {
+                	        // mark which player is playing now 
+                	        for(int i=0; i<playerLabels.length; i++) {
+                	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
+                	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+                	        		markTurnsLabels[i].setVisible(true);
+                	        	}
+                	        	else {
+                	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
+                	        		markTurnsLabels[i].setVisible(false);
+                				}
+                	        }
         	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
-        	                	
         	                	int movement = rollDice();
+        	                	playerLabels[0].setFont(new Font("Segoe UI", Font.BOLD, 18));
+        	                	markTurnsLabels[0].setVisible(false);
+        	                	playerLabels[1].setFont(new Font("Segoe UI", Font.BOLD, 24));
+        	                	markTurnsLabels[1].setVisible(true);
         	                    currentPlayer = nextPlayer(currentPlayer);
         	                    gameController.movePlayer(currentPlayer, boardPanel,movement);
         	                    boardPanel.repaint();
@@ -235,20 +247,18 @@ public class GuiBoard extends JFrame {
         	                }
         	            }
         	        });
+        	        //markTurnsLabels[1].setVisible(false);
         	        timer.setRepeats(false); // Ensure the timer only fires once
         	        timer.start();
 	        		 if(botFlag==false)
 				 	        currentPlayer = nextPlayer(currentPlayer);
-
         	    }
-        	 
         	 
         	 
         	 private int rollDice() {
         	        return new Random().nextInt(9) + 1;
         	    }
         	 
-
 
         	 private Player nextPlayer(Player p) {
              	if(p==null) {
@@ -268,8 +278,6 @@ public class GuiBoard extends JFrame {
              	
              }
         });
-        
-        
         
         getContentPane().add(btnDiceRoll);
         
@@ -430,17 +438,17 @@ public class GuiBoard extends JFrame {
                 int playerY = player.getRow() * cellSize;
                 g.fillOval(playerX, playerY, cellSize, cellSize);
             }
-         // mark which player is playing now 
-	        for(int i=0; i<playerLabels.length; i++) {
-	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
-	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
-	        		markTurnsLabels[i].setVisible(true);
-	        	}
-	        	else {
-	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
-	        		markTurnsLabels[i].setVisible(false);
-				}
-	        }
+//         // mark which player is playing now 
+//	        for(int i=0; i<playerLabels.length; i++) {
+//	        	if(currentPlayer.getName().equals(playerLabels[i].getText()) || currentPlayer.getName().equals("bot")) {
+//	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+//	        		markTurnsLabels[i].setVisible(true);
+//	        	}
+//	        	else {
+//	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
+//	        		markTurnsLabels[i].setVisible(false);
+//				}
+//	        }
         }
 
         @Override
