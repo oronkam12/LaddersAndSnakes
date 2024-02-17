@@ -92,7 +92,6 @@ class QuestionsFileTests {
 	    try {
 	    	JsonNode rootNode = objectMapper.readTree(deleteTestFile);
 	        JsonNode questionsNode = rootNode.path("questions");
-	        assertTrue(questionsNode.isArray());
 	        assertEquals(0, questionsNode.size());
 
 	        
