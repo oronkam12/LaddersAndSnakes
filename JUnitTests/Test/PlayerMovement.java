@@ -44,7 +44,7 @@ class PlayerMovement {
 	@BeforeEach
     public void setUp() throws IOException {
 		snakesDis.addAll(Arrays.asList(0,0,0,1));
-		boardCreation = new BoardCreation(7, 7, 1, snakesDis, 1);
+		boardCreation = new BoardCreation(7, 7, 1,1, snakesDis, 1);
 		board = boardCreation.getBoard();
 		ladder = new Ladder(board[2][2], board[5][3]);
 		ladders.add(ladder);
@@ -57,7 +57,7 @@ class PlayerMovement {
 		allPlayers.add(player);
 		allPlayersNames.add(player.getName());
 		System.out.println(allPlayersNames);
-		guiBoard = new GuiBoard(7, 7, snakes, ladders, board, 1, allPlayersNames, colors);
+		guiBoard = new GuiBoard(7, 7, snakes, ladders, board, 1,1, allPlayersNames, colors);
 		gameController = new GameController(guiBoard);		
 	}
 	

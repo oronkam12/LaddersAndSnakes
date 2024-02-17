@@ -180,7 +180,6 @@ public class GameController {
           } catch (IOException e2) {
               e2.printStackTrace();
           }
-		System.out.println(questionsMap);
 		return questionsMap;	
 	}
 	

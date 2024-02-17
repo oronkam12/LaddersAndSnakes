@@ -65,7 +65,7 @@ public class QuizMaster extends JFrame {
 				try {
 					QuizMaster frame = new QuizMaster();
 					frame.setVisible(true);
-				} catch (Exception e) {
+				} catch (Exception e) {	
 					e.printStackTrace();
 				}
 			}
@@ -150,7 +150,7 @@ public class QuizMaster extends JFrame {
 		contentPane.add(questionLabel);
 		
 		
-		 answer1Txt = new JTextArea(currentQuestionsList.get(currentPosition).getAnswers().get(0));
+		 answer1Txt = new JTextArea("m");
 		answer1Txt.setRows(1); // Set the height of the text area
 		answer1Txt.setColumns(20); // Set the width of the text area
 		answer1Txt.setLineWrap(true); // Enable line wrap
@@ -166,7 +166,7 @@ public class QuizMaster extends JFrame {
         answer1Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(answer1Pane);
         
-         answer2Txt = new JTextArea(currentQuestionsList.get(currentPosition).getAnswers().get(1));
+         answer2Txt = new JTextArea("m");
         answer2Txt.setRows(1); // Set the height of the text area
         answer2Txt.setColumns(20); // Set the width of the text area
 		answer2Txt.setLineWrap(true); // Enable line wrap
@@ -182,7 +182,7 @@ public class QuizMaster extends JFrame {
         answer2Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(answer2Pane);
         
-         answer3Txt = new JTextArea(currentQuestionsList.get(currentPosition).getAnswers().get(2));
+         answer3Txt = new JTextArea("m");
         answer3Txt.setRows(1); // Set the height of the text area
         answer3Txt.setColumns(20); // Set the width of the text area
 		answer3Txt.setLineWrap(true); // Enable line wrap
@@ -198,7 +198,7 @@ public class QuizMaster extends JFrame {
         answer3Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(answer3Pane);
         
-         answer4Txt = new JTextArea(currentQuestionsList.get(currentPosition).getAnswers().get(3));
+         answer4Txt = new JTextArea("m");
         answer4Txt.setRows(1); // Set the height of the text area
         answer4Txt.setColumns(20); // Set the width of the text area
 		answer4Txt.setLineWrap(true); // Enable line wrap
@@ -217,7 +217,7 @@ public class QuizMaster extends JFrame {
         
         
         
-		 questionArea = new JTextArea(currentQuestionsList.get(currentPosition).getQuestion());
+		 questionArea = new JTextArea("m");
 		questionArea.setRows(1); // Set the height of the text area
 		questionArea.setColumns(20); // Set the width of the text area
 		questionArea.setLineWrap(true); // Enable line wrap
@@ -517,7 +517,7 @@ public class QuizMaster extends JFrame {
 		contentPane.add(pagesField);
 		pagesField.setColumns(10);
 		
-		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
+		//pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
 		
 		nextBtn = new JButton(">>");
 		nextBtn.addActionListener(new ActionListener() {
@@ -525,12 +525,10 @@ public class QuizMaster extends JFrame {
 				currentPosition++;
 				firstQuestionBtn.setEnabled(true);
 				backBtn.setEnabled(true);
-				System.out.println(currentPosition);
-				System.out.println(currentQuestionsList.size());
+			
 
 				if(currentPosition+1==currentQuestionsList.size()) 
 				{
-					System.out.println("zz");
 					lastBtn.setEnabled(false);
 					nextBtn.setEnabled(false);
 				}
@@ -671,7 +669,6 @@ public class QuizMaster extends JFrame {
                         while (positionButtons.hasMoreElements()) {
                             AbstractButton button = positionButtons.nextElement();
                             if (button.isSelected()) {
-                            	System.out.println(button.getText());
                                 tmpDiff= button.getText(); // Cast is safe here because we know these are JRadioButtons
                             }
                         }
@@ -776,10 +773,13 @@ public class QuizMaster extends JFrame {
         {
         	currentQuestion = currentQuestionsList.get(0);
    	     displayQuestion();
+ 		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
+
 
         }
         else {
         	addNewQuestion();
+        	pagesField.setText("0/0");
         }
 
 	        
