@@ -151,6 +151,7 @@ public class GuiBoard extends JFrame {
             playerLabels[i].setBounds(30, 100+enter, 100, 50);
             playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
             enter += 40; 
+            
             playerLabels[i].setVisible(true);
             getContentPane().add(playerLabels[i]);
     }

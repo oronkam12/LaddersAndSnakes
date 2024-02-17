@@ -122,7 +122,7 @@ public class BoardCreation {
 			return;
 		}
     	Cell cell1 = GenerateCell(new Random().nextInt(rows));
-    	while(cell1.getRow()==0 || cell1.getRow()== rows) {
+    	while(cell1.getRow()==0 || cell1.getRow()== rows-1) {
         	cell1 = GenerateCell(new Random().nextInt(rows));
 
     	}
