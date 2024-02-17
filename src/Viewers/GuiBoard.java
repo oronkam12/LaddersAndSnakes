@@ -32,7 +32,8 @@ public class GuiBoard extends JFrame {
     private Player player; // Add a Player object to represent the character
     private boolean botFlag; // to create players only 1 time and not every board refresh
     private final GameController gameController;
-    private int cellSize;
+    private int cellWidth;
+    private int cellHeight;
     private ArrayList<String> players;
     private ArrayList<Player> allPlayers;
     private Player currentPlayer;
@@ -52,13 +53,15 @@ public class GuiBoard extends JFrame {
     public static Timer countDown;
     public static Timer duration;
     public BoardPanel boardPanel;
+	private ImageIcon backgroundIcon;
     // constructor of Gui Board
-    public GuiBoard(int rows, int cols, ArrayList<Snake> snakes,ArrayList<Ladder>ladders, Cell[][] board,int cellSize,ArrayList<String> players,ArrayList<String> colors) {
+    public GuiBoard(int rows, int cols, ArrayList<Snake> snakes,ArrayList<Ladder>ladders, Cell[][] board,int cellWidth,int cellHeight,ArrayList<String> players,ArrayList<String> colors) {
         this.rows = rows;
         this.cols = cols;
         this.snakes = snakes;
         this.board = board;
-        this.cellSize = cellSize;
+        this.cellWidth = cellWidth;
+        this.cellHeight = cellHeight;
         this.ladders = ladders;
         this.players = players; // array of players string names
         this.botFlag = false;
@@ -127,15 +130,17 @@ public class GuiBoard extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
         
+        
         // creating custom swing Props
         JPanel panel = new JPanel();
-        panel.setBounds(200, 77, 600, 600);
+        panel.setBounds(185, 135, 632, 590);
         getContentPane().add(panel);  // Add the panel to the frame
 
         // Add the BoardPanel to the panel, not directly to the content pane
         boardPanel = new BoardPanel(); 
         panel.add(boardPanel);
-        
+        backgroundIcon = new ImageIcon("Assets/background.jpg");
+
         
         int enter = 0; 
         // creating the display of players turns
@@ -167,7 +172,6 @@ public class GuiBoard extends JFrame {
         playerLabels[0].setFont(new Font("Segoe UI", Font.BOLD, 24));
         markTurnsLabels[0].setVisible(true);
         
-        
         BufferedImage clockIcon = null;
         try {
         	clockIcon = ImageIO.read(new File("Images/clockIcon.png"));
@@ -186,18 +190,18 @@ public class GuiBoard extends JFrame {
         lblTime = new JLabel("00:00");
         lblTime.setHorizontalAlignment(SwingConstants.CENTER);
         lblTime.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblTime.setBounds(322, 25, 96, 34);
+        lblTime.setBounds(324, 10, 96, 34);
         getContentPane().add(lblTime);
         
         lblTurnTime = new JLabel("00:00");
         lblTurnTime.setHorizontalAlignment(SwingConstants.CENTER);
         lblTurnTime.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblTurnTime.setBounds(704, 26, 96, 34);
+        lblTurnTime.setBounds(705, 10, 96, 34);
         getContentPane().add(lblTurnTime);
         
         JLabel lblTimer = new JLabel("Player - Time left:");
         lblTimer.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
-        lblTimer.setBounds(487, 26, 207, 34);
+        lblTimer.setBounds(488, 10, 207, 34);
         getContentPane().add(lblTimer);
         
 
@@ -211,7 +215,7 @@ public class GuiBoard extends JFrame {
         btnDiceRoll.addActionListener(new ActionListener() {
         	 public void actionPerformed(ActionEvent e) {
         	        // ---------------- game rules checks ---------------------------
-
+	     		 	btnDiceRoll.setEnabled(false);
 
         	        int movement = rollDice();
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
@@ -219,36 +223,86 @@ public class GuiBoard extends JFrame {
         	        boardPanel.repaint();// repaint for ladders or snakes cases
         	      
         	        timerActiovation();
+
         	        
-        	        // Delay before bot's move
+        	        // Delay before bot's move or replacing turn 
         	        Timer timer = new Timer(150*(movement+1), new ActionListener() { // Adjust the delay time in milliseconds (e.g., 2000 for 2 seconds)
         	            @Override
         	            public void actionPerformed(ActionEvent e) {
+                	        // mark which player is playing now 
+                	        for(int i=0; i<playerLabels.length; i++) {
+                	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
+                	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+                	        		markTurnsLabels[i].setVisible(true);
+                	        		
+                	        	}
+                	        	else {
+                	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
+                	        		markTurnsLabels[i].setVisible(false);
+                				}
+                	        }
         	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
-        	                	
-        	                	int movement = rollDice();
+        	                	int botMovement = rollDice();
+        	                	playerLabels[0].setFont(new Font("Segoe UI", Font.BOLD, 18));
+        	                	markTurnsLabels[0].setVisible(false);
+        	                	playerLabels[1].setFont(new Font("Segoe UI", Font.BOLD, 24));
+        	                	markTurnsLabels[1].setVisible(true);
         	                    currentPlayer = nextPlayer(currentPlayer);
-        	                    gameController.movePlayer(currentPlayer, boardPanel,movement);
+        	                    gameController.movePlayer(currentPlayer, boardPanel,botMovement);
+        	                    checkObjects();
         	                    boardPanel.repaint();
         			 	        currentPlayer = nextPlayer(currentPlayer);
         			 	        timerActiovation();
+        			 	    // Disable the button again for the specified time
+        	                    btnDiceRoll.setEnabled(false);
+
+        	                    // New Timer to enable the button after the specified time
+        	                    Timer enableButtonTimer = new Timer(150 * (botMovement + 1), new ActionListener() {
+        	                        @Override
+        	                        public void actionPerformed(ActionEvent e) {
+        	                            btnDiceRoll.setEnabled(true);
+        	                            checkObjects();
+        	                            boardPanel.repaint();
+        	                        }
+        	                    });
+        	                    enableButtonTimer.setRepeats(false);
+        	                    enableButtonTimer.start();
+        	                } else {
+        	                    // Enable the button immediately if the next player is not a bot
+        	                    btnDiceRoll.setEnabled(true);
+        	                    checkObjects();
+	                            boardPanel.repaint();
+
         	                }
-        	            }
+
+        			 	        
+        	                }
         	        });
         	        timer.setRepeats(false); // Ensure the timer only fires once
-        	        timer.start();
-	        		 if(botFlag==false)
-				 	        currentPlayer = nextPlayer(currentPlayer);
 
-        	    }
-        	 
+        	        if (botFlag == false) {
+        	            currentPlayer = nextPlayer(currentPlayer);
+        	            checkObjects();
+                        boardPanel.repaint();
+
+        	        }
+
+        	        timer.start();
+                    boardPanel.repaint();
+
+        	 }
+        	 public void checkObjects() {
+        		 for(Player p:allPlayers) {
+        			 gameController.isObject(p);
+        			 repaint();
+        		 }
+        	 }
         	 
         	 
         	 private int rollDice() {
         	        return new Random().nextInt(9) + 1;
         	    }
         	 
-
 
         	 private Player nextPlayer(Player p) {
              	if(p==null) {
@@ -268,8 +322,6 @@ public class GuiBoard extends JFrame {
              	
              }
         });
-        
-        
         
         getContentPane().add(btnDiceRoll);
         
@@ -309,8 +361,13 @@ public class GuiBoard extends JFrame {
         
         JLabel lblPlayersTurn = new JLabel("Players");
         lblPlayersTurn.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
-        lblPlayersTurn.setBounds(30, 70, 140, 44);
+        lblPlayersTurn.setBounds(31, 70, 140, 44);
         getContentPane().add(lblPlayersTurn);
+        
+        JLabel bgLabel = new JLabel("New label");
+        bgLabel.setIcon(new ImageIcon("C:\\Users\\Oron's computer\\Desktop\\teamZebra\\Assets\\background.jpg"));
+        bgLabel.setBounds(0, 0, 1000, 800);
+        getContentPane().add(bgLabel);
         btnPause.addActionListener(new ActionListener() {
 			
 			@Override
@@ -341,13 +398,14 @@ public class GuiBoard extends JFrame {
 		private static final long serialVersionUID = 1L;
 		private ImageIcon crownIcon;
 		private ImageIcon presentIcon;
+		private ImageIcon backgroundIcon;
         public BoardPanel() {
         	
         	// loading assets to the board
         	
         	try {
         		BufferedImage image = ImageIO.read(new File("Assets/crown.png"));
-        	    Image resizedImage = image.getScaledInstance(cellSize, cellSize, Image.SCALE_SMOOTH);
+        	    Image resizedImage = image.getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH);
         	    crownIcon = new ImageIcon(resizedImage);
         	}
         	catch (IOException e) {
@@ -356,12 +414,15 @@ public class GuiBoard extends JFrame {
         	
         	try {
         		BufferedImage image = ImageIO.read(new File("Assets/present.png"));
-        	    Image resizedImage = image.getScaledInstance(cellSize, cellSize, Image.SCALE_SMOOTH);
+        	    Image resizedImage = image.getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH);
         	    presentIcon = new ImageIcon(resizedImage);
         	}
         	catch (IOException e) {
         	    e.printStackTrace();
-        	}   
+        	}
+        	
+        	
+        	
         	
         }
         
@@ -369,22 +430,22 @@ public class GuiBoard extends JFrame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            
-         
 
             int borderWidth = 1;
 
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     Cell currentCell = board[i][j];
-                    int x = j * cellSize;
-                    int y = i * cellSize;
-
+                    int x = j * cellWidth;
+                    int y = i * cellHeight;
+                    
+                    
+                    
                     // ---------------- draw cell border ---------------------
-                    g.setColor(getColorForCell(currentCell.getValue()));
-                    g.fillRect(x, y, cellSize, cellSize);
+//                    g.setColor(getColorForCell(currentCell.getValue()));
+//                    g.fillRect(x, y, cellSize, cellSize);
                     g.setColor(Color.BLACK); // color of the border of the whole board
-                    g.drawRect(x + borderWidth, y + borderWidth, cellSize - 1 * borderWidth, cellSize - 1 * borderWidth);
+                    g.drawRect(x + borderWidth, y + borderWidth, cellWidth - 1 * borderWidth, cellHeight - 1 * borderWidth);
 
                     // ----------------- draw cell value ----------------------
                     g.setColor(Color.BLACK);
@@ -392,8 +453,8 @@ public class GuiBoard extends JFrame {
 
                     if (i == 0 && j == 0) {
                         // Calculate the center position for the crown image in the cell
-                        int crownX = x + (cellSize - crownIcon.getIconWidth()) / 2;
-                        int crownY = y + (cellSize - crownIcon.getIconHeight()) / 2;
+                        int crownX = x + (cellWidth - crownIcon.getIconWidth()) / 2;
+                        int crownY = y + (cellHeight - crownIcon.getIconHeight()) / 2;
 
                         // Draw the crown icon at the calculated position
                         crownIcon.paintIcon(this, g, crownX, crownY);
@@ -401,8 +462,8 @@ public class GuiBoard extends JFrame {
                     if(board[i][j].getSnakeOrLadder() instanceof Present) {
                     	Present temp = (Present)board[i][j].getSnakeOrLadder();
                     	if(temp.isMovement()==true) {
-                        	int presentX = x + (cellSize - presentIcon.getIconWidth()) / 2;
-                            int presentY = y + (cellSize - presentIcon.getIconHeight()) / 2;
+                        	int presentX = x + (cellWidth - presentIcon.getIconWidth()) / 2;
+                            int presentY = y + (cellHeight - presentIcon.getIconHeight()) / 2;
                         	presentIcon.paintIcon(this, g, presentX, presentY);
                     	}
                     	
@@ -417,35 +478,35 @@ public class GuiBoard extends JFrame {
             
 
             for (Snake snake : snakes) {
-                snake.draw((Graphics2D) g, cellSize);
+                snake.draw((Graphics2D) g, cellWidth,cellHeight);
             }
 
             for (Ladder l : ladders) {
-                l.draw((Graphics2D) g, cellSize);
+                l.draw((Graphics2D) g, cellWidth,cellHeight);
             }
 
             for (Player player : allPlayers) {
                 g.setColor(player.getColor());
-                int playerX = player.getCol() * cellSize;
-                int playerY = player.getRow() * cellSize;
-                g.fillOval(playerX, playerY, cellSize, cellSize);
+                int playerX = player.getCol() * cellWidth;
+                int playerY = player.getRow() * cellHeight;
+                g.fillOval(playerX, playerY, cellWidth, cellHeight);
             }
-         // mark which player is playing now 
-	        for(int i=0; i<playerLabels.length; i++) {
-	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
-	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
-	        		markTurnsLabels[i].setVisible(true);
-	        	}
-	        	else {
-	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
-	        		markTurnsLabels[i].setVisible(false);
-				}
-	        }
+//         // mark which player is playing now 
+//	        for(int i=0; i<playerLabels.length; i++) {
+//	        	if(currentPlayer.getName().equals(playerLabels[i].getText()) || currentPlayer.getName().equals("bot")) {
+//	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+//	        		markTurnsLabels[i].setVisible(true);
+//	        	}
+//	        	else {
+//	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
+//	        		markTurnsLabels[i].setVisible(false);
+//				}
+//	        }
         }
 
         @Override
         public Dimension getPreferredSize() {
-            return new Dimension(cols * cellSize, rows * cellSize);
+            return new Dimension(cols * cellWidth, rows * cellHeight);
         }
        
         
@@ -467,6 +528,11 @@ public class GuiBoard extends JFrame {
                     return Color.WHITE;
             }
         }
+    }
+	
+	private void drawBackground(Graphics g) {
+        Image backgroundImage = backgroundIcon.getImage();
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 	
 	

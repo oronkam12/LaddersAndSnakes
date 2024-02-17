@@ -13,18 +13,20 @@ public class BoardCreation {
     private final Cell[][] board;
     private final Random random = new Random();
     private ArrayList<Snake> snakes;
-    private int cellSize;
+    private int cellWidth;
+    private int cellHeight;
     private ArrayList<Ladder> ladders;
     private ArrayList<Integer> snakesDis;
     private int numLadders;
     
     
-    public BoardCreation(int rows, int cols,int cellSize,ArrayList<Integer> snakesDis,int numLadders) {
+    public BoardCreation(int rows, int cols,int cellWidth,int cellHeight,ArrayList<Integer> snakesDis,int numLadders) {
         this.rows = rows;
         this.cols = cols;
         this.board = new Cell[rows][cols];
         snakes = new ArrayList<Snake>();
-        this.cellSize = cellSize;
+        this.cellWidth = cellWidth;
+        this.cellHeight = cellHeight;
         ladders= new ArrayList<Ladder>();
         this.snakesDis = snakesDis;
         this.numLadders = numLadders;
@@ -252,12 +254,20 @@ public class BoardCreation {
     
 
 
-    public int getCellSize() {
-		return cellSize;
+	public int getCellWidth() {
+		return cellWidth;
 	}
 
-	public void setCellSize(int cellSize) {
-		this.cellSize = cellSize;
+	public void setCellWidth(int cellWidth) {
+		this.cellWidth = cellWidth;
+	}
+
+	public int getCellHeight() {
+		return cellHeight;
+	}
+
+	public void setCellHeight(int cellHeight) {
+		this.cellHeight = cellHeight;
 	}
 
 	public ArrayList<Ladder> getLadders() {

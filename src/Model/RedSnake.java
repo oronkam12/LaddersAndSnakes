@@ -30,25 +30,25 @@ public class RedSnake extends Snake {
 	}
 	
 	
-	public void draw(Graphics2D g, int cellSize) {
+	public void draw(Graphics2D g, int cellHeight,int cellWidth) {
 	    Cell headCell = this.getHeadCell();
 
-	    int startX = (headCell.getCol() + 1) * cellSize;
-	    int startY = (headCell.getRow() + 1) * cellSize;
+	    int startX = (headCell.getCol() + 1) * cellHeight;
+	    int startY = (headCell.getRow() + 1) * cellWidth;
 
-	    int endX = (this.getButtomCell().getCol() + 1) * cellSize;
-	    int endY = (this.getButtomCell().getRow() + 1) * cellSize;
+	    int endX = (this.getButtomCell().getCol() + 1) * cellHeight;
+	    int endY = (this.getButtomCell().getRow() + 1) * cellWidth;
 
 	    double angleInRadians = Math.atan2(endY - startY, endX - startX);
 
-	    int midX = (startX + endX) / 2 - cellSize/2;
-	    int midY = (startY + endY) / 2-cellSize/2;
+	    int midX = (startX + endX) / 2 - cellHeight/2;
+	    int midY = (startY + endY) / 2-cellWidth/2;
 
 	    BufferedImage snakeImage = this.getImage();
 
 	    // Calculate the width and height based on cellSize
-	    int width = cellSize; // Set to cellSize
-	    int height = cellSize; // Set to cellSize
+	    int width = cellHeight; // Set to cellSize
+	    int height = cellWidth; // Set to cellSize
 
 	    // Adjust drawX and drawY to center the image within the cell
 	    int drawX = midX - (width / 2);

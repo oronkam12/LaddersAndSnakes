@@ -31,15 +31,15 @@ public class Ladder extends Object implements ObjectInterface{
 	}
 
 	@Override
-	public void draw(Graphics2D g, int cellSize) {
+	public void draw(Graphics2D g, int cellWidth,int cellHeight) {
 	    Cell headCell = this.getHeadCell();
 
 	    //Set dimensions in pixels - start
-	    int startX = (headCell.getCol() + 1) * cellSize;
-	    int startY = (headCell.getRow() + 1) * cellSize;
+	    int startX = (headCell.getCol() + 1) * cellWidth;
+	    int startY = (headCell.getRow() + 1) * cellHeight;
 
-	    int endX = (this.getButtomCell().getCol() + 1) * cellSize;
-	    int endY = (this.getButtomCell().getRow() + 1) * cellSize;
+	    int endX = (this.getButtomCell().getCol() + 1) * cellWidth;
+	    int endY = (this.getButtomCell().getRow() + 1) * cellHeight;
 	    //Set dimensions in pixels - end
 	    
 	    //Calculate angle to rotate image
@@ -51,7 +51,7 @@ public class Ladder extends Object implements ObjectInterface{
 	    
 	    //Loading and scaling the image to fit board (Some of the calculations are for design implementations)
 	    BufferedImage snakeImage = this.getImage();
-	    Image resizedSnakeImage = snakeImage.getScaledInstance(cellSize/(Math.abs(headCell.getCol()-buttomCell.getCol())+1) * (Math.abs(headCell.getCol() - this.getButtomCell().getCol()) + 2),  cellSize*2 * (Math.abs(headCell.getRow() - this.getButtomCell().getRow())), Image.SCALE_SMOOTH);
+	    Image resizedSnakeImage = snakeImage.getScaledInstance(cellWidth/(Math.abs(headCell.getCol()-buttomCell.getCol())+1) * (Math.abs(headCell.getCol() - this.getButtomCell().getCol()) + 2),  cellHeight*2 * (Math.abs(headCell.getRow() - this.getButtomCell().getRow())), Image.SCALE_SMOOTH);
 
 	    //Calculating middle location of scaled image
 	    int drawX = midX - resizedSnakeImage.getWidth(null) / 2;
@@ -59,7 +59,7 @@ public class Ladder extends Object implements ObjectInterface{
 
 	    //Transforming the scaled image in rotation and scales
 	    AffineTransform transform = new AffineTransform();
-	    transform.translate(drawX - cellSize / 2, drawY - cellSize / 2);
+	    transform.translate(drawX - cellWidth / 2, drawY - cellHeight / 2);
 	    transform.rotate(angleInRadians, resizedSnakeImage.getWidth(null) / 2.0, resizedSnakeImage.getHeight(null) / 2.0);
 
 	    //Drawing in the GUI
