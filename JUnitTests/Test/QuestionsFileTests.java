@@ -31,7 +31,7 @@ class QuestionsFileTests {
 	 private String questionsPath;
 	 @BeforeEach
 	    public void setUp() throws IOException {
-		 	questionsPath = "questionsFormat.txt";
+		 	questionsPath = "questionsFormat.json.txt";
 	        // Create a temporary file
 	        addTestFile = new File("questionsTest.txt");
 	        // Initialize GameController with the path to the temporary file

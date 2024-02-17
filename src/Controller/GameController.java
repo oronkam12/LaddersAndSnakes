@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 
 public class GameController {
-	private String questionsPath = "questionsFormat.txt";
+	private String questionsPath = "questionsFormat.json.txt";
     private final GuiBoard guiBoard;
     private HashMap<String, ArrayList<Question>> questions;
 

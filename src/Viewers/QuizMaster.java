@@ -113,7 +113,7 @@ public class QuizMaster extends JFrame {
 	JRadioButton radioButton3;
 	JRadioButton radioButton4;
 	ButtonGroup group;
-	private String path = "questionsFormat.txt";
+	private String path = "questionsFormat.json.txt";
 	JButton editBtn;
 	JButton saveBtn;
 	JButton addBtn;
