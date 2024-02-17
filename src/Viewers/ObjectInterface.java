@@ -5,5 +5,5 @@ import Model.Player;
 
 public interface ObjectInterface {
 	void MovePlayer(Player player);
-	void draw(Graphics2D g, int cellSize);
+	void draw(Graphics2D g, int cellWidth,int cellHeight);
 }

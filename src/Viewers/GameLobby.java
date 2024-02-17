@@ -225,7 +225,8 @@ public class GameLobby extends JFrame {
             
             if(i+1 == numOfPlayers) {
             	CustomButton playBtn = new CustomButton("Play", 280, 460 + (i+1) * 30, 200, 60, e -> {
-						int cellSize = 0;
+						int cellWidth = 0;
+						int cellHeight = 0;
 			            int size = 0;
 			            BoardCreation boardCreation = null;
 			            ArrayList<Integer> snakesDis = new ArrayList<>();
@@ -235,19 +236,22 @@ public class GameLobby extends JFrame {
 			            		throw new Exception("Please select difficulty level!");
 			            	if (selectedButton.getText().equals("Easy")) {
 				                size = 7;
-				                cellSize = 84;
+				                cellWidth = 90;
+				                cellHeight=84;
 				                snakesDis.addAll(Arrays.asList(1, 1, 1, 1));
-				                boardCreation = new BoardCreation(7, 7, cellSize, snakesDis, 4);
+				                boardCreation = new BoardCreation(7, 7, cellWidth,cellHeight, snakesDis, 4);
 				            } else if (selectedButton.getText().equals("Medium")) {
 				                size = 10;
-				                cellSize = 60;
+				                cellWidth = 63;
+				                cellHeight = 59;
 				                snakesDis.addAll(Arrays.asList(2, 1, 2, 1));
-				                boardCreation = new BoardCreation(10, 10, cellSize, snakesDis, 6);
+				                boardCreation = new BoardCreation(10, 10, cellWidth,cellHeight, snakesDis, 6);
 				            } else if (selectedButton.getText().equals("Hard")) {
 				                size = 13;
-				                cellSize = 45;
+				                cellWidth = 48;
+				                cellHeight = 45;
 				                snakesDis.addAll(Arrays.asList(2, 2, 2, 2));
-				                boardCreation = new BoardCreation(13, 13, cellSize, snakesDis, 8);
+				                boardCreation = new BoardCreation(13, 13, cellWidth,cellHeight, snakesDis, 8);
 				            }
 				            
 				            ArrayList<String> players = new ArrayList<String>();
@@ -286,7 +290,7 @@ public class GameLobby extends JFrame {
 				            }
 				            System.out.println(playersNames);
 				            
-				            GuiBoard guiBoard = new GuiBoard(size,size,boardCreation.getSnakes(),boardCreation.getLadders(),boardCreation.getBoard(),cellSize,players,colors);
+				            GuiBoard guiBoard = new GuiBoard(size,size,boardCreation.getSnakes(),boardCreation.getLadders(),boardCreation.getBoard(),cellWidth,cellHeight,players,colors);
 				            guiBoard.setVisible(true);
 				            setVisible(false);
 			            } catch (Exception e1) {
