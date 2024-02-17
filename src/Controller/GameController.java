@@ -76,7 +76,7 @@ public class GameController {
         	JOptionPane.showMessageDialog(null, message);        }
     }
     //--------- checking snakes or ladders ----------------
-	private void isObject(Player player) {
+	public void isObject(Player player) {
 		Object o = null;
 		if (guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder()!=null) {
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Snake)

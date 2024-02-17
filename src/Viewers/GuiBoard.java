@@ -210,6 +210,8 @@ public class GuiBoard extends JFrame {
         btnDiceRoll.addActionListener(new ActionListener() {
         	 public void actionPerformed(ActionEvent e) {
         	        // ---------------- game rules checks ---------------------------
+	     		 	btnDiceRoll.setEnabled(false);
+
         	        int movement = rollDice();
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
         	        lblTimer.setText(currentPlayer.getName() + " - Time left:");
@@ -227,6 +229,7 @@ public class GuiBoard extends JFrame {
                 	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
                 	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
                 	        		markTurnsLabels[i].setVisible(true);
+                	        		
                 	        	}
                 	        	else {
                 	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -234,25 +237,61 @@ public class GuiBoard extends JFrame {
                 				}
                 	        }
         	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
-        	                	int movement = rollDice();
+        	                	int botMovement = rollDice();
         	                	playerLabels[0].setFont(new Font("Segoe UI", Font.BOLD, 18));
         	                	markTurnsLabels[0].setVisible(false);
         	                	playerLabels[1].setFont(new Font("Segoe UI", Font.BOLD, 24));
         	                	markTurnsLabels[1].setVisible(true);
         	                    currentPlayer = nextPlayer(currentPlayer);
-        	                    gameController.movePlayer(currentPlayer, boardPanel,movement);
+        	                    gameController.movePlayer(currentPlayer, boardPanel,botMovement);
+        	                    checkObjects();
         	                    boardPanel.repaint();
         			 	        currentPlayer = nextPlayer(currentPlayer);
         			 	        timerActiovation();
+        			 	    // Disable the button again for the specified time
+        	                    btnDiceRoll.setEnabled(false);
+
+        	                    // New Timer to enable the button after the specified time
+        	                    Timer enableButtonTimer = new Timer(150 * (botMovement + 1), new ActionListener() {
+        	                        @Override
+        	                        public void actionPerformed(ActionEvent e) {
+        	                            btnDiceRoll.setEnabled(true);
+        	                            checkObjects();
+        	                            boardPanel.repaint();
+        	                        }
+        	                    });
+        	                    enableButtonTimer.setRepeats(false);
+        	                    enableButtonTimer.start();
+        	                } else {
+        	                    // Enable the button immediately if the next player is not a bot
+        	                    btnDiceRoll.setEnabled(true);
+        	                    checkObjects();
+	                            boardPanel.repaint();
+
         	                }
-        	            }
+
+        			 	        
+        	                }
         	        });
-        	        //markTurnsLabels[1].setVisible(false);
         	        timer.setRepeats(false); // Ensure the timer only fires once
+
+        	        if (botFlag == false) {
+        	            currentPlayer = nextPlayer(currentPlayer);
+        	            checkObjects();
+                        boardPanel.repaint();
+
+        	        }
+
         	        timer.start();
-	        		 if(botFlag==false)
-				 	        currentPlayer = nextPlayer(currentPlayer);
-        	    }
+                    boardPanel.repaint();
+
+        	 }
+        	 public void checkObjects() {
+        		 for(Player p:allPlayers) {
+        			 gameController.isObject(p);
+        			 repaint();
+        		 }
+        	 }
         	 
         	 
         	 private int rollDice() {
