@@ -36,6 +36,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.awt.event.ActionEvent;
 
 public class QuizMaster extends JFrame {
@@ -45,9 +46,11 @@ public class QuizMaster extends JFrame {
 	private ImageIcon logoImage;
 	private ImageIcon questionImage;
 	private GameController gc = new GameController(null);
+	private ArrayList<Question> allQuestions = new ArrayList<>();
+	private String difficulty = "1";
     private HashMap<String,ArrayList<Model.Question>> questions = gc.loadQuesitons();
-    private ArrayList<Question> currentQuestionsList = questions.get("1");
-    private Question currentQuestion = currentQuestionsList.get(0);
+    private ArrayList<Question> currentQuestionsList = currentQuestionsList = questions.get(difficulty);;
+    private Question currentQuestion = null;
     private int currentPosition = 0;
     private ArrayList<JRadioButton> correctButtons = new ArrayList<>();
     private ArrayList<JRadioButton> difficultyButtons = new ArrayList<>();
@@ -115,13 +118,15 @@ public class QuizMaster extends JFrame {
 	JButton saveBtn;
 	JButton addBtn;
 	JButton deleteBtn;
-
+	private boolean editMode = false;
+	ButtonGroup difficultyGroup;
 
 
     
     
     
 	public QuizMaster() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 800);
         JPanel contentPane = new JPanel();
@@ -142,7 +147,6 @@ public class QuizMaster extends JFrame {
 		questionLabel.setBounds(150,350,140,50);
 		questionLabel.setVisible(true);
 		contentPane.add(questionLabel);
-		
 		
 		
 		 answer1Txt = new JTextArea(currentQuestionsList.get(currentPosition).getAnswers().get(0));
@@ -268,41 +272,41 @@ public class QuizMaster extends JFrame {
 		contentPane.add(correctAnswerLabel);
 		
 		 
-		difficultyLabel = new JLabel("Difficulty:");
-		difficultyLabel.setForeground(new Color(204, 153, 102));
-		difficultyLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		difficultyLabel.setBounds(164, 630, 200, 30);
-		contentPane.add(difficultyLabel);
+//		difficultyLabel = new JLabel("Difficulty:");
+//		difficultyLabel.setForeground(new Color(204, 153, 102));
+//		difficultyLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+//		difficultyLabel.setBounds(164, 630, 200, 30);
+//		contentPane.add(difficultyLabel);
 		
 		
 		
-		  difficultyButton1 = new JRadioButton("1");
-         difficultyButton2 = new JRadioButton("2");
-         difficultyButton3 = new JRadioButton("3");
+//		  difficultyButton1 = new JRadioButton("1");
+//         difficultyButton2 = new JRadioButton("2");
+//         difficultyButton3 = new JRadioButton("3");
         
         
         // Customize and position radio buttons
-        customizeRadioButton(difficultyButton1, 350, 630);
-        customizeRadioButton(difficultyButton2, 420, 630);
-        customizeRadioButton(difficultyButton3, 490, 630);
+//        customizeRadioButton(difficultyButton1, 350, 630);
+//        customizeRadioButton(difficultyButton2, 420, 630);
+//        customizeRadioButton(difficultyButton3, 490, 630);
 
         // Create a button group and add radio buttons to ensure mutual exclusivity
-        ButtonGroup difficultyGroup = new ButtonGroup();
-        difficultyGroup.add(difficultyButton1);
-        difficultyGroup.add(difficultyButton2);
-        difficultyGroup.add(difficultyButton3);
+//         difficultyGroup = new ButtonGroup();
+//        difficultyGroup.add(difficultyButton1);
+//        difficultyGroup.add(difficultyButton2);
+//        difficultyGroup.add(difficultyButton3);
         
         
-        difficultyLabel.setVisible(false);
-        difficultyButton1.setVisible(false);
-        difficultyButton2.setVisible(false);
-        difficultyButton3.setVisible(false);
+//        difficultyLabel.setVisible(false);
+//        difficultyButton1.setVisible(false);
+//        difficultyButton2.setVisible(false);
+//        difficultyButton3.setVisible(false);
 
         
         
-        contentPane.add(difficultyButton1);
-        contentPane.add(difficultyButton2);
-        contentPane.add(difficultyButton3);
+//        contentPane.add(difficultyButton1);
+//        contentPane.add(difficultyButton2);
+//        contentPane.add(difficultyButton3);
 		
 		 radioButton1 = new JRadioButton("1");
          radioButton2 = new JRadioButton("2");
@@ -318,9 +322,9 @@ public class QuizMaster extends JFrame {
         correctButtons.add(radioButton3);
         correctButtons.add(radioButton4);
         
-        difficultyButtons.add(difficultyButton1);
-        difficultyButtons.add(difficultyButton2);
-        difficultyButtons.add(difficultyButton3);
+//        difficultyButtons.add(difficultyButton1);
+//        difficultyButtons.add(difficultyButton2);
+//        difficultyButtons.add(difficultyButton3);
         
         
         // Customize and position radio buttons
@@ -329,8 +333,8 @@ public class QuizMaster extends JFrame {
         customizeRadioButton(radioButton3, 490, 580);
         customizeRadioButton(radioButton4, 560, 580);
         
-        correctButtons.get(Integer.valueOf(currentQuestion.getCorrect_ans())-1).setSelected(true);
-        difficultyButtons.get(Integer.valueOf(currentQuestion.getDifficulty())-1).setSelected(true);
+//        correctButtons.get(Integer.valueOf(currentQuestion.getCorrect_ans())-1).setSelected(true);
+//        difficultyButtons.get(Integer.valueOf(currentQuestion.getDifficulty())-1).setSelected(true);
 
 
         // Create a button group and add radio buttons to ensure mutual exclusivity
@@ -353,12 +357,24 @@ public class QuizMaster extends JFrame {
         mediumBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		currentPosition = 0;
+        		difficulty = "2";
         		currentQuestionsList = questions.get("2");
+        		if(currentQuestionsList==null)
+        		{
+        			addNewQuestion();
+        			pagesField.setText("0/0");
+        		}
+        		else {
         		currentQuestion = currentQuestionsList.get(0);
         		displayQuestion();
+        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
+
+        		}
         		mediumBtn.setEnabled(false);
         		easyBtn.setEnabled(true);
         		hardBtn.setEnabled(true);
+
+        		
 
         		
         	}
@@ -378,6 +394,8 @@ public class QuizMaster extends JFrame {
         		displayQuestion();
         		easyBtn.setEnabled(false);
         		mediumBtn.setEnabled(true);
+        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
+
         	
         	}
         });
@@ -393,12 +411,24 @@ public class QuizMaster extends JFrame {
         hardBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		currentPosition = 0;
-        		currentQuestionsList = questions.get("3");
+        		difficulty = "3";
+        		currentQuestionsList = questions.get(difficulty);
+        		if(currentQuestionsList==null)
+        		{
+        			addNewQuestion();
+        			pagesField.setText("0/0");
+        		}
+        		else {
         		currentQuestion = currentQuestionsList.get(0);
         		displayQuestion();
+        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
+
+        		}
+        		
         		hardBtn.setEnabled(false);
         		easyBtn.setEnabled(true);
         		mediumBtn.setEnabled(true);
+
 
         	}
         });
@@ -452,6 +482,7 @@ public class QuizMaster extends JFrame {
         backBtn.setBackground(new Color(160, 82, 45));
         backBtn.setFont(new Font("Segoe UI", Font.BOLD, 18));
         backBtn.setBounds(100, 700, 60, 30);
+        
         contentPane.add(backBtn); 
         
         pagesField = new JTextField();
@@ -468,8 +499,12 @@ public class QuizMaster extends JFrame {
 				currentPosition++;
 				firstQuestionBtn.setEnabled(true);
 				backBtn.setEnabled(true);
-				if(currentPosition+1==questions.size()) 
+				System.out.println(currentPosition);
+				System.out.println(currentQuestionsList.size());
+
+				if(currentPosition+1==currentQuestionsList.size()) 
 				{
+					System.out.println("zz");
 					lastBtn.setEnabled(false);
 					nextBtn.setEnabled(false);
 				}
@@ -516,16 +551,18 @@ public class QuizMaster extends JFrame {
 		searchField.setText("Search");
 		
 		searchBtn = new JButton("Search");
-		if(currentQuestionsList.size()==1) searchBtn.setEnabled(false);
 		searchBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				allQuestions = gc.getQuestionsAsList(path);
+				ArrayList<Question> questionsFound = new ArrayList<>();
 				boolean found = false;
-				for(int i =0; i<currentQuestionsList.size();i++)
+				int counter = 0;
+				for(int i =0; i<allQuestions.size();i++)
 				{
-					if(currentQuestionsList.get(i).getQuestion().contains(searchField.getText()))
+					if(allQuestions.get(i).getQuestion().contains(searchField.getText()))
 					{
-						currentQuestion = currentQuestionsList.get(i);
-						currentPosition = i;
+						questionsFound.add(allQuestions.get(i));
+						counter++;
 						found = true;
 					}
 				}
@@ -534,27 +571,25 @@ public class QuizMaster extends JFrame {
 					JOptionPane.showMessageDialog(null, "No such question exists");
 					return;
 				}
-				if(currentPosition==0)
-				{
-					firstQuestionBtn.setEnabled(false);
-					backBtn.setEnabled(false);
-					nextBtn.setEnabled(true);
-					lastBtn.setEnabled(true);
-				}
-				else if(currentPosition==currentQuestionsList.size()-1)
-				{
-					firstQuestionBtn.setEnabled(true);
-					backBtn.setEnabled(true);
-					nextBtn.setEnabled(false);
-					lastBtn.setEnabled(false);
-				}
 				else
 				{
-					firstQuestionBtn.setEnabled(true);
-					backBtn.setEnabled(true);
+					currentPosition = 0;
+					currentQuestionsList = questionsFound;
+					currentQuestion = currentQuestionsList.get(0);
+					firstQuestionBtn.setEnabled(false);
+					backBtn.setEnabled(false);
+					JOptionPane.showMessageDialog(null, counter + " questions found");
+				}
+				
+				if(currentQuestionsList.size()>1)
+				{
+					
 					nextBtn.setEnabled(true);
 					lastBtn.setEnabled(true);
 				}
+				easyBtn.setEnabled(true);
+				mediumBtn.setEnabled(true);
+				hardBtn.setEnabled(true);
 				
         		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
 				displayQuestion();
@@ -570,6 +605,17 @@ public class QuizMaster extends JFrame {
         contentPane.add(searchBtn); 
         
          editBtn = new JButton("Edit");
+         editBtn.addActionListener(new ActionListener() {
+         	public void actionPerformed(ActionEvent e) {
+         		
+         		editMode = true;
+        		enableFields(true);
+        	    saveBtn.setEnabled(true);
+        	    addBtn.setEnabled(false);
+        	    editBtn.setEnabled(false);
+        	    deleteBtn.setEnabled(false);
+         	}
+         });
         editBtn.setForeground(new Color(240, 230, 140));
         editBtn.setBackground(new Color(160, 82, 45));
         editBtn.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -579,16 +625,45 @@ public class QuizMaster extends JFrame {
          saveBtn = new JButton("Save");
         saveBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		Question q = null;
         		try {
-					createQuestion();
+					q = createQuestion();
+					System.out.println("diffi:" +  q.getDifficulty());
 				} catch (IncompleteInputException e1) {
 				    JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
-        		displayQuestion();
+        		if(editMode)
+        		{
+        			try {
+						gc.editQuestion(currentQuestion.getQuestion(), q, path);
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+        			JOptionPane.showMessageDialog(null, "question edited succefully");
+        		}
+        		else
+        		{
+        			
+        			gc.addQuestion(q, path);
+        			JOptionPane.showMessageDialog(null, "question added succefully");
+
+        		}
+        		currentPosition = 0;
         		addBtn.setEnabled(true);
         	    editBtn.setEnabled(true);
         	    deleteBtn.setEnabled(true);
         	    saveBtn.setEnabled(false);
+        	    questions = gc.loadQuesitons();
+        	    System.out.println(difficulty);
+        	    System.out.println(questions.get(difficulty));
+        	    currentQuestionsList = questions.get(difficulty);
+        	    currentQuestion = currentQuestionsList.get(0);
+        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
+
+        		displayQuestion();
+
+        	    
 
         	}
         });
@@ -602,16 +677,7 @@ public class QuizMaster extends JFrame {
          addBtn = new JButton("Add");
         addBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		questionArea.setText("");
-        		answer1Txt.setText("");
-        		answer2Txt.setText("");
-        		answer3Txt.setText("");
-        		answer4Txt.setText("");
-        		enableFields(true);
-        	    saveBtn.setEnabled(true);
-        	    addBtn.setEnabled(false);
-        	    editBtn.setEnabled(false);
-        	    deleteBtn.setEnabled(false);
+        		addNewQuestion();
         	   
 
         		
@@ -627,6 +693,25 @@ public class QuizMaster extends JFrame {
         contentPane.add(addBtn); 
         
         deleteBtn = new JButton("Delete");
+        deleteBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		currentPosition = 0;
+        		gc.deleteQuestion(currentQuestion.getQuestion(), path);
+        		questions = gc.loadQuesitons();
+        	    currentQuestionsList = questions.get(difficulty);
+        	    if(currentQuestionsList==null)
+        	    {
+        	    	addNewQuestion();
+        			pagesField.setText("0/0");
+        	    }
+        	    else {
+	        	    currentQuestion = currentQuestionsList.get(0);
+	        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
+	        		displayQuestion();
+        	    }
+        		JOptionPane.showMessageDialog(null, "question" + currentQuestion.getQuestion() + " deleted succefully");
+        	}
+        });
         deleteBtn.setForeground(new Color(240, 230, 140));
         deleteBtn.setBackground(new Color(160, 82, 45));
         deleteBtn.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -635,8 +720,16 @@ public class QuizMaster extends JFrame {
         
         enableFields(false);
         saveBtn.setEnabled(false);
-	     displayQuestion();
-	     
+        
+        if(currentQuestionsList!=null)
+        {
+        	currentQuestion = currentQuestionsList.get(0);
+   	     displayQuestion();
+
+        }
+        else {
+        	addNewQuestion();
+        }
 
 	        
 
@@ -656,7 +749,21 @@ public class QuizMaster extends JFrame {
 
 		
 	}
-protected void createQuestion() throws IncompleteInputException {
+private void addNewQuestion() {
+	editMode = false;
+	questionArea.setText("");
+	answer1Txt.setText("");
+	answer2Txt.setText("");
+	answer3Txt.setText("");
+	answer4Txt.setText("");
+	enableFields(true);
+    saveBtn.setEnabled(true);
+    addBtn.setEnabled(false);
+    editBtn.setEnabled(false);
+    deleteBtn.setEnabled(false);
+    correctButtons.get(0).setSelected(true);
+	}
+protected Question createQuestion() throws IncompleteInputException  {
 	String question = questionArea.getText();
 	String answer1 = answer1Txt.getText();
 	String answer2 = answer2Txt.getText();
@@ -668,7 +775,7 @@ protected void createQuestion() throws IncompleteInputException {
 	answers.add(answer3);
 	answers.add(answer4);
 	String correctPosition = null;
-	String difficulty = null;
+	String diff =null;
 	 Enumeration<AbstractButton> positionButtons = group.getElements();
      while (positionButtons.hasMoreElements()) {
          AbstractButton button = positionButtons.nextElement();
@@ -677,13 +784,17 @@ protected void createQuestion() throws IncompleteInputException {
          }
      }
      
-     Enumeration<AbstractButton> difficultyButtons = group.getElements();
-     while (difficultyButtons.hasMoreElements()) {
-         AbstractButton button = difficultyButtons.nextElement();
-         if (button.isSelected()) {
-        	 difficulty= button.getText(); // Cast is safe here because we know these are JRadioButtons
-         }
-     }
+//     Enumeration<AbstractButton> difficultyButtons = difficultyGroup.getElements();
+//     System.out.println("Checking selected difficulty button...");
+//     while (difficultyButtons.hasMoreElements()) {
+//         AbstractButton button = difficultyButtons.nextElement();
+//         System.out.println("Button text: " + button.getText() + ", Selected: " + button.isSelected());
+//         if (button.isSelected()) {
+//             System.out.println("Selected difficulty: " + button.getText());
+//             diff = button.getText(); // Assuming 'diff' is correctly declared elsewhere
+//             break; // Exit loop once the selected button is found
+//         }
+//     }
      
 	
 	if(question.equals("")|| answer1.equals("")||answer2.equals("")||answer3.equals("")	||answer4.equals(""))
@@ -692,18 +803,17 @@ protected void createQuestion() throws IncompleteInputException {
 	}
 	
 	Question q = new Question(question,answers,correctPosition,difficulty);
-	gc.addQuestion(q, path);
-	JOptionPane.showMessageDialog(null, "Question added succefully");
+	return q;
 	
 	
 	}
 private void enableFields(boolean flag)
 {
 	answer1Txt.setEditable(flag);
-	difficultyLabel.setVisible(flag);
-    difficultyButton1.setVisible(flag);
-    difficultyButton2.setVisible(flag);
-    difficultyButton3.setVisible(flag);
+//	difficultyLabel.setVisible(flag);
+//    difficultyButton1.setVisible(flag);
+//    difficultyButton2.setVisible(flag);
+//    difficultyButton3.setVisible(flag);
     questionArea.setEditable(flag);
     answer2Txt.setEditable(flag);
     answer3Txt.setEditable(flag);
@@ -712,10 +822,12 @@ private void enableFields(boolean flag)
     radioButton2.setEnabled(flag);
     radioButton3.setEnabled(flag);
     radioButton4.setEnabled(flag);
+
     }
 	
 private void displayQuestion()
 {
+	
 	questionArea.setText(currentQuestion.getQuestion());
 	answer1Txt.setText(currentQuestion.getAnswers().get(0));
 	answer2Txt.setText(currentQuestion.getAnswers().get(1));
@@ -728,8 +840,23 @@ private void displayQuestion()
 		else answersButtons.get(i).setEnabled(false);
 	}
 	answersButtons.get(Integer.valueOf(currentQuestion.getCorrect_ans())-1).setEnabled(true);;
-
-    difficultyButtons.get(Integer.valueOf(currentQuestion.getDifficulty())-1).setSelected(true);
+	if(currentQuestionsList.size()<=1 || (currentPosition + 1== currentQuestionsList.size()))
+	{
+		nextBtn.setEnabled(false);
+		lastBtn.setEnabled(false);
+	}
+	else 
+	{
+		nextBtn.setEnabled(true);
+		lastBtn.setEnabled(true);
+	}
+	if(currentQuestionsList.size()<=1 )
+	{
+		firstQuestionBtn.setEnabled(false);
+		backBtn.setEnabled(false);
+	}
+	
+//	difficultyButtons.get(Integer.valueOf(currentQuestion.getDifficulty())-1).setSelected(true);
 	
 
 }

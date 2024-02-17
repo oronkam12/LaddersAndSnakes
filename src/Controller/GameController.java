@@ -7,6 +7,7 @@ import Viewers.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -179,6 +180,7 @@ public class GameController {
           } catch (IOException e2) {
               e2.printStackTrace();
           }
+		System.out.println(questionsMap);
 		return questionsMap;	
 	}
 	
@@ -235,6 +237,54 @@ public class GameController {
 	            e.printStackTrace();
 	        }
 
+	}
+	
+	
+	public void editQuestion(String originalQuestion, Question updatedQuestion, String path) throws FileNotFoundException {
+		ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+	    File file = new File(path);
+	    ObjectNode rootNode;
+	    List<Question> questionsList;
+
+	    // Load the existing questions
+	    if (file.exists() && file.length() > 0) {
+	        try {
+	            rootNode = (ObjectNode) objectMapper.readTree(file);
+	            ArrayNode questionsNode = (ArrayNode) rootNode.path("questions");
+	            questionsList = objectMapper.convertValue(questionsNode, new TypeReference<List<Question>>() {});
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return; // Exit if reading fails
+	        }
+	    } else {
+	        throw new FileNotFoundException("File does not exist or is empty: " + path);
+	    }
+
+	    // Update the question in the list
+	    boolean found = false;
+	    for (int i = 0; i < questionsList.size(); i++) {
+	        Question q = questionsList.get(i);
+	        if (q.getQuestion().equals(originalQuestion)) {
+	            questionsList.set(i, updatedQuestion);
+	            found = true;
+	            break;
+	        }
+	    }
+
+	    if (!found) {
+	        System.out.println("Question not found: " + originalQuestion);
+	        return;
+	    }
+
+	    // Update the questions node
+	    rootNode.set("questions", objectMapper.valueToTree(questionsList));
+
+	    // Write back to the file
+	    try {
+	        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, rootNode);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 	
         public  boolean deleteQuestion(String question, String path) {
