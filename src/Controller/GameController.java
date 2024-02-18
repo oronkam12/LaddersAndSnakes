@@ -60,7 +60,6 @@ public class GameController {
                     checkForWin(player);
                     isObject(guiBoard.getCurrentPlayer());
                     boardPanel.repaint();
-
                 }
             }
         });

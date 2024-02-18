@@ -71,7 +71,7 @@ public class GuiBoard extends JFrame {
         }
 
         this.colors = colors;
-        System.out.println(colors);
+//        System.out.println(colors);
         this.allPlayers = new ArrayList<Player>(); // array of players objects
         this.heightFactor=1;
         this.widthFactor=1;
@@ -106,6 +106,11 @@ public class GuiBoard extends JFrame {
         normalTimer();
         duration.start();
         System.out.println(allPlayers);
+        System.out.println(snakes.get(0).getHeadCell());
+        System.out.println(snakes.get(0).getButtomCell());
+        System.out.println(ladders.get(0).getHeadCell());
+        System.out.println(ladders.get(0).getButtomCell());
+        
         this.currentPlayer = allPlayers.get(0);
         gameController = new GameController(this);
 //        gameController.loadQuesitons();
