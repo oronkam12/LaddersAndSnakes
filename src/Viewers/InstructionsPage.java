@@ -26,17 +26,17 @@ public class InstructionsPage extends JFrame {
         easyBtn.setBackground(new Color(205, 133, 63));
         easyBtn.setForeground(new Color(238, 232, 170));
         easyBtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        easyBtn.setBounds(21, 485, 120, 30);
+        easyBtn.setBounds(193, 701, 120, 30);
         mediumBtn = new JButton("Medium");
         mediumBtn.setForeground(new Color(240, 230, 140));
         mediumBtn.setBackground(new Color(160, 82, 45));
         mediumBtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        mediumBtn.setBounds(21, 526, 120, 30);
+        mediumBtn.setBounds(323, 701, 120, 30);
         hardBtn = new JButton("Hard");
         hardBtn.setBackground(new Color(153, 51, 0));
         hardBtn.setForeground(new Color(240, 230, 140));
         hardBtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        hardBtn.setBounds(21, 567, 120, 30);
+        hardBtn.setBounds(453, 701, 120, 30);
 
         // Add action listeners to buttons
         easyBtn.addActionListener(new ActionListener() {
@@ -68,7 +68,7 @@ public class InstructionsPage extends JFrame {
         panel.setLayout(null);
         btnQuestionsInst = new JButton();
         btnQuestionsInst.setLocation(455, 350);
-        btnQuestionsInst.setBounds(379, 455, 40, 40);
+        btnQuestionsInst.setBounds(323, 468, 145, 30);
         btnQuestionsInst.setVisible(true);
         btnDiceInst = new JButton();
         btnDiceInst.setLocation(500, 468);
@@ -159,7 +159,7 @@ public class InstructionsPage extends JFrame {
         btnSnakeInst.setIcon(snakeInstImage);
         btnSnakeInst.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Create and display QuestionsInstructions JFrame
+				// Create and display SnakeInstructions JFrame
 				SnakeInstructions snakeInstructions = new SnakeInstructions();
 				snakeInstructions.setVisible(true);
 			}
@@ -190,7 +190,7 @@ public class InstructionsPage extends JFrame {
         btnDiceInst.setIcon(diceInstImage);
         btnDiceInst.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Create and display QuestionsInstructions JFrame
+				// Create and display DiceInstructions JFrame
 				DiceInstructions diceInstructions = new DiceInstructions();
 				diceInstructions.setVisible(true);
 			}
@@ -203,7 +203,7 @@ public class InstructionsPage extends JFrame {
         lblQuestionGoal.setVisible(true);
         panel.add(lblQuestionGoal);
         
-        ImageIcon quesInstImage = new ImageIcon("Images/btnInfo.png");
+        ImageIcon quesInstImage = new ImageIcon("Images/btnQuestionsInst.png");
         btnQuestionsInst.setIcon(quesInstImage);
         btnQuestionsInst.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -232,8 +232,8 @@ public class InstructionsPage extends JFrame {
         backgroundLabel.setBounds(0, 0, 800, 800);
         panel.add(backgroundLabel);
 
-        // Set frame properties
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+     // Set frame properties
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Change this line
         setSize(800, 800);
         setLocationRelativeTo(null); // Center the frame
         setVisible(true);

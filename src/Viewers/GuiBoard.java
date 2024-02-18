@@ -181,31 +181,39 @@ public class GuiBoard extends JFrame {
         }
         
         JLabel lblDuration = new JLabel("");
-        lblDuration.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
         lblDuration.setBounds(237, 10, 60, 60);
+        lblDuration.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
         Image dimg = clockIcon.getScaledInstance(lblDuration.getWidth(), lblDuration.getHeight(),Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
         lblDuration.setIcon(imageIcon);
         getContentPane().add(lblDuration);
         
         lblTime = new JLabel("00:00");
+        lblTime.setBounds(324, 10, 96, 34);
         lblTime.setHorizontalAlignment(SwingConstants.CENTER);
         lblTime.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblTime.setBounds(324, 10, 96, 34);
         getContentPane().add(lblTime);
         
         lblTurnTime = new JLabel("00:00");
+        lblTurnTime.setBounds(705, 10, 96, 34);
         lblTurnTime.setHorizontalAlignment(SwingConstants.CENTER);
         lblTurnTime.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblTurnTime.setBounds(705, 10, 96, 34);
         getContentPane().add(lblTurnTime);
         
         JLabel lblTimer = new JLabel("Player - Time left:");
-        lblTimer.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
         lblTimer.setBounds(488, 10, 207, 34);
+        lblTimer.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
         getContentPane().add(lblTimer);
         
-
+        
+        JLabel lblRollDice2 = new JLabel("");
+        lblRollDice2.setBounds(3, 380, 100, 100);
+        getContentPane().add(lblRollDice2);
+        
+        JLabel lblDiceRoll1 = new JLabel("");
+        lblDiceRoll1.setBounds(0, 469, 110, 100);
+        getContentPane().add(lblDiceRoll1);
+        
         JButton btnDiceRoll = new JButton("");
         btnDiceRoll.setBounds(10, 643, 140, 100);
         btnDiceRoll.setForeground(new Color(0, 0, 0));
@@ -219,6 +227,65 @@ public class GuiBoard extends JFrame {
 	     		 	btnDiceRoll.setEnabled(false);
 
         	        int movement = rollDice();
+        	        switch (movement) {
+					case 1:
+				        lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+						break;
+					case 2:
+				        lblDiceRoll1.setIcon(new ImageIcon("Images/2Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+				        break;
+					case 3:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+				        break;
+					case 4:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+				        break;
+					case 5:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/5Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+				        break;
+					case 6:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/6Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+				        break;
+					case 7:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
+				        lblRollDice2.setVisible(true);
+				        break;
+					case 8:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
+				        lblRollDice2.setVisible(true);
+				        break;
+					case 9:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
+				        lblRollDice2.setVisible(true);
+				        break;
+					case 10:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
+				        lblRollDice2.setVisible(true);
+				        break;
+
+					default:
+						break;
+					}
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
         	        lblTimer.setText(currentPlayer.getName() + " - Time left:");
         	        boardPanel.repaint();// repaint for ladders or snakes cases
@@ -280,6 +347,7 @@ public class GuiBoard extends JFrame {
         	                }
         	        });
         	        timer.setRepeats(false); // Ensure the timer only fires once
+        	       
 
         	        if (botFlag == false) {
         	            currentPlayer = nextPlayer(currentPlayer);
@@ -361,14 +429,15 @@ public class GuiBoard extends JFrame {
         getContentPane().add(btnPlay);
         
         JLabel lblPlayersTurn = new JLabel("Players");
-        lblPlayersTurn.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
         lblPlayersTurn.setBounds(31, 70, 140, 44);
+        lblPlayersTurn.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
         getContentPane().add(lblPlayersTurn);
         
-        JLabel bgLabel = new JLabel("New label");
-        bgLabel.setIcon(new ImageIcon("C:\\Users\\Oron's computer\\Desktop\\teamZebra\\Assets\\background.jpg"));
+        JLabel bgLabel = new JLabel("");
         bgLabel.setBounds(0, 0, 1000, 800);
+        bgLabel.setIcon(new ImageIcon("Assets/background.jpg"));
         getContentPane().add(bgLabel);
+
         btnPause.addActionListener(new ActionListener() {
 			
 			@Override

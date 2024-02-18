@@ -34,7 +34,7 @@ public class DiceInstructions extends JFrame {
 	 * Create the frame.
 	 */
 	public DiceInstructions() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(205, 133, 63));
