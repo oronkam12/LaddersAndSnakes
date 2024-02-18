@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,6 +34,8 @@ public class GameLobby extends JFrame {
     private ArrayList<CustomTextField> playersNames;
     private boolean flag;
     private CustomButton selectedButton;
+    private Set<String> nameSet = new HashSet<>();
+    private Set<String> chosenColors = new HashSet<>();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -118,15 +123,21 @@ public class GameLobby extends JFrame {
                 updatePlayerComponents();
             }
         });
-
+        
         for (int i = 0; i < numOfPlayers; i++) {
             JComboBox<String> colorComboBox = new JComboBox<>();
+         	
             for (String color : selectedColors) {
                 colorComboBox.addItem(color);
             }
             colorComboBox.setBounds(210, 460 + i * 30, 100, 20);
             allComboBoxes.add(colorComboBox);
             contentPane.add(colorComboBox);
+            
+           	if(numOfPlayerBox.getSelectedIndex()==0)  { // bot case
+      	      // Update available colors for subsequent players
+      		colorComboBox.removeItem("Pink");
+      	}
 
             final int playerIndex = i;
             colorComboBox.addActionListener(new ActionListener() {
@@ -196,16 +207,15 @@ public class GameLobby extends JFrame {
                             }
                         }
 
-//                        // Check for duplicate names
-//                        for (int j = 0; j < players.size(); j++) {
-//                            for (int k = j + 1; k < players.size(); k++) {
-//                                if (players.get(j).equalsIgnoreCase(players.get(k))) {
-//                                    throw new Exception("Names are equal! Please change one of the names.");
-//                                }
-//                            }
-//                        }
-
-                        // Check if colors are the same for all players
+                     // Check for duplicate names
+                        Set<String> nameSet = new HashSet<>();
+                        for (String name : players) {
+                            if (!nameSet.add(name)) {
+                                throw new Exception("Names are equal! Please change one of the names.");
+                            }
+                        }
+                        
+//                        //Check if colors are the same for all players
 //                        if (!numOfPlayerBox.getSelectedItem().equals("bot")) {
 //                            String firstColor = allComboBoxes.get(0).getSelectedItem().toString();
 //                            boolean sameColors = allComboBoxes.stream().allMatch(cb -> cb.getSelectedItem().toString().equals(firstColor));
@@ -222,6 +232,14 @@ public class GameLobby extends JFrame {
                         if (numOfPlayerBox.getSelectedIndex()==0) {
 							colors.add(("Pink"));
 						}
+                        
+                        // If the color was previously chosen by another player, prevent the game from starting
+                        Set<String> chosenColors = new HashSet<>();
+                        for(String color : colors) {
+                        	if(!chosenColors.add(color)) {
+                        		throw new Exception("Players need to play in DIFFERENT colors!");
+                        	}
+                        }
 
                         // Create and display the game board
                         GuiBoard guiBoard = createGuiBoard(selectedButton.getText(), players, colors);

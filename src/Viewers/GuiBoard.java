@@ -230,65 +230,7 @@ public class GuiBoard extends JFrame {
 	     		 	btnDiceRoll.setEnabled(false);
 
         	        int movement = rollDice();
-        	        switch (movement) {
-					case 1:
-				        lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-						break;
-					case 2:
-				        lblDiceRoll1.setIcon(new ImageIcon("Images/2Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-				        break;
-					case 3:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-				        break;
-					case 4:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-				        break;
-					case 5:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/5Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-				        break;
-					case 6:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/6Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-				        break;
-					case 7:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
-				        lblRollDice2.setVisible(true);
-				        break;
-					case 8:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
-				        lblRollDice2.setVisible(true);
-				        break;
-					case 9:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
-				        lblRollDice2.setVisible(true);
-				        break;
-					case 10:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
-				        lblRollDice2.setVisible(true);
-				        break;
-
-					default:
-						break;
-					}
+        	        rollingDiceDisplay(movement);
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
         	        lblTimer.setText(currentPlayer.getName() + " - Time left:");
         	        boardPanel.repaint();// repaint for ladders or snakes cases
@@ -314,6 +256,7 @@ public class GuiBoard extends JFrame {
                 	        }
         	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
         	                	int botMovement = rollDice();
+        	                	rollingDiceDisplay(botMovement);
         	                	playerLabels[0].setFont(new Font("Segoe UI", Font.BOLD, 18));
         	                	markTurnsLabels[0].setVisible(false);
         	                	playerLabels[1].setFont(new Font("Segoe UI", Font.BOLD, 24));
@@ -390,9 +333,69 @@ public class GuiBoard extends JFrame {
              		return allPlayers.get(0);
              		
              	}
-             	
-             	
              }
+        	 
+        	 private void rollingDiceDisplay(int movement) {
+     	        switch (movement) {
+					case 1:
+				        lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+						break;
+					case 2:
+				        lblDiceRoll1.setIcon(new ImageIcon("Images/2Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+				        break;
+					case 3:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+				        break;
+					case 4:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+				        break;
+					case 5:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/5Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+				        break;
+					case 6:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/6Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setVisible(false);
+				        break;
+					case 7:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
+				        lblRollDice2.setVisible(true);
+				        break;
+					case 8:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
+				        lblRollDice2.setVisible(true);
+				        break;
+					case 9:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
+				        lblRollDice2.setVisible(true);
+				        break;
+					case 10:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
+				        lblDiceRoll1.setVisible(true);
+				        lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
+				        lblRollDice2.setVisible(true);
+				        break;
+
+					default:
+						break;
+					}
+        	 }
         });
         
         getContentPane().add(btnDiceRoll);
