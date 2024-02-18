@@ -93,7 +93,7 @@ public class GameLobby extends JFrame {
         numOfPlayerBox = new JComboBox<>();
         for (int i = 2; i <= 6; i++) {
             if (i == 2) {
-                numOfPlayerBox.addItem("Bot");
+                numOfPlayerBox.addItem("bot");
             }
             numOfPlayerBox.addItem(String.valueOf(i));
         }
@@ -179,12 +179,14 @@ public class GameLobby extends JFrame {
                             throw new Exception("Please select difficulty level!");
                         
                         ArrayList<String> players = new ArrayList<>();
+                        System.out.println(playersNames);
                         for(int j=0;j<playersNames.size();j++) {
                             players.add(playersNames.get(j).getText());
                             if(playersNames.size()==1) {
                                 players.add("bot");
                             }
                         }
+                        System.out.println(players);
 
                         // Gather player names
                         for (CustomTextField textField : playersNames) {
@@ -192,7 +194,6 @@ public class GameLobby extends JFrame {
                             if (name.isEmpty()) {
                                 throw new Exception("Please insert ALL players names!");
                             }
-                            players.add(name);
                         }
 
 //                        // Check for duplicate names
@@ -204,8 +205,8 @@ public class GameLobby extends JFrame {
 //                            }
 //                        }
 
-//                        // Check if colors are the same for all players
-//                        if (!numOfPlayerBox.getSelectedItem().equals("Bot")) {
+                        // Check if colors are the same for all players
+//                        if (!numOfPlayerBox.getSelectedItem().equals("bot")) {
 //                            String firstColor = allComboBoxes.get(0).getSelectedItem().toString();
 //                            boolean sameColors = allComboBoxes.stream().allMatch(cb -> cb.getSelectedItem().toString().equals(firstColor));
 //                            if (sameColors) {
@@ -218,8 +219,8 @@ public class GameLobby extends JFrame {
                         for (JComboBox<String> comboBox : allComboBoxes) {
                             colors.add((String) comboBox.getSelectedItem());
                         }
-                        if (numOfPlayerBox.getSelectedItem().equals("bot")) {
-							colors.add(("pink"));
+                        if (numOfPlayerBox.getSelectedIndex()==0) {
+							colors.add(("Pink"));
 						}
 
                         // Create and display the game board

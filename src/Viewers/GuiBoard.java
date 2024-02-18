@@ -65,10 +65,13 @@ public class GuiBoard extends JFrame {
         this.ladders = ladders;
         this.players = players; // array of players string names
         this.botFlag = false;
-        if(players.contains("bot"))
+        
+        if(players.contains("bot")) {
             this.botFlag = true;
+        }
 
         this.colors = colors;
+        System.out.println(colors);
         this.allPlayers = new ArrayList<Player>(); // array of players objects
         this.heightFactor=1;
         this.widthFactor=1;
