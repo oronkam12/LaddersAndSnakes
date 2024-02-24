@@ -20,20 +20,10 @@
     "correct_ans" : "3",
     "difficulty" : "2"
   }, {
-    "question" : "testtttttttttttttttttttttttt",
-    "answers" : [ "dsadsa", "dsadsa", "dsadsad", "adsadsad" ],
-    "correct_ans" : "3",
-    "difficulty" : "1"
-  }, {
     "question" : "ad",
     "answers" : [ "sadsad", "sadsa", "dsad", "sadsad" ],
     "correct_ans" : "1",
     "difficulty" : "3"
-  }, {
-    "question" : "testnow",
-    "answers" : [ "sasad", "sadsa", "dsada", "dsadsadsa" ],
-    "correct_ans" : "1",
-    "difficulty" : "1"
   }, {
     "question" : "dsadsadsad",
     "answers" : [ "sadsadsad", "sadsa", "sad", "sadsadsad" ],
@@ -44,10 +34,5 @@
     "answers" : [ "sadasdsad", "sadsa", "dsadsada", "dsadsadsa" ],
     "correct_ans" : "1",
     "difficulty" : "2"
-  }, {
-    "question" : "qqqqqqqq",
-    "answers" : [ "noam\t", "bar", "nadav", "oron" ],
-    "correct_ans" : "3",
-    "difficulty" : "1"
   } ]
 }

@@ -186,12 +186,7 @@ public class GameController {
 	
 	public void addQuestion(Question question, String path)
 	{
-		questions = loadQuesitons();
-		if(this.questions.get(question.getDifficulty())==null)
-			this.questions.put(question.getDifficulty(), new ArrayList<Question>());
-		ArrayList<Question> temp = this.questions.get(question.getDifficulty());
-		temp.add(question);
-		this.questions.put(question.getDifficulty(),temp );
+		
 
 		 ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 	        File file = new File(path);
@@ -310,6 +305,70 @@ public class GameController {
             return false;
         }
 
+        public  ArrayList<Match> getMatchesAsList(String path)
+    	{
+    		ArrayList<Match> matchesList = new ArrayList<>();
+    		ObjectMapper objectMapper = new ObjectMapper();
+    		try {
+                  JsonNode rootNode = objectMapper.readTree(new File(path));
+
+                  JsonNode matchesNode = rootNode.get("matches");
+                  
+                  if (matchesNode.isArray()) {
+                	  matchesList = (ArrayList<Match>) objectMapper.convertValue(matchesNode, new TypeReference<List<Match>>(){});
+                  }
+    		}
+    	 catch (IOException e) {
+            e.printStackTrace();
+        }
+            return matchesList;
+    	}	
+        public void addMatch(String path,Match match)
+    	{
+        	System.out.println("zz");
+    		 ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    	        File file = new File(path);
+    	        ObjectNode rootNode;
+    	        List<Match> matches = new ArrayList<>();
+
+    	        if (file.exists() && file.length() > 0) {
+    	            try {
+    	                rootNode = (ObjectNode) objectMapper.readTree(file);
+    	            } catch (IOException e) {
+    	                e.printStackTrace();
+    	                return; // Exit if reading fails
+    	            }
+    	        } else {
+    	            // Initialize rootNode as an empty ObjectNode if the file doesn't exist or is empty
+    	            rootNode = objectMapper.createObjectNode();
+    	            rootNode.putArray("matches"); // Initialize questions as an empty array
+    	        }
+
+    	        // Retrieve or create the questions array node
+    	        ArrayNode matchNode = (ArrayNode) rootNode.path("matches");
+    	        if (!matchNode.isArray()) {
+    	        	matchNode = rootNode.putArray("matches");
+    	        }
+
+    	        // Deserialize existing questions, if any
+    	        if (matchNode.size() > 0) {
+    	            matches = objectMapper.convertValue(matchNode, new TypeReference<List<Match>>() {});
+    	        }
+
+    	        // Add the new question to the list
+    	        matches.add(match);
+
+    	        // Replace the existing questions array with the updated list
+    	        rootNode.set("matches", objectMapper.valueToTree(matches));
+
+    	        // Serialize the rootNode (which now includes the updated questions list) back to JSON and write it to the file
+    	        try {
+    	            objectMapper.writeValue(file, rootNode);
+    	        } catch (IOException e) {
+    	            e.printStackTrace();
+    	        }
+
+    	}
 
 		
     
