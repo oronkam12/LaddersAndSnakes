@@ -186,12 +186,7 @@ public class GameController {
 	
 	public void addQuestion(Question question, String path)
 	{
-		questions = loadQuesitons();
-		if(this.questions.get(question.getDifficulty())==null)
-			this.questions.put(question.getDifficulty(), new ArrayList<Question>());
-		ArrayList<Question> temp = this.questions.get(question.getDifficulty());
-		temp.add(question);
-		this.questions.put(question.getDifficulty(),temp );
+		
 
 		 ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 	        File file = new File(path);
