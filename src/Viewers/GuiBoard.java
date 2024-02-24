@@ -43,6 +43,12 @@ public class GuiBoard extends JFrame {
     private HashMap<String,ArrayList<Question>> questions;
     private JLabel[] playerLabels;
     private JLabel[] markTurnsLabels;
+    JButton btnPlay = new JButton();
+    JButton btnPause = new JButton();
+    JButton btnRestart = new JButton();
+    JButton btnMute = new JButton();
+    JButton btnUnmute = new JButton();
+    JButton btnInfo = new JButton();
 
     //Nadav
     int CTsecond = 5, CTminute = 0, Dsecond = 0, Dminute = 0;
@@ -113,25 +119,7 @@ public class GuiBoard extends JFrame {
         
         this.currentPlayer = allPlayers.get(0);
         gameController = new GameController(this);
-//        gameController.loadQuesitons();
-////      gameController.deleteQuestion("sss");
-//
-//        Question q = new Question();
-//
-//        q.setQuestion("sss");
-//        q.setDifficulty("1");
-//
-//        gameController.addQuestion(q);
-//        if(gameController.getQuestions("1")!=null) {
-//        	
-//        	ArrayList<Question> z = gameController.getQuestions("1");
-//            System.out.println(z);
-//        }
-//        else {
-//        	System.out.println("no questions");
-//        }
-//        
-//      
+   
         setTitle("Snakes and Ladders Board");
         setSize(1000,800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -229,6 +217,7 @@ public class GuiBoard extends JFrame {
         btnDiceRoll.setIcon(DiceRollImage);
         btnDiceRoll.setOpaque(false);
         btnDiceRoll.setContentAreaFilled(false);
+        btnDiceRoll.setBorderPainted(false);
         btnDiceRoll.addActionListener(new ActionListener() {
         	 public void actionPerformed(ActionEvent e) {
         	        // ---------------- game rules checks ---------------------------
@@ -405,28 +394,95 @@ public class GuiBoard extends JFrame {
         
         getContentPane().add(btnDiceRoll);
         
-        JButton btnPause = new JButton("");
-        btnPause.setBounds(10, 10, 50, 50);
-        ImageIcon pauseIcon = new ImageIcon("Images/pauseIcon.png"); 
-        btnPause.setIcon(pauseIcon);
-        btnPause.setOpaque(false);
-        btnPause.setContentAreaFilled(false);
-        btnPause.addActionListener(new ActionListener() {
+        btnMute = new JButton("");
+        btnMute.setBounds(855, 500, 65, 65);
+        ImageIcon muteIcon = new ImageIcon("Images/btnMute.png");
+        btnMute.setIcon(muteIcon);
+        btnMute.setOpaque(false);
+        btnMute.setContentAreaFilled(false);
+        btnMute.setBorderPainted(false);
+        btnMute.setVisible(true);
+        getContentPane().add(btnMute);
+        
+        btnUnmute = new JButton("");
+        btnUnmute.setBounds(855, 550, 65, 65);
+        ImageIcon unmuteIcon = new ImageIcon("Images/btnUnmute.png");
+        btnUnmute.setIcon(unmuteIcon);
+        btnUnmute.setOpaque(false);
+        btnUnmute.setContentAreaFilled(false);
+        btnUnmute.setBorderPainted(false);
+        btnUnmute.setVisible(true);
+        getContentPane().add(btnUnmute);
+        
+        btnInfo = new JButton("");
+        btnInfo.setBounds(855, 600, 65, 65);
+        ImageIcon infoIcon = new ImageIcon("Images/btnInformation.png");
+        btnInfo.setIcon(infoIcon);
+        btnInfo.setOpaque(false);
+        btnInfo.setContentAreaFilled(false);
+        btnInfo.setBorderPainted(false);
+        btnInfo.setVisible(true);
+        getContentPane().add(btnInfo);
+      
+        
+        btnRestart = new JButton("");
+        btnRestart.setBounds(855, 290, 70, 70);
+        ImageIcon restartIcon = new ImageIcon("Images/btnRestart.png");
+        btnRestart.setIcon(restartIcon);
+        btnRestart.setOpaque(false);
+        btnRestart.setContentAreaFilled(false);
+        btnRestart.setBorderPainted(false);
+        btnRestart.setVisible(false);
+        btnRestart.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				duration.stop();
-				countDown.stop();	
+				// TODO Auto-generated method stub
+				Dsecond = 0;
+		        Dminute = 0;
+		        lblTime.setText("00:00");
+		        duration.restart();
+		        CTsecond = 0;
+		        CTminute = 0;
+		        lblTurnTime.setText("00:00");
+		        countDown.restart();
+		        
+		        lblDiceRoll1.setVisible(false);
+		        lblRollDice2.setVisible(false);
+		        
+		        currentPlayer = allPlayers.get(0);
+		        for(int i=0; i<playerLabels.length; i++) {
+    	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
+    	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+    	        		markTurnsLabels[i].setVisible(true);
+    	        	}
+    	        	else {
+						markTurnsLabels[i].setVisible(false);
+					}
+		        }
+		        
+				for(Player player : allPlayers)
+				{
+					player.setRow(rows-1);
+					player.setCol(cols-1);
+				}
+
+				btnRestart.setVisible(false);
+				btnDiceRoll.setEnabled(true);
+				btnPlay.setVisible(false);
+				btnPause.setEnabled(true);
+				boardPanel.repaint();
 			}
 		});
-        getContentPane().add(btnPause);
+        getContentPane().add(btnRestart);
         
-        JButton btnPlay = new JButton("");
-        btnPlay.setBounds(80, 10, 50, 50);
-        ImageIcon playIcon = new ImageIcon("Images/playIcon.png");
+        btnPlay = new JButton("");
+        btnPlay.setBounds(855, 210, 70, 70);
+        ImageIcon playIcon = new ImageIcon("Images/btnPlay.png");
         btnPlay.setIcon(playIcon);
         btnPlay.setOpaque(false);
         btnPlay.setContentAreaFilled(false);
+        btnPlay.setBorderPainted(false);
         btnPlay.setVisible(false);
         btnPlay.addActionListener(new ActionListener() {
 			
@@ -434,10 +490,28 @@ public class GuiBoard extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				duration.start();
 				countDown.start();
-				
+				btnRestart.setVisible(false);
 			}
 		});
         getContentPane().add(btnPlay);
+        
+        btnPause = new JButton("");
+        btnPause.setBounds(855, 135, 70, 70);
+        ImageIcon pauseIcon = new ImageIcon("Images/btnPause.png"); 
+        btnPause.setIcon(pauseIcon);
+        btnPause.setOpaque(false);
+        btnPause.setContentAreaFilled(false);
+        btnPause.setBorderPainted(false);
+        btnPause.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				duration.stop();
+				countDown.stop();
+				btnRestart.setVisible(true);
+			}
+		});
+        getContentPane().add(btnPause);
         
         JLabel lblPlayersTurn = new JLabel("Players");
         lblPlayersTurn.setBounds(31, 70, 140, 44);

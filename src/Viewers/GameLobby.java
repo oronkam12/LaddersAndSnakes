@@ -215,14 +215,6 @@ public class GameLobby extends JFrame {
                             }
                         }
                         
-//                        //Check if colors are the same for all players
-//                        if (!numOfPlayerBox.getSelectedItem().equals("bot")) {
-//                            String firstColor = allComboBoxes.get(0).getSelectedItem().toString();
-//                            boolean sameColors = allComboBoxes.stream().allMatch(cb -> cb.getSelectedItem().toString().equals(firstColor));
-//                            if (sameColors) {
-//                                throw new Exception("Players need to play in DIFFERENT colors!");
-//                            }
-//                        }
 
                         // Gather selected colors
                         ArrayList<String> colors = new ArrayList<>();
