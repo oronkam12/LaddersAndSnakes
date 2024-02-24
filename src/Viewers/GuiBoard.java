@@ -60,6 +60,7 @@ public class GuiBoard extends JFrame {
     public static Timer duration;
     public BoardPanel boardPanel;
 	private ImageIcon backgroundIcon;
+	public long startTime;
     // constructor of Gui Board
     public GuiBoard(int rows, int cols, ArrayList<Snake> snakes,ArrayList<Ladder>ladders, Cell[][] board,int cellWidth,int cellHeight,ArrayList<String> players,ArrayList<String> colors) {
         this.rows = rows;
@@ -108,8 +109,8 @@ public class GuiBoard extends JFrame {
         	}
 	        	
         }
-        
         normalTimer();
+        startTime = System.currentTimeMillis();
         duration.start();
         System.out.println(allPlayers);
         System.out.println(snakes.get(0).getHeadCell());

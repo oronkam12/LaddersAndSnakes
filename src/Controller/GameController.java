@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -53,8 +54,12 @@ public class GameController {
                 else {
                 	//----- in case passed last col of winning and need to go back -------
                 	if(movesLeft<0) {
-                		MoveBackWards(player,1,movesLeft);
-                		boardPanel.repaint();
+                		while(movesLeft!=0) {
+                			MoveBackWards(player,1,movesLeft);
+                    		movesLeft = movesLeft+1;
+                    		boardPanel.repaint();
+                		}
+                		
                 	}
                     moveTimer.stop();
                     checkForWin(player);
@@ -73,7 +78,28 @@ public class GameController {
         	String message = player.getName() + " has won the game!";
 
         	// Show a pop-up message
-        	JOptionPane.showMessageDialog(null, message);        }
+        	JOptionPane.showMessageDialog(null, message);        
+        	long endTime = System.currentTimeMillis();
+        	long durationInMillis = endTime - guiBoard.startTime;
+        	long minutes = TimeUnit.MILLISECONDS.toMinutes(durationInMillis);
+        	long seconds = TimeUnit.MILLISECONDS.toSeconds(durationInMillis) - TimeUnit.MINUTES.toSeconds(minutes);
+
+        	// Format the string
+        	String durationString = String.format("%02d:%02d", minutes, seconds);
+        	String difficulty="";
+        	if(guiBoard.getRows()==13) {
+        		difficulty = "hard";
+        	}
+        	else if(guiBoard.getRows()==10) {
+        		difficulty = "medium";
+        	}
+        	else
+        		difficulty = "easy";
+        	Match temp = new Match(player.getName(),durationString,difficulty);
+        	addMatch("matchHistory.json.txt", temp);
+
+        
+        }
     }
     //--------- checking snakes or ladders ----------------
 	public void isObject(Player player) {
@@ -92,8 +118,7 @@ public class GameController {
 	
 	public int Move(Player player ,int i, int movesLeft) {
 		//----- checking how much to go back if needed--------------
-		if(player.getCol()-movesLeft<0 && player.getRow()== 0) {
-			System.out.println("rolled: " + i +" which is too high.");
+		if(player.getCol()-i<0 && player.getRow()== 0) {
 			return player.getCol()-movesLeft;
 		}
 		//--------- if need to move row up -------
