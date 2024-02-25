@@ -15,6 +15,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -31,6 +38,10 @@ public class GameController {
 	private String questionsPath = "questionsFormat.json.txt";
     private final GuiBoard guiBoard;
     private HashMap<String, ArrayList<Question>> questions;
+    private Clip clip;
+    private FloatControl volumeControl;
+    private boolean isPausedByUser;
+
 
     public GameController(GuiBoard guiBoard) {
         this.guiBoard = guiBoard;
@@ -369,9 +380,48 @@ public class GameController {
     	        }
 
     	}
+        public void loadMusic(String musicFilePath) {
+            try {
+                // Open an audio input stream.
+                File audioFile = new File(musicFilePath);
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+                
+                // Get a sound clip resource.
+                clip = AudioSystem.getClip();
+                // Open audio clip and load samples from the audio input stream.
+                clip.open(audioStream);
+                
+                clip.addLineListener(event -> {
+                    if (event.getType() == LineEvent.Type.STOP) {
+                        if (!isPausedByUser && clip.getFramePosition() >= clip.getFrameLength()) {
+                            // If the clip ended on its own, restart it
+                            clip.setFramePosition(0);  // Rewind to the beginning
+                            clip.start();  // And start playing again
+                        } else {
+                            // If paused by user or stopped for other reasons, do not restart
+                            isPausedByUser = false; // Reset the flag
+                        }
+                    }
+                });
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                e.printStackTrace();
+            }
+        }
 
-		
-    
+        public void playMusic(boolean isPlaying) {
+            if (!clip.isRunning()) {
+                clip.start(); // Start or resume playback
+                isPlaying = true;
+                isPausedByUser = false;
+            }
+        }
+
+        public void pauseMusic(boolean isPlaying) {
+            if (clip.isRunning()) {
+                clip.stop(); // Pause playback
+                isPlaying = false;
+            }
+        }
 	
 	
 	

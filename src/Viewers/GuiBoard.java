@@ -43,6 +43,7 @@ public class GuiBoard extends JFrame {
     private HashMap<String,ArrayList<Question>> questions;
     private JLabel[] playerLabels;
     private JLabel[] markTurnsLabels;
+    private boolean isPlaying = false;
     JButton btnPlay = new JButton();
     JButton btnPause = new JButton();
     JButton btnRestart = new JButton();
@@ -412,6 +413,19 @@ public class GuiBoard extends JFrame {
         btnUnmute.setContentAreaFilled(false);
         btnUnmute.setBorderPainted(false);
         btnUnmute.setVisible(true);
+        
+        gameController.loadMusic("maplestoryMusic.wav");
+        btnMute.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                if (isPlaying) {
+                    gameController.pauseMusic(isPlaying);
+                    isPlaying = false;
+                } else {
+                    gameController.playMusic(isPlaying);
+                    isPlaying = true;
+                }
+            }
+        });
         getContentPane().add(btnUnmute);
         
         btnInfo = new JButton("");
