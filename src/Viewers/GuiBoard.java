@@ -1,6 +1,5 @@
 package Viewers;
 import Model.*;
-import Model.Object;
 import Controller.*;
 
 import javax.imageio.ImageIO;
@@ -49,6 +48,7 @@ public class GuiBoard extends JFrame {
     JButton btnMute = new JButton();
     JButton btnUnmute = new JButton();
     JButton btnInfo = new JButton();
+    JButton btnHomePage = new JButton();
 
     //Nadav
     int CTsecond = 5, CTminute = 0, Dsecond = 0, Dminute = 0;
@@ -144,8 +144,9 @@ public class GuiBoard extends JFrame {
         for (int i = 0; i < allPlayers.size(); i++) {
         	String con = allPlayers.get(i).getName();
             playerLabels[i] = new JLabel(con);
-            playerLabels[i].setBounds(30, 100+enter, 100, 50);
-            playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
+            playerLabels[i].setBounds(40, 250+enter, 100, 50);
+            playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 22));
+            playerLabels[i].setForeground(new Color(255, 250, 240));
             enter += 40; 
             
             playerLabels[i].setVisible(true);
@@ -158,7 +159,7 @@ public class GuiBoard extends JFrame {
        markTurnsLabels = new JLabel[allPlayers.size()];
        for (int i = 0; i < allPlayers.size(); i++) {
     	   markTurnsLabels[i] = new JLabel("");
-    	   markTurnsLabels[i].setBounds(10, 100+enter, 100, 50);
+    	   markTurnsLabels[i].setBounds(25, 250+enter, 100, 50);
     	   enter += 40;
     	   markTurnsLabels[i].setIcon(markerIcon);
     	   markTurnsLabels[i].setVisible(false);
@@ -166,7 +167,7 @@ public class GuiBoard extends JFrame {
        }
 
         
-        playerLabels[0].setFont(new Font("Segoe UI", Font.BOLD, 24));
+        playerLabels[0].setFont(new Font("Snap ITC", Font.BOLD, 26));
         markTurnsLabels[0].setVisible(true);
         
         BufferedImage clockIcon = null;
@@ -177,43 +178,47 @@ public class GuiBoard extends JFrame {
         }
         
         JLabel lblDuration = new JLabel("");
-        lblDuration.setBounds(237, 10, 60, 60);
+        lblDuration.setBounds(178, 22, 70, 70);
         lblDuration.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
-        Image dimg = clockIcon.getScaledInstance(lblDuration.getWidth(), lblDuration.getHeight(),Image.SCALE_SMOOTH);
-        ImageIcon imageIcon = new ImageIcon(dimg);
-        lblDuration.setIcon(imageIcon);
+        ImageIcon dimg = new ImageIcon("Images/hourGlass.png");
+        //Image dimg = clockIcon.getScaledInstance(lblDuration.getWidth(), lblDuration.getHeight(),Image.SCALE_SMOOTH);
+        //ImageIcon imageIcon = new ImageIcon(dimg);
+        lblDuration.setIcon(dimg);
         getContentPane().add(lblDuration);
         
         lblTime = new JLabel("00:00");
-        lblTime.setBounds(324, 10, 96, 34);
+        lblTime.setForeground(new Color(255, 250, 240));
+        lblTime.setBounds(164, 91, 96, 34);
         lblTime.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTime.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblTime.setFont(new Font("Snap ITC", Font.PLAIN, 20));
         getContentPane().add(lblTime);
         
         lblTurnTime = new JLabel("00:00");
-        lblTurnTime.setBounds(705, 10, 96, 34);
+        lblTurnTime.setForeground(new Color(255, 250, 240));
+        lblTurnTime.setBounds(485, 94, 96, 34);
         lblTurnTime.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTurnTime.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblTurnTime.setFont(new Font("Snap ITC", Font.PLAIN, 12));
         getContentPane().add(lblTurnTime);
         
-        JLabel lblTimer = new JLabel("Player - Time left:");
-        lblTimer.setBounds(488, 10, 207, 34);
-        lblTimer.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
+        JLabel lblTimer = new JLabel(" - Time left:");
+        lblTimer.setForeground(new Color(255, 250, 240));
+        lblTimer.setBounds(366, 93, 207, 34);
+        lblTimer.setFont(new Font("Snap ITC", Font.PLAIN, 16));
         getContentPane().add(lblTimer);
         
         
         JLabel lblRollDice2 = new JLabel("");
-        lblRollDice2.setBounds(3, 380, 100, 100);
+        lblRollDice2.setBounds(80, 550, 100, 100);
         getContentPane().add(lblRollDice2);
         
         JLabel lblDiceRoll1 = new JLabel("");
-        lblDiceRoll1.setBounds(0, 469, 110, 100);
+        lblDiceRoll1.setBounds(10, 550, 110, 100);
         getContentPane().add(lblDiceRoll1);
         
         JButton btnDiceRoll = new JButton("");
         btnDiceRoll.setBounds(10, 643, 140, 100);
         btnDiceRoll.setForeground(new Color(0, 0, 0));
-        ImageIcon DiceRollImage = new ImageIcon("Images/diceIcon.png"); 
+        ImageIcon DiceRollImage = new ImageIcon("Images/btnRollDice.png"); 
         btnDiceRoll.setIcon(DiceRollImage);
         btnDiceRoll.setOpaque(false);
         btnDiceRoll.setContentAreaFilled(false);
@@ -239,21 +244,21 @@ public class GuiBoard extends JFrame {
                 	        // mark which player is playing now 
                 	        for(int i=0; i<playerLabels.length; i++) {
                 	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
-                	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+                	        		playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 26));
                 	        		markTurnsLabels[i].setVisible(true);
                 	        		
                 	        	}
                 	        	else {
-                	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
+                	        		playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 22));
                 	        		markTurnsLabels[i].setVisible(false);
                 				}
                 	        }
         	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
         	                	int botMovement = rollDice();
         	                	rollingDiceDisplay(botMovement);
-        	                	playerLabels[0].setFont(new Font("Segoe UI", Font.BOLD, 18));
+        	                	playerLabels[0].setFont(new Font("Snap ITC", Font.BOLD, 22));
         	                	markTurnsLabels[0].setVisible(false);
-        	                	playerLabels[1].setFont(new Font("Segoe UI", Font.BOLD, 24));
+        	                	playerLabels[1].setFont(new Font("Snap ITC", Font.BOLD, 26));
         	                	markTurnsLabels[1].setVisible(true);
         	                    currentPlayer = nextPlayer(currentPlayer);
         	                    gameController.movePlayer(currentPlayer, boardPanel,botMovement);
@@ -394,8 +399,31 @@ public class GuiBoard extends JFrame {
         
         getContentPane().add(btnDiceRoll);
         
+        btnHomePage = new JButton("");
+        btnHomePage.setBounds(10, 10, 65, 65);
+        ImageIcon homePageIcon = new ImageIcon("Images/btnHomePage.png");
+        btnHomePage.setIcon(homePageIcon);
+        btnHomePage.setOpaque(false);
+        btnHomePage.setContentAreaFilled(false);
+        btnHomePage.setBorderPainted(false);
+        btnHomePage.setVisible(true);
+        getContentPane().add(btnHomePage);
+        btnHomePage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close the current GuiBoard window
+                dispose();
+
+                // Open a new LoginScreen window
+                LoginScreen loginScreen = new LoginScreen();
+                loginScreen.setVisible(true);
+            }
+        });
+        
+        gameController.loadMusic("maplestoryMusic.wav");
+               
         btnMute = new JButton("");
-        btnMute.setBounds(855, 500, 65, 65);
+        btnMute.setBounds(790, 30, 65, 65);
         ImageIcon muteIcon = new ImageIcon("Images/btnMute.png");
         btnMute.setIcon(muteIcon);
         btnMute.setOpaque(false);
@@ -403,30 +431,66 @@ public class GuiBoard extends JFrame {
         btnMute.setBorderPainted(false);
         btnMute.setVisible(true);
         getContentPane().add(btnMute);
+        btnMute.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                gameController.pauseMusic();
+                btnMute.setVisible(false);
+                btnUnmute.setVisible(true);
+                btnMute.setVisible(false);
+
+            }
+        });
         
         btnUnmute = new JButton("");
-        btnUnmute.setBounds(855, 550, 65, 65);
+        btnUnmute.setBounds(680, 29, 65, 65);
         ImageIcon unmuteIcon = new ImageIcon("Images/btnUnmute.png");
         btnUnmute.setIcon(unmuteIcon);
         btnUnmute.setOpaque(false);
         btnUnmute.setContentAreaFilled(false);
         btnUnmute.setBorderPainted(false);
-        btnUnmute.setVisible(true);
+        btnUnmute.setVisible(false);
+        btnUnmute.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                gameController.playMusic();
+                btnUnmute.setVisible(false);
+                btnMute.setVisible(true);
+            }
+        });
         getContentPane().add(btnUnmute);
         
         btnInfo = new JButton("");
-        btnInfo.setBounds(855, 600, 65, 65);
+        btnInfo.setBounds(740, 30, 65, 65);
         ImageIcon infoIcon = new ImageIcon("Images/btnInformation.png");
         btnInfo.setIcon(infoIcon);
         btnInfo.setOpaque(false);
         btnInfo.setContentAreaFilled(false);
         btnInfo.setBorderPainted(false);
         btnInfo.setVisible(true);
+        btnInfo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (rows == 13) {
+					HardInstructions hardInstructions = new HardInstructions();
+	                hardInstructions.setVisible(true);
+				}
+				else if(rows == 10) {
+					MediumInstructions mediumInstructions = new MediumInstructions();
+					mediumInstructions.setVisible(true);
+				}
+				else {
+					EasyInstructions easyInstructions = new EasyInstructions();
+					easyInstructions.setVisible(true);
+				}
+			}
+		});
         getContentPane().add(btnInfo);
-      
         
         btnRestart = new JButton("");
-        btnRestart.setBounds(855, 290, 70, 70);
+        btnRestart.setBounds(855, 215, 70, 70);
         ImageIcon restartIcon = new ImageIcon("Images/btnRestart.png");
         btnRestart.setIcon(restartIcon);
         btnRestart.setOpaque(false);
@@ -449,6 +513,7 @@ public class GuiBoard extends JFrame {
 		        
 		        lblDiceRoll1.setVisible(false);
 		        lblRollDice2.setVisible(false);
+		        btnPause.setVisible(true);
 		        
 		        currentPlayer = allPlayers.get(0);
 		        for(int i=0; i<playerLabels.length; i++) {
@@ -477,7 +542,7 @@ public class GuiBoard extends JFrame {
         getContentPane().add(btnRestart);
         
         btnPlay = new JButton("");
-        btnPlay.setBounds(855, 210, 70, 70);
+        btnPlay.setBounds(855, 135, 70, 70);
         ImageIcon playIcon = new ImageIcon("Images/btnPlay.png");
         btnPlay.setIcon(playIcon);
         btnPlay.setOpaque(false);
@@ -489,8 +554,13 @@ public class GuiBoard extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				duration.start();
-				countDown.start();
+				if (countDown != null) {
+					countDown.start();	
+				}
+
 				btnRestart.setVisible(false);
+				btnPlay.setVisible(false);
+				btnPause.setVisible(true);
 			}
 		});
         getContentPane().add(btnPlay);
@@ -507,16 +577,20 @@ public class GuiBoard extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				duration.stop();
-				countDown.stop();
+				if (countDown != null) {
+					countDown.stop();	
+				}
 				btnRestart.setVisible(true);
+				btnPause.setVisible(false);
 			}
 		});
         getContentPane().add(btnPause);
         
-        JLabel lblPlayersTurn = new JLabel("Players");
-        lblPlayersTurn.setBounds(31, 70, 140, 44);
-        lblPlayersTurn.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
-        getContentPane().add(lblPlayersTurn);
+//        JLabel lblPlayersTurn = new JLabel("Players");
+//        lblPlayersTurn.setForeground(new Color(255, 250, 240));
+//        lblPlayersTurn.setBounds(31, 250, 140, 44);
+//        lblPlayersTurn.setFont(new Font("Snap ITC", Font.BOLD, 26));
+//        getContentPane().add(lblPlayersTurn);
         
         JLabel bgLabel = new JLabel("");
         bgLabel.setBounds(0, 0, 1000, 800);
@@ -575,10 +649,6 @@ public class GuiBoard extends JFrame {
         	catch (IOException e) {
         	    e.printStackTrace();
         	}
-        	
-        	
-        	
-        	
         }
         
         // function to paint the board with colors (repaint) -- In every change repaint the board again.
@@ -621,16 +691,9 @@ public class GuiBoard extends JFrame {
                             int presentY = y + (cellHeight - presentIcon.getIconHeight()) / 2;
                         	presentIcon.paintIcon(this, g, presentX, presentY);
                     	}
-                    	
-
                     }
-                    
-                    
-                    
-                    
                 }
             }
-            
 
             for (Snake snake : snakes) {
                 snake.draw((Graphics2D) g, cellWidth,cellHeight);
@@ -646,17 +709,6 @@ public class GuiBoard extends JFrame {
                 int playerY = player.getRow() * cellHeight;
                 g.fillOval(playerX, playerY, cellWidth, cellHeight);
             }
-//         // mark which player is playing now 
-//	        for(int i=0; i<playerLabels.length; i++) {
-//	        	if(currentPlayer.getName().equals(playerLabels[i].getText()) || currentPlayer.getName().equals("bot")) {
-//	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
-//	        		markTurnsLabels[i].setVisible(true);
-//	        	}
-//	        	else {
-//	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 18));
-//	        		markTurnsLabels[i].setVisible(false);
-//				}
-//	        }
         }
 
         @Override

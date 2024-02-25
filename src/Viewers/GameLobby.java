@@ -22,6 +22,7 @@ import Model.CustomButton;
 import Model.CustomTextField;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 public class GameLobby extends JFrame {
 
@@ -36,6 +37,7 @@ public class GameLobby extends JFrame {
     private CustomButton selectedButton;
     private Set<String> nameSet = new HashSet<>();
     private Set<String> chosenColors = new HashSet<>();
+    
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -216,6 +218,7 @@ public class GameLobby extends JFrame {
                         }
                         
 
+
                         // Gather selected colors
                         ArrayList<String> colors = new ArrayList<>();
                         for (JComboBox<String> comboBox : allComboBoxes) {
@@ -245,6 +248,27 @@ public class GameLobby extends JFrame {
             }
         }
         flag = true;
+        
+        JButton btnHomePage = new JButton("");
+        btnHomePage.setBounds(10, 10, 65, 65);
+        ImageIcon homePageIcon = new ImageIcon("Images/btnHomePage.png");
+        btnHomePage.setIcon(homePageIcon);
+        btnHomePage.setOpaque(false);
+        btnHomePage.setContentAreaFilled(false);
+        btnHomePage.setBorderPainted(false);
+        btnHomePage.setVisible(true);
+        getContentPane().add(btnHomePage);
+        btnHomePage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close the current GuiBoard window
+                dispose();
+
+                // Open a new LoginScreen window
+                LoginScreen loginScreen = new LoginScreen();
+                loginScreen.setVisible(true);
+            }
+        });
 
         // Background
         ImageIcon screenImage = new ImageIcon("Assets/wS62pVGA.jpg");
