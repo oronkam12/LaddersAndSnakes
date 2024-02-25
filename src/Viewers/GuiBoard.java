@@ -402,30 +402,37 @@ public class GuiBoard extends JFrame {
         btnMute.setOpaque(false);
         btnMute.setContentAreaFilled(false);
         btnMute.setBorderPainted(false);
-        btnMute.setVisible(true);
+        btnMute.setVisible(false);
+        btnMute.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		gameController.pauseMusic();
+        		btnUnmute.setVisible(true);
+        		btnMute.setVisible(false);
+        		
+            }
+        });
         getContentPane().add(btnMute);
         
         btnUnmute = new JButton("");
-        btnUnmute.setBounds(855, 550, 65, 65);
+        btnUnmute.setBounds(855, 500, 65, 65);
         ImageIcon unmuteIcon = new ImageIcon("Images/btnUnmute.png");
         btnUnmute.setIcon(unmuteIcon);
         btnUnmute.setOpaque(false);
         btnUnmute.setContentAreaFilled(false);
         btnUnmute.setBorderPainted(false);
         btnUnmute.setVisible(true);
-        
         gameController.loadMusic("maplestoryMusic.wav");
-        btnMute.addActionListener(new ActionListener() {
+
+        btnUnmute.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                if (isPlaying) {
-                    gameController.pauseMusic(isPlaying);
-                    isPlaying = false;
-                } else {
-                    gameController.playMusic(isPlaying);
-                    isPlaying = true;
-                }
-            }
+              
+        		gameController.playMusic();
+        		btnUnmute.setVisible(false);
+        		btnMute.setVisible(true);
+        	}             
         });
+      
         getContentPane().add(btnUnmute);
         
         btnInfo = new JButton("");

@@ -408,18 +408,17 @@ public class GameController {
             }
         }
 
-        public void playMusic(boolean isPlaying) {
+        public void playMusic() {
             if (!clip.isRunning()) {
                 clip.start(); // Start or resume playback
-                isPlaying = true;
+
                 isPausedByUser = false;
             }
         }
 
-        public void pauseMusic(boolean isPlaying) {
+        public void pauseMusic() {
             if (clip.isRunning()) {
                 clip.stop(); // Pause playback
-                isPlaying = false;
             }
         }
 	
