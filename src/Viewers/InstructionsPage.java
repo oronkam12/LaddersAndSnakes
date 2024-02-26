@@ -79,12 +79,33 @@ public class InstructionsPage extends JFrame {
         btnSnakeInst.setBounds(250, 600, 130, 30);
         btnSnakeInst.setVisible(true);
         
+        JButton btnHomePage = new JButton("");
+        btnHomePage.setBounds(10, 10, 65, 65);
+        ImageIcon homePageIcon = new ImageIcon("Images/btnHomePage.png");
+        btnHomePage.setIcon(homePageIcon);
+        btnHomePage.setOpaque(false);
+        btnHomePage.setContentAreaFilled(false);
+        btnHomePage.setBorderPainted(false);
+        btnHomePage.setVisible(true);
+        btnHomePage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close the current GuiBoard window
+                dispose();
+
+                // Open a new LoginScreen window
+                LoginScreen loginScreen = new LoginScreen();
+                loginScreen.setVisible(true);
+            }
+        });
+        
         panel.add(btnQuestionsInst);
         panel.add(btnDiceInst);
         panel.add(btnSnakeInst);
         panel.add(easyBtn);
         panel.add(mediumBtn);
         panel.add(hardBtn);
+        panel.add(btnHomePage);
         getContentPane().add(panel);
         
         ImageIcon instructionsLogo = new ImageIcon("Images/instructionsTitle.png"); 

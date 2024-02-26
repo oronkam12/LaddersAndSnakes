@@ -118,6 +118,7 @@ public class QuizMaster extends JFrame {
 	JButton saveBtn;
 	JButton addBtn;
 	JButton deleteBtn;
+	JButton btnHomePage;
 	private boolean editMode = false;
 	ButtonGroup difficultyGroup;
 	String tmpDiff = null;
@@ -148,6 +149,28 @@ public class QuizMaster extends JFrame {
 		questionLabel.setBounds(150,350,140,50);
 		questionLabel.setVisible(true);
 		contentPane.add(questionLabel);
+		
+		JButton btnHomePage = new JButton("");
+        btnHomePage.setBounds(10, 10, 65, 65);
+        ImageIcon homePageIcon = new ImageIcon("Images/btnHomePage.png");
+        btnHomePage.setIcon(homePageIcon);
+        btnHomePage.setOpaque(false);
+        btnHomePage.setContentAreaFilled(false);
+        btnHomePage.setBorderPainted(false);
+        btnHomePage.setVisible(true);
+        contentPane.add(btnHomePage);
+        btnHomePage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close the current GuiBoard window
+                dispose();
+
+                // Open a new LoginScreen window
+                LoginScreen loginScreen = new LoginScreen();
+                loginScreen.setVisible(true);
+            }
+        });
+
 		
 		
 		 answer1Txt = new JTextArea("m");

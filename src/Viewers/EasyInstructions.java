@@ -51,6 +51,62 @@ public class EasyInstructions extends JFrame {
         easyLogoLabel.setVisible(true);
         contentPane.add(easyLogoLabel);
         
+        ImageIcon blueSnakeIcon = new ImageIcon("Images/blueSnakeIns.png");
+		JLabel lblBlueSnake = new JLabel(blueSnakeIcon);
+		lblBlueSnake.setLocation(500, 200);
+		lblBlueSnake.setSize(150, 150);
+		lblBlueSnake.setVisible(true);		
+		contentPane.add(lblBlueSnake);
+		
+		ImageIcon greenSnakeIcon = new ImageIcon("Images/greenSnakeIns.png");
+		JLabel lblGreenSnake = new JLabel(greenSnakeIcon);
+		lblGreenSnake.setLocation(500, 300);
+		lblGreenSnake.setSize(150, 150);
+		lblGreenSnake.setVisible(true);		
+		contentPane.add(lblGreenSnake);
+		
+		ImageIcon yellowSnakeIcon = new ImageIcon("Images/yellowSnakeIns.png");
+		JLabel lblYellowSnake = new JLabel(yellowSnakeIcon);
+		lblYellowSnake.setLocation(500, 400);
+		lblYellowSnake.setSize(150, 150);
+		lblYellowSnake.setVisible(true);		
+		contentPane.add(lblYellowSnake);
+		
+		ImageIcon redSnakeIcon = new ImageIcon("Images/redSnakeIns.png");
+		JLabel lblRedSnake = new JLabel(redSnakeIcon);
+		lblRedSnake.setLocation(500, 500);
+		lblRedSnake.setSize(150, 150);
+		lblRedSnake.setVisible(true);		
+		contentPane.add(lblRedSnake);
+		
+		ImageIcon Ladder1Icon = new ImageIcon("Images/1ladderIns.png");
+		JLabel lbl1Ladder = new JLabel(Ladder1Icon);
+		lbl1Ladder.setLocation(350, 200);
+		lbl1Ladder.setSize(150, 150);
+		lbl1Ladder.setVisible(true);		
+		contentPane.add(lbl1Ladder);
+		
+		ImageIcon Ladder2Icon = new ImageIcon("Images/2ladderIns.png");
+		JLabel lbl2Ladder = new JLabel(Ladder2Icon);
+		lbl2Ladder.setLocation(350, 270);
+		lbl2Ladder.setSize(150, 200);
+		lbl2Ladder.setVisible(true);		
+		contentPane.add(lbl2Ladder);
+		
+		ImageIcon Ladder3Icon = new ImageIcon("Images/3ladderIns.png");
+		JLabel lbl3Ladder = new JLabel(Ladder3Icon);
+		lbl3Ladder.setLocation(350, 320);
+		lbl3Ladder.setSize(150, 300);
+		lbl3Ladder.setVisible(true);		
+		contentPane.add(lbl3Ladder);
+		
+		ImageIcon Ladder4Icon = new ImageIcon("Images/4ladderIns.png");
+		JLabel lbl4Ladder = new JLabel(Ladder4Icon);
+		lbl4Ladder.setLocation(350, 400);
+		lbl4Ladder.setSize(150, 400);
+		lbl4Ladder.setVisible(true);		
+		contentPane.add(lbl4Ladder);
+		
     	ImageIcon easyRulesImage = new ImageIcon("Images/easyRules.png");
 		JLabel easyRulesLabel = new JLabel(easyRulesImage);
 		easyRulesLabel.setLocation(160, 276);

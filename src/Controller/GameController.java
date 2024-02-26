@@ -14,11 +14,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -38,10 +39,8 @@ public class GameController {
 	private String questionsPath = "questionsFormat.json.txt";
     private final GuiBoard guiBoard;
     private HashMap<String, ArrayList<Question>> questions;
-    private Clip clip;
-    private FloatControl volumeControl;
-    private boolean isPausedByUser;
-
+	private DataLine clip;
+	private boolean isPausedByUser = false;
 
     public GameController(GuiBoard guiBoard) {
         this.guiBoard = guiBoard;
@@ -64,8 +63,12 @@ public class GameController {
                 else {
                 	//----- in case passed last col of winning and need to go back -------
                 	if(movesLeft<0) {
-                		MoveBackWards(player,1,movesLeft);
-                		boardPanel.repaint();
+                		while(movesLeft!=0) {
+                			MoveBackWards(player,1,movesLeft);
+                    		movesLeft = movesLeft+1;
+                    		boardPanel.repaint();
+                		}
+                		
                 	}
                     moveTimer.stop();
                     checkForWin(player);
@@ -77,6 +80,48 @@ public class GameController {
 
         moveTimer.start();
     }
+    
+    public void loadMusic(String musicFilePath) {
+        try {
+            // Open an audio input stream.
+            File audioFile = new File(musicFilePath);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+            // Get a sound clip resource.
+            clip = AudioSystem.getClip();
+            // Open audio clip and load samples from the audio input stream.
+            clip.open();
+
+            clip.addLineListener(event -> {
+                if (event.getType() == LineEvent.Type.STOP) {
+                    if (!isPausedByUser && clip.getFramePosition() >= ((AudioInputStream) clip).getFrameLength()) {
+                        // If the clip ended on its own, restart it
+                        ((Clip) clip).setFramePosition(0);  // Rewind to the beginning
+                        clip.start();  // And start playing again
+                    } else {
+                        // If paused by user or stopped for other reasons, do not restart
+                        isPausedByUser = false; // Reset the flag
+                    }
+                }
+            });
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace(); // Print the stack trace for debugging
+        }
+    }
+
+    public void playMusic() {
+        if (!clip.isRunning()) {
+            clip.start(); // Start or resume playback
+            isPausedByUser = false;
+        }
+    }
+
+
+    public void pauseMusic() {
+        if (clip.isRunning()) {
+            clip.stop(); // Pause playback
+        }
+    }
 
     private void checkForWin(Player player) {
         if (player.getCol() == 0 && player.getRow() == 0) {
@@ -84,7 +129,28 @@ public class GameController {
         	String message = player.getName() + " has won the game!";
 
         	// Show a pop-up message
-        	JOptionPane.showMessageDialog(null, message);        }
+        	JOptionPane.showMessageDialog(null, message);        
+        	long endTime = System.currentTimeMillis();
+        	long durationInMillis = endTime - guiBoard.startTime;
+        	long minutes = TimeUnit.MILLISECONDS.toMinutes(durationInMillis);
+        	long seconds = TimeUnit.MILLISECONDS.toSeconds(durationInMillis) - TimeUnit.MINUTES.toSeconds(minutes);
+
+        	// Format the string
+        	String durationString = String.format("%02d:%02d", minutes, seconds);
+        	String difficulty="";
+        	if(guiBoard.getRows()==13) {
+        		difficulty = "hard";
+        	}
+        	else if(guiBoard.getRows()==10) {
+        		difficulty = "medium";
+        	}
+        	else
+        		difficulty = "easy";
+        	Match temp = new Match(player.getName(),durationString,difficulty);
+        	addMatch("matchHistory.json.txt", temp);
+
+        
+        }
     }
     //--------- checking snakes or ladders ----------------
 	public void isObject(Player player) {
@@ -103,8 +169,7 @@ public class GameController {
 	
 	public int Move(Player player ,int i, int movesLeft) {
 		//----- checking how much to go back if needed--------------
-		if(player.getCol()-movesLeft<0 && player.getRow()== 0) {
-			System.out.println("rolled: " + i +" which is too high.");
+		if(player.getCol()-i<0 && player.getRow()== 0) {
 			return player.getCol()-movesLeft;
 		}
 		//--------- if need to move row up -------
@@ -380,47 +445,9 @@ public class GameController {
     	        }
 
     	}
-        public void loadMusic(String musicFilePath) {
-            try {
-                // Open an audio input stream.
-                File audioFile = new File(musicFilePath);
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-                
-                // Get a sound clip resource.
-                clip = AudioSystem.getClip();
-                // Open audio clip and load samples from the audio input stream.
-                clip.open(audioStream);
-                
-                clip.addLineListener(event -> {
-                    if (event.getType() == LineEvent.Type.STOP) {
-                        if (!isPausedByUser && clip.getFramePosition() >= clip.getFrameLength()) {
-                            // If the clip ended on its own, restart it
-                            clip.setFramePosition(0);  // Rewind to the beginning
-                            clip.start();  // And start playing again
-                        } else {
-                            // If paused by user or stopped for other reasons, do not restart
-                            isPausedByUser = false; // Reset the flag
-                        }
-                    }
-                });
-            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
 
-        public void playMusic() {
-            if (!clip.isRunning()) {
-                clip.start(); // Start or resume playback
-
-                isPausedByUser = false;
-            }
-        }
-
-        public void pauseMusic() {
-            if (clip.isRunning()) {
-                clip.stop(); // Pause playback
-            }
-        }
+		
+    
 	
 	
 	
