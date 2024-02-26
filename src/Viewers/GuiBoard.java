@@ -286,11 +286,8 @@ public class GuiBoard extends JFrame {
         	                    btnDiceRoll.setEnabled(true);
         	                    checkObjects();
 	                            boardPanel.repaint();
-
-        	                }
-
-        			 	        
-        	                }
+        	                }       
+    	                }
         	        });
         	        timer.setRepeats(false); // Ensure the timer only fires once
         	       
@@ -513,11 +510,13 @@ public class GuiBoard extends JFrame {
 		        Dminute = 0;
 		        lblTime.setText("00:00");
 		        duration.restart();
-		        CTsecond = 0;
+		        CTsecond = 30;
 		        CTminute = 0;
 		        lblTurnTime.setText("00:00");
-		        countDown.restart();
-		        
+				if (countDown != null) {
+					countDown.stop();	
+				}
+				
 		        lblDiceRoll1.setVisible(false);
 		        lblRollDice2.setVisible(false);
 		        btnPause.setVisible(true);
