@@ -188,7 +188,7 @@ public class GameController {
 				return movesLeft-1;
 	}
 	public int MoveBackWards(Player player ,int i, int movesLeft) {
-		 if(player.getCol()+i >getBoardCols() )
+		 if(player.getCol()+i >getBoardCols()-1 )
 		{
 			player.setRow(player.getRow()+1);
 			player.setCol(player.getCol()+i-this.getBoardCols());
