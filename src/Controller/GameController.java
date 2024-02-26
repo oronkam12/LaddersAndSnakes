@@ -39,7 +39,7 @@ public class GameController {
 	private String questionsPath = "questionsFormat.json.txt";
     private final GuiBoard guiBoard;
     private HashMap<String, ArrayList<Question>> questions;
-	private DataLine clip;
+	private Clip clip;
 	private boolean isPausedByUser = false;
 
     public GameController(GuiBoard guiBoard) {
@@ -90,13 +90,13 @@ public class GameController {
             // Get a sound clip resource.
             clip = AudioSystem.getClip();
             // Open audio clip and load samples from the audio input stream.
-            clip.open();
+            clip.open(audioStream);
 
             clip.addLineListener(event -> {
                 if (event.getType() == LineEvent.Type.STOP) {
-                    if (!isPausedByUser && clip.getFramePosition() >= ((AudioInputStream) clip).getFrameLength()) {
+                    if (!isPausedByUser && clip.getFramePosition() >= clip.getFrameLength()) {
                         // If the clip ended on its own, restart it
-                        ((Clip) clip).setFramePosition(0);  // Rewind to the beginning
+                        clip.setFramePosition(0);  // Rewind to the beginning
                         clip.start();  // And start playing again
                     } else {
                         // If paused by user or stopped for other reasons, do not restart
@@ -105,9 +105,10 @@ public class GameController {
                 }
             });
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace(); // Print the stack trace for debugging
+            e.printStackTrace();
         }
     }
+
 
     public void playMusic() {
         if (!clip.isRunning()) {
@@ -184,7 +185,7 @@ public class GameController {
 				return movesLeft-1;
 	}
 	public int MoveBackWards(Player player ,int i, int movesLeft) {
-		 if(player.getCol()+i >getBoardCols() )
+		 if(player.getCol()+i >getBoardCols()-1 )
 		{
 			player.setRow(player.getRow()+1);
 			player.setCol(player.getCol()+i-this.getBoardCols());

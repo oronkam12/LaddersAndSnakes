@@ -317,4 +317,6 @@ public class GameLobby extends JFrame {
 
         return new GuiBoard(size, size, boardCreation.getSnakes(), boardCreation.getLadders(), boardCreation.getBoard(), cellWidth, cellHeight, players, colors);
     }
+    
+    
 }

@@ -421,8 +421,7 @@ public class GuiBoard extends JFrame {
             }
         });
         
-        gameController.loadMusic("maplestoryMusic.wav");
-               
+                      
         btnMute = new JButton("");
         btnMute.setBounds(790, 30, 65, 65);
         ImageIcon muteIcon = new ImageIcon("Images/btnMute.png");
@@ -430,27 +429,34 @@ public class GuiBoard extends JFrame {
         btnMute.setOpaque(false);
         btnMute.setContentAreaFilled(false);
         btnMute.setBorderPainted(false);
-        btnMute.setVisible(true);
+        btnMute.setVisible(false);
         getContentPane().add(btnMute);
-        btnMute.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                gameController.pauseMusic();
-                btnMute.setVisible(false);
-                btnUnmute.setVisible(true);
-                btnMute.setVisible(false);
-
-            }
-        });
-        
+       
         btnUnmute = new JButton("");
-        btnUnmute.setBounds(680, 29, 65, 65);
+        btnUnmute.setBounds(790, 30, 65, 65);
         ImageIcon unmuteIcon = new ImageIcon("Images/btnUnmute.png");
         btnUnmute.setIcon(unmuteIcon);
         btnUnmute.setOpaque(false);
         btnUnmute.setContentAreaFilled(false);
         btnUnmute.setBorderPainted(false);
         btnUnmute.setVisible(false);
+        
+        btnMute.setVisible(true);
+        btnMute.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                gameController.pauseMusic();
+                btnUnmute.setVisible(true);
+                btnMute.setVisible(false);
+
+            }
+        });
+
+
+
+        gameController.loadMusic("maplestoryMusic.wav");
+        gameController.playMusic();
+
         btnUnmute.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -459,6 +465,9 @@ public class GuiBoard extends JFrame {
                 btnMute.setVisible(true);
             }
         });
+      
+        
+        
         getContentPane().add(btnUnmute);
         
         btnInfo = new JButton("");
