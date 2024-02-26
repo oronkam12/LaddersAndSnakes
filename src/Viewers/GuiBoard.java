@@ -451,7 +451,7 @@ public class GuiBoard extends JFrame {
 
             }
         });
-
+        
 
 
         gameController.loadMusic("maplestoryMusic.wav");
@@ -459,15 +459,12 @@ public class GuiBoard extends JFrame {
 
         btnUnmute.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
                 gameController.playMusic();
                 btnUnmute.setVisible(false);
                 btnMute.setVisible(true);
             }
         });
-      
-        
-        
+                      
         getContentPane().add(btnUnmute);
         
         btnInfo = new JButton("");
