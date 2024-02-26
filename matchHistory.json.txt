@@ -19,5 +19,9 @@
     "playerName" : "asd",
     "gameTime" : "00:11",
     "difficulty" : "easy"
+  }, {
+    "playerName" : "bot",
+    "gameTime" : "00:15",
+    "difficulty" : "medium"
   } ]
 }
