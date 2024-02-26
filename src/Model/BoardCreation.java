@@ -198,8 +198,11 @@ public class BoardCreation {
     
     private void addRedSnake(int row1) {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0) || (board[rows-1][cols-1]==cell1)) {
+    		System.out.println("stuck red");
     		cell1 = GenerateCell(row1);
+    	}
+
     	Snake s = new RedSnake(cell1,cell1,rows);
     	cell1.setSnakeOrLadder(s);
     	board[cell1.getRow()][cell1.getCol()] = cell1;
@@ -208,15 +211,16 @@ public class BoardCreation {
     
     private void addLadder(int row1,int row2) throws Exception {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null)
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getRow()==0 && cell1.getCol()==0) ||(board[rows-1][cols-1]==cell1))
     		cell1 = GenerateCell(row1);
     	
     	Cell cell2 = GenerateCell(row2);
     	int counter=10;
-    	while(Math.abs(cell1.getCol()-cell2.getCol())!=(row1-row2) || cell2.getSnakeOrLadder()!=null || board[0][0]==cell2) {
+    	while(Math.abs(cell1.getCol()-cell2.getCol())!=(row1-row2) || cell2.getSnakeOrLadder()!=null || board[0][0]==cell2 || board[rows-1][cols-1]==cell2) {
     		cell2 = GenerateCell(row2);
     		counter--;
     		if(counter<=0)
+    			System.out.println("stuck here:");
     			throw new Exception();
     	}
     	Ladder l = new Ladder(cell2,cell1);
