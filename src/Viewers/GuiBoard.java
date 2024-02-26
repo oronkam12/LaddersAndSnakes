@@ -232,7 +232,7 @@ public class GuiBoard extends JFrame {
         	        int movement = rollDice();
         	        rollingDiceDisplay(movement);
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
-        	        lblTimer.setText(currentPlayer.getName() + " - Time left:");
+        	        lblTimer.setText("Time left:");
         	        boardPanel.repaint();// repaint for ladders or snakes cases
         	      
         	        timerActiovation();
@@ -507,10 +507,10 @@ public class GuiBoard extends JFrame {
 		        Dminute = 0;
 		        lblTime.setText("00:00");
 		        duration.restart();
-		        CTsecond = 0;
+		        CTsecond = 30;
 		        CTminute = 0;
 		        lblTurnTime.setText("00:00");
-		        countDown.restart();
+		        //countDown.restart();
 		        
 		        lblDiceRoll1.setVisible(false);
 		        lblRollDice2.setVisible(false);
