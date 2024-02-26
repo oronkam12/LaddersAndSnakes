@@ -39,7 +39,7 @@ public class GameController {
 	private String questionsPath = "questionsFormat.json.txt";
     private final GuiBoard guiBoard;
     private HashMap<String, ArrayList<Question>> questions;
-	private DataLine clip;
+	private Clip clip;
 	private boolean isPausedByUser = false;
 
     public GameController(GuiBoard guiBoard) {
@@ -89,25 +89,29 @@ public class GameController {
 
             // Get a sound clip resource.
             clip = AudioSystem.getClip();
-            // Open audio clip and load samples from the audio input stream.
-            clip.open();
 
+            // Open audio clip and load samples from the audio input stream.
+            clip.open(audioStream);
+
+            // Add a listener to detect when the clip ends
             clip.addLineListener(event -> {
                 if (event.getType() == LineEvent.Type.STOP) {
-                    if (!isPausedByUser && clip.getFramePosition() >= ((AudioInputStream) clip).getFrameLength()) {
+                    if (!isPausedByUser && clip.getFramePosition() == ((AudioInputStream) clip).getFrameLength()) {
                         // If the clip ended on its own, restart it
-                        ((Clip) clip).setFramePosition(0);  // Rewind to the beginning
-                        clip.start();  // And start playing again
+                        ((Clip) clip).setFramePosition(0); // Rewind to the beginning
+                        clip.start(); // And start playing again
                     } else {
-                        // If paused by user or stopped for other reasons, do not restart
+                        // If paused by user or stopped for other reasons, do not automatically restart
                         isPausedByUser = false; // Reset the flag
                     }
                 }
             });
+
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace(); // Print the stack trace for debugging
         }
     }
+
 
     public void playMusic() {
         if (!clip.isRunning()) {
