@@ -8,7 +8,7 @@
     "question" : "lalalallalalaa",
     "answers" : [ "dsasda", "dsadsa", "dsadsadsa", "dsadsadsa" ],
     "correct_ans" : "1",
-    "difficulty" : "2"
+    "difficulty" : "1"
   }, {
     "question" : "sadT",
     "answers" : [ "ssdsadsad", "dsadsa", "dsadsa", "dsadsadsadsa" ],

@@ -232,7 +232,7 @@ public class GuiBoard extends JFrame {
         	        int movement = rollDice();
         	        rollingDiceDisplay(movement);
         	        gameController.movePlayer(currentPlayer, boardPanel,movement);
-        	        lblTimer.setText(currentPlayer.getName() + " - Time left:");
+        	        lblTimer.setText(currentPlayer.getName() + " - Time left: ");
         	        boardPanel.repaint();// repaint for ladders or snakes cases
         	      
         	        timerActiovation();
@@ -633,6 +633,7 @@ public class GuiBoard extends JFrame {
 		private static final long serialVersionUID = 1L;
 		private ImageIcon crownIcon;
 		private ImageIcon presentIcon;
+		private ImageIcon questionMarkIcon;
 		private ImageIcon backgroundIcon;
         public BoardPanel() {
         	
@@ -651,6 +652,14 @@ public class GuiBoard extends JFrame {
         		BufferedImage image = ImageIO.read(new File("Assets/present.png"));
         	    Image resizedImage = image.getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH);
         	    presentIcon = new ImageIcon(resizedImage);
+        	}
+        	catch (IOException e) {
+        	    e.printStackTrace();
+        	}
+        	try {
+        		BufferedImage image = ImageIO.read(new File("Assets/questionMark.png"));
+        	    Image resizedImage = image.getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH);
+        	    questionMarkIcon = new ImageIcon(resizedImage);
         	}
         	catch (IOException e) {
         	    e.printStackTrace();
@@ -697,6 +706,14 @@ public class GuiBoard extends JFrame {
                             int presentY = y + (cellHeight - presentIcon.getIconHeight()) / 2;
                         	presentIcon.paintIcon(this, g, presentX, presentY);
                     	}
+                    }
+                    else if(board[i][j].getSnakeOrLadder() instanceof QuestionCell) {
+                    	//QuestionCell temp = (QuestionCell)board[i][j].getSnakeOrLadder();
+                    	//if(temp.isMovement()==true) {
+                        	int questionX = x + (cellWidth - questionMarkIcon.getIconWidth()) / 2;
+                            int questionY = y + (cellHeight - questionMarkIcon.getIconHeight()) / 2;
+                            questionMarkIcon.paintIcon(this, g, questionX, questionY);
+                    	//}
                     }
                 }
             }

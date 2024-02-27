@@ -23,7 +23,10 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JDialog;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 import javax.swing.Timer;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -38,7 +41,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class GameController {
 	private String questionsPath = "questionsFormat.json.txt";
     private final GuiBoard guiBoard;
-    private HashMap<String, ArrayList<Question>> questions;
+    private HashMap<String,ArrayList<Model.Question>> questions = loadQuesitons();
 	private Clip clip;
 	private boolean isPausedByUser = false;
 
@@ -149,22 +152,29 @@ public class GameController {
         		difficulty = "easy";
         	Match temp = new Match(player.getName(),durationString,difficulty);
         	addMatch("matchHistory.json.txt", temp);
-
-        
+        	pauseMusic();
+        	guiBoard.setVisible(false);
+        	LoginScreen loginScreen = new LoginScreen();
+        	loginScreen.setVisible(true);
         }
     }
     //--------- checking snakes or ladders ----------------
 	public void isObject(Player player) {
 		Object o = null;
 		if (guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder()!=null) {
+			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof QuestionCell) {
+				QuestionCell qc = null;
+				qc = (QuestionCell)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
+				handleQuestion(qc, player);
+				return;	
+			}				
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Snake)
 				o = (Snake)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Ladder)
 				o = (Ladder)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Present)
 				o = (Present)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
-			o.MovePlayer(player);	
-			
+			o.MovePlayer(player);			
 		}
 	}
 	
@@ -193,6 +203,46 @@ public class GameController {
 		else
 			    player.setCol(player.getCol() + 1);  // Assuming player and boardPanel are defined elsewhere in your code
 				return movesLeft+1;
+	}
+	
+	public void handleQuestion(QuestionCell qc, Player player) {
+		String diff = qc.getDifficulty();
+		questions = loadQuesitons();
+		int length = questions.get(diff).size();
+		int question = new Random().nextInt(length);
+		Question q = questions.get(diff).get(question);
+		ArrayList<String> answers = q.getAnswers();
+		JList<String> jlist = new JList<String>(answers.toArray(new String[answers.size()]));
+		JOptionPane.showMessageDialog(null, jlist, q.getQuestion(), JOptionPane.PLAIN_MESSAGE);
+		int selected = jlist.getSelectedIndex()+1;
+		if (q.getCorrect_ans().equals(String.valueOf(selected))) {
+			String m;
+			if (diff.equals("3")) {
+				m = "Correct Answer! you move 1 step forward";
+			} else {
+				m = "Correct Answer!";
+			}
+			
+			displayAnswerStatus(m);
+			qc.setMovement(true);
+		}
+		else {
+			String m = "Wrong Answer! you move " +diff+ " steps backwards!";
+			displayAnswerStatus(m);
+		}
+		qc.MovePlayer(player);
+		return;	
+	}
+	
+	public void displayAnswerStatus(String message) {
+		final JOptionPane pane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE);
+        final JDialog dialog = pane.createDialog(null, "Timed Dialog");
+        // Create a Timer that will close the dialog after 1.5 seconds (1500 ms)
+        Timer timer = new Timer(1500, e -> dialog.dispose());
+        timer.setRepeats(false);
+        // Start the timer and make the dialog visible
+        timer.start();
+        dialog.setVisible(true);
 	}
 	
 	public int getBoardRows() {

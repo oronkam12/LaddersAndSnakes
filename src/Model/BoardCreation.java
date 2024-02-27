@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 import javax.swing.SwingUtilities;
 
+import Controller.GameController;
+import Viewers.GuiBoard;
+
 public class BoardCreation {
     private final int rows;
     private final int cols;
@@ -17,6 +20,7 @@ public class BoardCreation {
     private int cellHeight;
     private ArrayList<Ladder> ladders;
     private ArrayList<Integer> snakesDis;
+    private ArrayList<Question> questionsList;
     private int numLadders;
     
     
@@ -52,6 +56,7 @@ public class BoardCreation {
             }
         }
         addPresent();
+        addQuestionCell();
 
         //----- create 4 types of snakes ----------
         for(int i=0;i<snakesDis.size();i++) {
@@ -143,11 +148,22 @@ public class BoardCreation {
 
     	Present pTop = new Present(board[rowMax][colMax],board[rowMax][colMax],rows,cols);
     	pTop.setMovement(false);
-    	board[rowMax][colMax].setSnakeOrLadder(pTop);
-    	
-    	
-    	
+    	board[rowMax][colMax].setSnakeOrLadder(pTop);  	
     }
+	
+	private void addQuestionCell() {
+		for (int i = 1; i < 4; i++) {
+			Cell cell1 = GenerateCell(new Random().nextInt(rows));
+	    	while(cell1.getRow()== 0 || cell1.getRow()== rows-1) {
+	        	cell1 = GenerateCell(new Random().nextInt(rows));
+	    	}
+	    	QuestionCell qc = new QuestionCell(cell1, cell1, rows, cols, String.valueOf(i));
+	    	board[cell1.getRow()][cell1.getCol()].setSnakeOrLadder(qc);
+		}
+	}
+	
+	
+	
     
     private void addYellowSnake(int row1,int row2) {
     	Cell cell1 = GenerateCell(row1);
