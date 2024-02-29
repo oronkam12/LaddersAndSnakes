@@ -83,5 +83,13 @@
     "playerName" : "sz",
     "gameTime" : "01:06",
     "difficulty" : "easy"
+  }, {
+    "playerName" : "bot",
+    "gameTime" : "00:24",
+    "difficulty" : "easy"
+  }, {
+    "playerName" : "sadsad",
+    "gameTime" : "00:59",
+    "difficulty" : "easy"
   } ]
 }

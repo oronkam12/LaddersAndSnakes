@@ -74,7 +74,7 @@ public class History extends JFrame {
 		contentPane.setLayout(null);
         setLocationRelativeTo(null);
         
-        String[] columnNames = {"Player's Name", "Game Time", "Difficulty Level"};
+        String[] columnNames = {"Match Number","Player's Name", "Game Time", "Difficulty Level"};
         
         // Create the table model
         tableModel = new DefaultTableModel(columnNames, 0);
@@ -161,9 +161,11 @@ public class History extends JFrame {
 
 		contentPane.add(scrollPane);
 		contentPane.setComponentZOrder(scrollPane, 0); // This ensures the scrollPane is above the background label
-		for(Match match: matches)
+		
+		for(int i =matches.size();i>0;i--)
 		{
-			addMatchHistory(match.getPlayerName(),match.getGameTime(),match.getDifficulty());
+			Match match =matches.get(i-1);
+			addMatchHistory(i,match.getPlayerName(),match.getGameTime(),match.getDifficulty());
 			
 		}
         
@@ -183,9 +185,9 @@ public class History extends JFrame {
 		
         
 	}
- public void addMatchHistory(String playerName, String gameTime, String difficultyLevel) {
+ public void addMatchHistory(int matchNumber, String playerName, String gameTime, String difficultyLevel) {
      // Add a row with the match details
-     tableModel.addRow(new Object[]{playerName, gameTime, difficultyLevel});
+     tableModel.addRow(new Object[]{matchNumber,playerName, gameTime, difficultyLevel});
  }
  public class PrettyCellRenderer extends DefaultTableCellRenderer {
 	    
