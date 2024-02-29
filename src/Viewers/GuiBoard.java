@@ -203,7 +203,7 @@ public class GuiBoard extends JFrame {
         
         JLabel lblTimer = new JLabel(" - Time left:");
         lblTimer.setForeground(new Color(255, 250, 240));
-        lblTimer.setBounds(366, 93, 207, 34);
+        lblTimer.setBounds(405, 91, 100, 34);
         lblTimer.setFont(new Font("Snap ITC", Font.PLAIN, 16));
         getContentPane().add(lblTimer);
         
@@ -254,6 +254,7 @@ public class GuiBoard extends JFrame {
                 	        		markTurnsLabels[i].setVisible(false);
                 				}
                 	        }
+    	                    checkObjects();
         	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
         	                	int botMovement = rollDice();
         	                	rollingDiceDisplay(botMovement);
@@ -410,6 +411,7 @@ public class GuiBoard extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Close the current GuiBoard window
+            	gameController.pauseMusic();
                 dispose();
 
                 // Open a new LoginScreen window
