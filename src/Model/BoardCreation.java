@@ -167,7 +167,7 @@ public class BoardCreation {
     
     private void addYellowSnake(int row1,int row2) {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0) || (cell1.getCol()== cols-1 && cell1.getRow()== rows-1))
     		cell1 = GenerateCell(row1);
     	int col = random.nextInt(this.rows-1);
     	while(Math.abs(col- cell1.getCol()) >2 && col-cell1.getCol()!=0 || board[row2][col].getSnakeOrLadder()!=null) {
@@ -182,7 +182,7 @@ public class BoardCreation {
     
     private void addGreenSnake(int row1,int row2) {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0) || (cell1.getCol()== cols-1 && cell1.getRow()== rows-1))
     		cell1 = GenerateCell(row1);
     	int col = random.nextInt(this.rows-1);
     	while(Math.abs(col- cell1.getCol()) >3 && col-cell1.getCol()!=0 || board[row2][col].getSnakeOrLadder()!=null) {
@@ -198,7 +198,7 @@ public class BoardCreation {
     
     private void addBlueSnake(int row1,int row2) {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0))
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0) || (cell1.getCol()== cols-1 && cell1.getRow()== rows-1))
     		cell1 = GenerateCell(row1);
     	int col = random.nextInt(this.rows-1);
     	while(Math.abs(col- cell1.getCol()) >4 && col-cell1.getCol()!=0 || board[row2][col].getSnakeOrLadder()!=null) {
@@ -227,7 +227,7 @@ public class BoardCreation {
     
     private void addLadder(int row1,int row2) throws Exception {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || (cell1.getRow()==0 && cell1.getCol()==0) ||(board[rows-1][cols-1]==cell1))
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getRow()==0 && cell1.getCol()==0) || (board[rows-1][cols-1]==cell1) || (cell1.getCol()== cols-1 && cell1.getRow()== rows-1))
     		cell1 = GenerateCell(row1);
     	
     	Cell cell2 = GenerateCell(row2);
@@ -247,7 +247,7 @@ public class BoardCreation {
     
     private Cell GenerateCell(int row) {
     	int col = random.nextInt(cols);
-    	while(board[row][col].getSnakeOrLadder()!=null&& board[row][col]!= board[0][0]) {
+    	while(board[row][col].getSnakeOrLadder() != null && board[row][col] != board[0][0] && board[row][col] != board[rows-1][cols-1]) {
     		col = random.nextInt(cols);
     	}
     	return new Cell(row,col,board[row][col].getValue(), null);

@@ -27,6 +27,7 @@ import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -159,23 +160,30 @@ public class GameController {
         }
     }
     //--------- checking snakes or ladders ----------------
-	public void isObject(Player player) {
+	public boolean isObject(Player player) {
 		Object o = null;
 		if (guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder()!=null) {
-			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof QuestionCell) {
-				QuestionCell qc = null;
-				qc = (QuestionCell)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
-				handleQuestion(qc, player);
-				return;	
-			}				
+				if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof QuestionCell) {
+					if (!player.getName().equals("bot")) {
+					QuestionCell qc = null;
+					qc = (QuestionCell)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
+					handleQuestion(qc, player);
+					return true;	
+				}
+				else {
+					return false;	
+				}
+			}
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Snake)
 				o = (Snake)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Ladder)
 				o = (Ladder)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Present)
 				o = (Present)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
-			o.MovePlayer(player);			
+			o.MovePlayer(player);
+			return true;
 		}
+		return false;
 	}
 	
 	public int Move(Player player ,int i, int movesLeft) {
@@ -213,6 +221,7 @@ public class GameController {
 		Question q = questions.get(diff).get(question);
 		ArrayList<String> answers = q.getAnswers();
 		JList<String> jlist = new JList<String>(answers.toArray(new String[answers.size()]));
+		jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JOptionPane.showMessageDialog(null, jlist, q.getQuestion(), JOptionPane.PLAIN_MESSAGE);
 		int selected = jlist.getSelectedIndex()+1;
 		if (q.getCorrect_ans().equals(String.valueOf(selected))) {
