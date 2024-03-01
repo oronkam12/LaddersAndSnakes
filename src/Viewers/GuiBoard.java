@@ -230,10 +230,13 @@ public class GuiBoard extends JFrame {
 	     		 	btnDiceRoll.setEnabled(false);
 
         	        int movement = rollDice();
-        	        rollingDiceDisplay(movement);
-        	        gameController.movePlayer(currentPlayer, boardPanel,movement);
-        	        lblTimer.setText(currentPlayer.getName() + " - Time left: ");
-        	        boardPanel.repaint();// repaint for ladders or snakes cases
+        	        if(!checkQuestion(movement,currentPlayer)) {
+        	        	rollingDiceDisplay(movement);
+            	        gameController.movePlayer(currentPlayer, boardPanel,movement);
+            	        lblTimer.setText(currentPlayer.getName() + " - Time left: ");
+            	        boardPanel.repaint();// repaint for ladders or snakes cases
+        	        }
+        	        
         	      
         	        timerActiovation();
 
@@ -313,7 +316,17 @@ public class GuiBoard extends JFrame {
         	 
         	 
         	 private int rollDice() {
-        	        return new Random().nextInt(9) + 1;
+        		 if(cols==7) {
+         	        return new Random().nextInt(7) + 1;
+
+        		 }
+        		 if(cols==10) {
+          	        return new Random().nextInt(12) + 1;
+        		 }
+        		 else {
+           	        return new Random().nextInt(14) + 1;
+
+        		 }
         	    }
         	 
 
@@ -627,7 +640,64 @@ public class GuiBoard extends JFrame {
 		});
     }
     
-    // board creating as a class 
+    public boolean checkQuestion(int movement,Player player) {
+    	System.out.println("cols: "+cols);
+    	System.out.println(movement);
+		if(cols==7) {
+			if(movement==5) {
+				System.out.println("rolled: "+movement + "easy question");
+				return true;
+			}
+			else if(movement ==6) {
+				System.out.println("rolled: "+movement + "medium question");
+				return true;
+
+			}
+			else if (movement==7){
+				System.out.println("rolled: "+movement + "hard question");
+				return true;
+
+			}
+		}
+		else if(cols==10) {
+			if(movement==7 || movement ==8) {
+				System.out.println("rolled: "+movement + "easy question");
+				return true;
+
+			}
+			else if(movement==9||movement ==10) {
+				System.out.println("rolled: "+movement + "medium question");
+				return true;
+
+			}
+			else if(movement ==11 || movement ==12) {
+				System.out.println("rolled: "+movement + "hard question");
+				return true;
+
+			}
+		}
+		else if(cols==13) {
+			if(movement == 7 || movement ==8) {
+				System.out.println("rolled: "+movement + "easy question");
+				return true;
+
+			}
+			else if(movement ==9 || movement == 10) {
+				System.out.println("rolled: "+movement + "medium question");
+				return true;
+
+			}
+			else if(movement>10 && movement <14) {
+				System.out.println("rolled: "+movement + "hard question");
+				return true;
+
+			}
+		}
+		
+		return false;
+	}
+
+	// board creating as a class 
 	public class BoardPanel extends JPanel {
         /**
 		 * 
