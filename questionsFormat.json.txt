@@ -1,38 +1,87 @@
 {
   "questions" : [ {
-    "question" : "noamamm",
-    "answers" : [ "sdsadsa", "dsadsadsa", "dsadsa", "dsadsadsa" ],
-    "correct_ans" : "1",
-    "difficulty" : "2"
-  }, {
-    "question" : "lalalallalalaa",
-    "answers" : [ "dsasda", "dsadsa", "dsadsadsa", "dsadsadsa" ],
-    "correct_ans" : "1",
-    "difficulty" : "1"
-  }, {
-    "question" : "sadT",
-    "answers" : [ "ssdsadsad", "dsadsa", "dsadsa", "dsadsadsadsa" ],
-    "correct_ans" : "3",
-    "difficulty" : "2"
-  }, {
-    "question" : "sadsadsad",
-    "answers" : [ "sad", "sadsad", "sadsadsa", "sadsadsad" ],
-    "correct_ans" : "3",
-    "difficulty" : "2"
-  }, {
-    "question" : "ad",
-    "answers" : [ "sadsad", "sadsa", "dsad", "sadsad" ],
-    "correct_ans" : "1",
-    "difficulty" : "3"
-  }, {
-    "question" : "dsadsadsad",
-    "answers" : [ "sadsadsad", "sadsa", "sad", "sadsadsad" ],
+    "question" : "What is the primary goal of Agile Methodology in software development?",
+    "answers" : [ "To adhere strictly to a predetermined plan", "To respond to change and deliver working software incrementally", "To allocate resources based on a fixed timeline", "To prioritize documentation over collaboration" ],
     "correct_ans" : "2",
-    "difficulty" : "3"
+    "difficulty" : "1",
+    "askedPlayers" : null
   }, {
-    "question" : "TESTFROMTHISMOMENTsadsad",
-    "answers" : [ "sadasdsad", "sadsa", "dsadsada", "dsadsadsa" ],
+    "question" : "What is the role of a Product Owner in Agile Methodology?",
+    "answers" : [ "To manage the team's day-to-day tasks and activities", "To represent the stakeholders and prioritize the backlog", "To write code and develop software features", "To conduct user acceptance testing (UAT) for each sprint" ],
+    "correct_ans" : "2",
+    "difficulty" : "2",
+    "askedPlayers" : null
+  }, {
+    "question" : "What are Missing Requirements?\n",
+    "answers" : [ " Requirements that are unnecessary for the software's functionality", "Requirements that are too vague or ambiguous to be implemented", "Requirements that are not documented in the SRS document", "Requirements that are overly detailed and specific, leading to scope creep" ],
+    "correct_ans" : "3",
+    "difficulty" : "2",
+    "askedPlayers" : null
+  }, {
+    "question" : "What are Excess Requirements?",
+    "answers" : [ "Requirements that are essential for the software's functionality", "A requirement that describes functionality that already was described in the    document in one of the requirements or alternatively Functionality that is not part of the project at all", "Requirements that are vague and open to interpretation", "Requirements that are constantly changing during the development process" ],
     "correct_ans" : "1",
-    "difficulty" : "2"
+    "difficulty" : "3",
+    "askedPlayers" : null
+  }, {
+    "question" : "What is the typical outcome of a Software Requirements Review (SRR) meeting?",
+    "answers" : [ "Finalizing the software design and architecture", "Identifying and resolving discrepancies or ambiguities in the requirements", "Executing the software development tasks according to the project plan", "Conducting user acceptance testing (UAT) to validate the software functionality" ],
+    "correct_ans" : "2",
+    "difficulty" : "3",
+    "askedPlayers" : null
+  }, {
+    "question" : "In a Client-Server architecture, what role does the client play in the communication process?",
+    "answers" : [ "The client initiates requests for services or resources from the server", "The client manages the distribution of data among multiple servers", "The client monitors and maintains the performance of the server hardware", "The client stores and manages the database records for the server" ],
+    "correct_ans" : "1",
+    "difficulty" : "2",
+    "askedPlayers" : null
+  }, {
+    "question" : "Which of the following standards is specifically tailored for assessing and improving software development processes?\n",
+    "answers" : [ "ISO 9001", "ISO/IEC 27001 ", "CMMI-DEV", "SPICE" ],
+    "correct_ans" : "4",
+    "difficulty" : "3",
+    "askedPlayers" : null
+  }, {
+    "question" : "Which type of testing involves examining the internal logic and structure of the software application?",
+    "answers" : [ "White box testing", "Black box testing", "Grey box testing", "Regression testing" ],
+    "correct_ans" : "1",
+    "difficulty" : "1",
+    "askedPlayers" : null
+  }, {
+    "question" : "A project management approach that involves breaking the project into phases and emphasizes continuous collaboration and improvement",
+    "answers" : [ "Waterfall", "Agile", "SCRUM", "Critical Path Method" ],
+    "correct_ans" : "2",
+    "difficulty" : "1",
+    "askedPlayers" : null
+  }, {
+    "question" : "Which of the following SCRUM requirements best describe functional requirements?",
+    "answers" : [ "As a player, I want intuitive navigation for easy feature accessing", "As a player, I want error messages display for effective issues resolution.", "As a user, I want to browse different options available, view the menu as a dropdown, and make orders", "As a player, I want a consistent and aesthetic layout for a smooth experience." ],
+    "correct_ans" : "3",
+    "difficulty" : "3",
+    "askedPlayers" : null
+  }, {
+    "question" : "Which of the following does not belong to the ‘Bottom-Up’ testing approach?",
+    "answers" : [ "Component-Centric", "Incremental Testing", "Early Detection", "Mock objects/stubs used" ],
+    "correct_ans" : "1",
+    "difficulty" : "3",
+    "askedPlayers" : null
+  }, {
+    "question" : "What is the correct order of the ‘Layered Information System Architecture",
+    "answers" : [ "User Interface <-> User Communications <-> Information Retrieval & Modification <-> Transaction Management-Database", "User Interface <-> User Communications <-> Transaction Management-Database <-> Information Retrieval & Modification", "Information Retrieval & Modification <-> User Communications <-> User Interface", "User Communications <-> User Interface <-> Information Retrieval & Modification <-> Transaction Management-Database" ],
+    "correct_ans" : "1",
+    "difficulty" : "3",
+    "askedPlayers" : null
+  }, {
+    "question" : "which one of the above are not related to AGILE:",
+    "answers" : [ ".Prioritizes flexibility,\ncollaboration, & customer\nsatisfaction.", "Quality, transparency, and\nopen communication are\nparamount.", "Teams adapt to changing\nrequirements and deliver\nincremental progress.", "Customer testing on the system after every delivery" ],
+    "correct_ans" : "4",
+    "difficulty" : "2",
+    "askedPlayers" : null
+  }, {
+    "question" : "Who is respnsible of defining the goals for the overall project?",
+    "answers" : [ "ScrumMaster", "Product Owner", "The Team", "All of the above" ],
+    "correct_ans" : "2",
+    "difficulty" : "1",
+    "askedPlayers" : null
   } ]
 }

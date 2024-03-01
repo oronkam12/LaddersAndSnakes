@@ -1141,7 +1141,7 @@ public class QuizMaster extends JFrame {
 		JLabel questionLabel = new JLabel("Question");
 		questionLabel.setForeground(new Color(255, 250, 240));
 		questionLabel.setFont(new Font("Stencil", Font.BOLD, 25));
-		questionLabel.setBounds(144,353,140,50);
+		questionLabel.setBounds(144,360,140,50);
 		questionLabel.setVisible(true);
 		contentPane.add(questionLabel);
 		
@@ -1179,7 +1179,7 @@ public class QuizMaster extends JFrame {
 		
         // Making the JTextArea scrollable
          answer1Pane = new JScrollPane(answer1Txt);
-        answer1Pane.setBounds(280, 413, 380, 25);
+        answer1Pane.setBounds(280, 413, 380, 38);
         answer1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // Hide vertical scroll bar
         answer1Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(answer1Pane);
@@ -1195,7 +1195,7 @@ public class QuizMaster extends JFrame {
 		
         // Making the JTextArea scrollable
          answer2Pane = new JScrollPane(answer2Txt);
-        answer2Pane.setBounds(280, 453, 380, 25);
+        answer2Pane.setBounds(280, 453, 380, 38);
         answer2Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // Hide vertical scroll bar
         answer2Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(answer2Pane);
@@ -1211,7 +1211,7 @@ public class QuizMaster extends JFrame {
 		
         // Making the JTextArea scrollable
          answer3Pane = new JScrollPane(answer3Txt);
-        answer3Pane.setBounds(280, 493, 380, 25);
+        answer3Pane.setBounds(280, 493, 380, 38);
         answer3Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // Hide vertical scroll bar
         answer3Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(answer3Pane);
@@ -1227,7 +1227,7 @@ public class QuizMaster extends JFrame {
 		
         // Making the JTextArea scrollable
          answer4Pane = new JScrollPane(answer4Txt);
-        answer4Pane.setBounds(280, 533, 380, 25);
+        answer4Pane.setBounds(280, 533, 380, 38);
         answer4Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // Hide vertical scroll bar
         answer4Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(answer4Pane);
@@ -1246,7 +1246,7 @@ public class QuizMaster extends JFrame {
 		
         // Making the JTextArea scrollable
         questionPane = new JScrollPane(questionArea);
-        questionPane.setBounds(280, 355, 380, 37);
+        questionPane.setBounds(280, 372, 380, 38);
         questionPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // Hide vertical scroll bar
         questionPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(questionPane);
@@ -1375,6 +1375,7 @@ public class QuizMaster extends JFrame {
          mediumBtn = new JButton("Medium");
         mediumBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		enableFields(false);
         		currentPosition = 0;
         		difficulty = "2";
         		currentQuestionsList = gc.loadQuesitons().get("2");
@@ -1411,7 +1412,10 @@ public class QuizMaster extends JFrame {
          easyBtn = new JButton("Easy");
         easyBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		enableFields(false);
         		currentPosition = 0;
+        		difficulty = "1";
+
         		currentQuestionsList = gc.loadQuesitons().get("1");
         		
         		if(currentQuestionsList==null)
@@ -1450,6 +1454,7 @@ public class QuizMaster extends JFrame {
          hardBtn = new JButton("Hard");
         hardBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		enableFields(false);
         		currentPosition = 0;
         		difficulty = "3";
         		currentQuestionsList = gc.loadQuesitons().get(difficulty);
@@ -1776,7 +1781,7 @@ public class QuizMaster extends JFrame {
 	        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
 	        		displayQuestion();
         	    }
-        		JOptionPane.showMessageDialog(null, "question" + currentQuestion.getQuestion() + " deleted succefully");
+        		JOptionPane.showMessageDialog(null, "question deleted succefully");
         	}
         });
         deleteBtn.setForeground(new Color(240, 230, 140));
