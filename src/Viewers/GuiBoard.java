@@ -254,39 +254,11 @@ public class GuiBoard extends JFrame {
                 				}
                 	        }
     	                    checkObjects();
-        	                if (nextPlayer(currentPlayer).getName().equals("bot")) {
-        	                	int botMovement = rollDice();
-        	                	rollingDiceDisplay(botMovement);
-        	                	playerLabels[0].setFont(new Font("Snap ITC", Font.BOLD, 22));
-        	                	markTurnsLabels[0].setVisible(false);
-        	                	playerLabels[1].setFont(new Font("Snap ITC", Font.BOLD, 26));
-        	                	markTurnsLabels[1].setVisible(true);
-        	                    currentPlayer = nextPlayer(currentPlayer);
-        	                    gameController.movePlayer(currentPlayer, boardPanel,botMovement);
-        	                    checkObjects();
-        	                    boardPanel.repaint();
-        			 	        currentPlayer = nextPlayer(currentPlayer);
-        			 	        timerActiovation();
-        			 	    // Disable the button again for the specified time
-        	                    btnDiceRoll.setEnabled(false);
-
-        	                    // New Timer to enable the button after the specified time
-        	                    Timer enableButtonTimer = new Timer(150 * (botMovement + 1), new ActionListener() {
-        	                        @Override
-        	                        public void actionPerformed(ActionEvent e) {
-        	                            btnDiceRoll.setEnabled(true);
-        	                            checkObjects();
-        	                            boardPanel.repaint();
-        	                        }
-        	                    });
-        	                    enableButtonTimer.setRepeats(false);
-        	                    enableButtonTimer.start();
-        	                } else {
+        	               
         	                    // Enable the button immediately if the next player is not a bot
         	                    btnDiceRoll.setEnabled(true);
         	                    checkObjects();
 	                            boardPanel.repaint();
-        	                }       
     	                }
         	        });
         	        timer.setRepeats(false); // Ensure the timer only fires once

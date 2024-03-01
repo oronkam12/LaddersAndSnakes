@@ -106,10 +106,7 @@ public class GameLobby extends JFrame {
 
         numOfPlayerBox = new JComboBox<>();
         numOfPlayerBox.setFont(new Font("Stencil", Font.PLAIN, 12));
-        for (int i = 2; i <= 6; i++) {
-            if (i == 2) {
-                numOfPlayerBox.addItem("bot");
-            }
+        for (int i = 1; i <= 6; i++) {
             numOfPlayerBox.addItem(String.valueOf(i));
         }
        
@@ -147,11 +144,6 @@ public class GameLobby extends JFrame {
             allComboBoxes.add(colorComboBox);
             contentPane.add(colorComboBox);
            
-           if(numOfPlayerBox.getSelectedIndex()==0)  { // bot case
-            // Update available colors for subsequent players
-      colorComboBox.removeItem("Pink");
-      }
-
             final int playerIndex = i;
             colorComboBox.addActionListener(new ActionListener() {
                 @Override
@@ -206,9 +198,7 @@ public class GameLobby extends JFrame {
                         System.out.println(playersNames);
                         for(int j=0;j<playersNames.size();j++) {
                             players.add(playersNames.get(j).getText());
-                            if(playersNames.size()==1) {
-                                players.add("bot");
-                            }
+                            
                         }
                         System.out.println(players);
 
@@ -233,9 +223,7 @@ public class GameLobby extends JFrame {
                         for (JComboBox<String> comboBox : allComboBoxes) {
                             colors.add((String) comboBox.getSelectedItem());
                         }
-                        if (numOfPlayerBox.getSelectedIndex()==0) {
-                        	colors.add(("Pink"));
-						}
+                        
                        
                         // If the color was previously chosen by another player, prevent the game from starting
                         Set<String> chosenColors = new HashSet<>();
