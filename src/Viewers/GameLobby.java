@@ -106,7 +106,7 @@ public class GameLobby extends JFrame {
 
         numOfPlayerBox = new JComboBox<>();
         numOfPlayerBox.setFont(new Font("Stencil", Font.PLAIN, 12));
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 2; i <= 6; i++) {
             numOfPlayerBox.addItem(String.valueOf(i));
         }
        
@@ -118,7 +118,7 @@ public class GameLobby extends JFrame {
 
         numOfPlayerBox.setBounds(330, 337, 100, 20);
         contentPane.add(numOfPlayerBox);
-        numOfPlayerBox.setSelectedIndex(numOfPlayers - 1);
+        numOfPlayerBox.setSelectedIndex(numOfPlayers - 2);
 
         numOfPlayerBox.addActionListener(new ActionListener() {
             @Override
@@ -200,7 +200,6 @@ public class GameLobby extends JFrame {
                             players.add(playersNames.get(j).getText());
                             
                         }
-                        System.out.println(players);
 
                         // Gather player names
                         for (CustomTextField textField : playersNames) {
