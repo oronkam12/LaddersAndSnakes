@@ -61,6 +61,8 @@ public class GuiBoard extends JFrame {
     public BoardPanel boardPanel;
 	private ImageIcon backgroundIcon;
 	public long startTime;
+	private Player lastPlayer;
+	
     // constructor of Gui Board
     public GuiBoard(int rows, int cols, ArrayList<Snake> snakes,ArrayList<Ladder>ladders, Cell[][] board,int cellWidth,int cellHeight,ArrayList<String> players,ArrayList<String> colors) {
         this.rows = rows;
@@ -230,10 +232,10 @@ public class GuiBoard extends JFrame {
 	     		 	btnDiceRoll.setEnabled(false);
 
         	        int movement = rollDice();
+        	        rollingDiceDisplay(movement);
         	        if(!checkQuestion(movement,currentPlayer)) {
-        	        	rollingDiceDisplay(movement);
             	        gameController.movePlayer(currentPlayer, boardPanel,movement);
-            	        lblTimer.setText(currentPlayer.getName() + " - Time left: ");
+            	        lblTimer.setText("Time left: ");
             	        boardPanel.repaint();// repaint for ladders or snakes cases
         	        }
         	        
@@ -297,8 +299,10 @@ public class GuiBoard extends JFrame {
         	       
 
         	        if (botFlag == false) {
+        	        	lastPlayer = currentPlayer;
         	            currentPlayer = nextPlayer(currentPlayer);
         	            checkObjects();
+//        	            lastPlayer.setAskedQ(false);
                         boardPanel.repaint();
 
         	        }
@@ -317,37 +321,24 @@ public class GuiBoard extends JFrame {
         	 
         	 private int rollDice() {
         		 if(cols==7) {
-         	        return new Random().nextInt(7) + 1;
+         	        return new Random().nextInt(8);
 
         		 }
         		 if(cols==10) {
-          	        return new Random().nextInt(12) + 1;
+          	        return new Random().nextInt(13);
         		 }
         		 else {
-           	        return new Random().nextInt(14) + 1;
+           	        return new Random().nextInt(17);
 
         		 }
         	    }
         	 
 
-        	 private Player nextPlayer(Player p) {
-             	if(p==null) {
-             		return allPlayers.get(0);
-             	}
-             	else {
-             		for(int i=0;i<allPlayers.size();i++) {
-                 		if(allPlayers.get(i) ==p && i+1<allPlayers.size()) {
-                 			return allPlayers.get(i+1);
-                 		}
-                     		
-                 	}
-             		return allPlayers.get(0);
-             		
-             	}
-             }
+        	 
         	 
         	 private void rollingDiceDisplay(int movement) {
-     	        switch (movement) {
+        		 int movement2 = movement + 1;
+     	        switch (movement2) {
 					case 1:
 				        lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
 				        lblDiceRoll1.setVisible(true);
@@ -425,6 +416,11 @@ public class GuiBoard extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Close the current GuiBoard window
             	gameController.pauseMusic();
+            	duration.stop();
+            	if (countDown != null) {
+            		countDown.stop();	
+            	}
+            	
                 dispose();
 
                 // Open a new LoginScreen window
@@ -645,16 +641,22 @@ public class GuiBoard extends JFrame {
     	System.out.println(movement);
 		if(cols==7) {
 			if(movement==5) {
-				System.out.println("rolled: "+movement + "easy question");
+				player.setAskedQ(true);
+				gameController.handleRolledQuestion("1", player);
+//				System.out.println("rolled: "+movement + "easy question");
 				return true;
 			}
 			else if(movement ==6) {
-				System.out.println("rolled: "+movement + "medium question");
+				player.setAskedQ(true);
+				gameController.handleRolledQuestion("2", player);
+//				System.out.println("rolled: "+movement + "medium question");
 				return true;
 
 			}
 			else if (movement==7){
-				System.out.println("rolled: "+movement + "hard question");
+				player.setAskedQ(true);
+				gameController.handleRolledQuestion("3", player);
+//				System.out.println("rolled: "+movement + "hard question");
 				return true;
 
 			}
@@ -697,6 +699,24 @@ public class GuiBoard extends JFrame {
 		return false;
 	}
 
+    
+    private Player nextPlayer(Player p) {
+     	if(p==null) {
+     		return allPlayers.get(0);
+     	}
+     	else {
+     		for(int i=0;i<allPlayers.size();i++) {
+         		if(allPlayers.get(i) ==p && i+1<allPlayers.size()) {
+         			return allPlayers.get(i+1);
+         		}
+             		
+         	}
+     		return allPlayers.get(0);
+     		
+     	}
+     }
+    
+    
 	// board creating as a class 
 	public class BoardPanel extends JPanel {
         /**
@@ -873,9 +893,27 @@ public class GuiBoard extends JFrame {
 					CTddMinute = dFormat.format(CTminute);
 					lblTurnTime.setText(CTddMinute + ":" + CTddSecond);
 					countDown.stop();
+					turnEnded();
+					timerActiovation();
+					CTsecond = 30;
+					System.out.println(currentPlayer.getName());
+					currentPlayer = nextPlayer(currentPlayer);
+					System.out.println(currentPlayer.getName());
 				}
 			}	
 		});
+	}
+	
+	public void turnEnded() {
+		String message = currentPlayer.getName() + " your time ran out! \n Turn passed to " + nextPlayer(currentPlayer).getName();
+		final JOptionPane pane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE);
+        final JDialog dialog = pane.createDialog(null, "Timed Dialog");
+        // Create a Timer that will close the dialog after 1.5 seconds (1500 ms)
+        Timer timer = new Timer(3000, e -> dialog.dispose());
+        timer.setRepeats(false);
+        // Start the timer and make the dialog visible
+        timer.start();
+        dialog.setVisible(true);
 	}
 	
 	public void normalTimer() {

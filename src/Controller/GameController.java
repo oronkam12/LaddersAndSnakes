@@ -2,7 +2,7 @@ package Controller;
 import Model.* ;
 import Model.Object;
 import Viewers.*;
-
+import Viewers.GuiBoard.BoardPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,6 +61,9 @@ public class GameController {
             public void actionPerformed(ActionEvent e) {
             	//----- in case need to move forward on the board -----
                 if (movesLeft > 0) {
+                	if (!player.getName().equals("bot")) {
+                		player.setAskedQ(false);
+                	}
                     movesLeft = Move(player, 1 ,movesLeft);
                     boardPanel.repaint();
                 }
@@ -154,25 +157,25 @@ public class GameController {
         	Match temp = new Match(player.getName(),durationString,difficulty);
         	addMatch("matchHistory.json.txt", temp);
         	pauseMusic();
+        	GuiBoard.countDown.stop();
+        	GuiBoard.duration.stop();
         	guiBoard.setVisible(false);
         	LoginScreen loginScreen = new LoginScreen();
         	loginScreen.setVisible(true);
         }
     }
     //--------- checking snakes or ladders ----------------
-	public boolean isObject(Player player) {
+	public void isObject(Player player) {
 		Object o = null;
 		if (guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder()!=null) {
-				if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof QuestionCell) {
-					if (!player.getName().equals("bot")) {
+			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof QuestionCell) {
+				if (!player.getName().equals("bot") && !player.isAskedQ()) {
 					QuestionCell qc = null;
 					qc = (QuestionCell)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
 					handleQuestion(qc, player);
-					return true;	
+					return;
 				}
-				else {
-					return false;	
-				}
+				return;
 			}
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Snake)
 				o = (Snake)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
@@ -181,10 +184,8 @@ public class GameController {
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Present)
 				o = (Present)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
 			o.MovePlayer(player);
-			return true;
+			}
 		}
-		return false;
-	}
 	
 	public int Move(Player player ,int i, int movesLeft) {
 		//----- checking how much to go back if needed--------------
@@ -236,12 +237,23 @@ public class GameController {
 			qc.setMovement(true);
 		}
 		else {
-			String m = "Wrong Answer! you move " +diff+ " steps backwards!";
+			String m = "Wrong Answer! you move " + diff + " steps backwards!";
 			displayAnswerStatus(m);
+			qc.setMovement(false);
 		}
 		qc.MovePlayer(player);
 		return;	
 	}
+	
+	
+	public void handleRolledQuestion(String difficulty, Player player) {
+		Cell c = new Cell(player.getRow(), player.getCol(), getBoardCols(), null);
+		QuestionCell qc = new QuestionCell(c, c, getBoardRows(), getBoardCols(), difficulty);
+		qc.setDifficulty(difficulty);
+		handleQuestion(qc, player);
+		return;	
+	}
+	
 	
 	public void displayAnswerStatus(String message) {
 		final JOptionPane pane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE);

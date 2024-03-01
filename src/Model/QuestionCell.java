@@ -84,9 +84,7 @@ public class QuestionCell extends Object{
 	@Override
 	public void MovePlayer(Player player) {
 		int move = 0;
-		int newCol = headCell.getCol();
-		int newRow = headCell.getRow();
-	
+		player.setAskedQ(true);
 		ArrayList<Integer> newLocation = null;
 		
 		if (movement && difficulty.equals("3")) {
@@ -94,6 +92,7 @@ public class QuestionCell extends Object{
 			newLocation = checkLocation(move);
 			player.setCol(newLocation.get(0));
 			player.setRow(newLocation.get(1));
+			player.setAskedQ(false);
 		}
 		else if (!movement) {
 			switch (difficulty) {
@@ -114,13 +113,38 @@ public class QuestionCell extends Object{
 			}
 			player.setCol(newLocation.get(0));
 			player.setRow(newLocation.get(1));
+			player.setAskedQ(false);
 		}		
 	}
 	
 	private ArrayList<Integer> checkLocation (int move) {
+		int oldCol = headCell.getCol();
+		int oldRow = headCell.getRow();
+		
+		
 		int newCol = headCell.getCol();
 		int newRow = headCell.getRow();
 		ArrayList<Integer> a = new ArrayList<>();
+		
+		if (newRow == 6 && !movement) {
+			if (headCell.getCol() + move > cols - 1) {
+				newCol = 6;
+				newRow = 6;
+			}
+			else {
+				newCol = headCell.getCol() + move;
+				newRow = headCell.getRow();
+			}
+		} else if (!movement) {
+			if (headCell.getCol() + move > cols - 1) {
+				newCol = headCell.getCol() + move - cols;
+				newRow = headCell.getRow() + 1;
+			}
+			else {
+				newCol = headCell.getCol() + move;
+				newRow = headCell.getRow();
+			}	
+		}
 		
 		//Correct answer for diff 3
 		if (movement && difficulty.equals("3")) {
@@ -135,16 +159,7 @@ public class QuestionCell extends Object{
 			}
 		}
 		//wrong answers
-		else if (!movement) {
-			if (headCell.getCol() + move > cols) {
-				newCol = headCell.getCol() + move - cols - 1;
-				newRow = headCell.getRow() + 1;
-			}
-			else {
-				newCol = headCell.getCol() + move;
-				newRow = headCell.getRow();
-			}	
-		}
+		
 		a.add(newCol);
 		a.add(newRow);
 		return a;	

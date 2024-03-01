@@ -21,6 +21,7 @@ import java.util.Timer;
 import javax.swing.BorderFactory;
 import javax.swing.BoundedRangeModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -82,6 +83,27 @@ public class History extends JFrame {
         // Create the table with the model
         table = new JTable(tableModel);
         table.setEnabled(false);
+        
+		JButton btnHomePage = new JButton("");
+        btnHomePage.setBounds(10, 10, 65, 65);
+        ImageIcon homePageIcon = new ImageIcon("Images/btnHomePage.png");
+        btnHomePage.setIcon(homePageIcon);
+        btnHomePage.setOpaque(false);
+        btnHomePage.setContentAreaFilled(false);
+        btnHomePage.setBorderPainted(false);
+        btnHomePage.setVisible(true);
+        getContentPane().add(btnHomePage);
+        btnHomePage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close the current GuiBoard window
+                dispose();
+
+                // Open a new LoginScreen window
+                LoginScreen loginScreen = new LoginScreen();
+                loginScreen.setVisible(true);
+            }
+        });
         
         // Wrap the table in a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);
@@ -182,6 +204,8 @@ public class History extends JFrame {
 		screenLabel.setVisible(true);
 		contentPane.add(screenLabel);
 		
+		
+
 		
 		
         

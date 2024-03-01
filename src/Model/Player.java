@@ -15,6 +15,9 @@ public class Player {
 	private String name;
 	private final Cell[][] board;
 	private Color color;
+	private boolean askedQ = false;
+	
+
 	public Player(int row, int col, String name,Cell[][] board,Color color) {
 		super();
 		this.row = row;
@@ -49,6 +52,14 @@ public class Player {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public boolean isAskedQ() {
+		return askedQ;
+	}
+
+	public void setAskedQ(boolean askedQ) {
+		this.askedQ = askedQ;
 	}
 
 	@Override

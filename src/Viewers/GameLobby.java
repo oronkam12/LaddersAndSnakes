@@ -530,8 +530,8 @@ public class GameLobby extends JFrame {
                             colors.add((String) comboBox.getSelectedItem());
                         }
                         if (numOfPlayerBox.getSelectedIndex()==0) {
-colors.add(("Pink"));
-}
+                        	colors.add(("Pink"));
+						}
                        
                         // If the color was previously chosen by another player, prevent the game from starting
                         Set<String> chosenColors = new HashSet<>();
