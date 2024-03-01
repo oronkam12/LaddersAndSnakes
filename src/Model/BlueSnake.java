@@ -29,6 +29,7 @@ public class BlueSnake extends Snake {
 	public String toString() {
 		return "BlueSnake [headCell=" + headCell + ", buttomCell=" + buttomCell;
 	}
+
 	
 	
 	

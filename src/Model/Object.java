@@ -1,8 +1,10 @@
 package Model;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -39,7 +41,16 @@ public abstract class Object {
 	}
 	public abstract void MovePlayer(Player player);
 	
+	abstract ArrayList<Integer> init(Graphics2D g, int cellHeight,int cellWidth);
+	abstract ArrayList<Double> reshape(ArrayList<Integer> list);
+	abstract void plot(ArrayList<Double> list,Graphics2D g, int cellWidth,int cellHeight);
 	
+	public final void draw(Graphics2D g, int cellWidth,int cellHeight) {
+		ArrayList<Integer>list = init(g, cellWidth, cellHeight);
+		ArrayList<Double> reshapeList = reshape(list);
+		plot(reshapeList,g, cellWidth, cellHeight);
+	}
+	// added nothing
 	
 	
 

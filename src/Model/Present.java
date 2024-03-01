@@ -1,8 +1,10 @@
 package Model;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -55,5 +57,24 @@ public class Present extends Object {
 
 		
 	}
+
+	@Override
+	ArrayList<Integer> init(Graphics2D g, int cellWidth, int cellHeight) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	ArrayList<Double> reshape(ArrayList<Integer> list) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	void plot(ArrayList<Double> list, Graphics2D g, int cellWidth, int cellHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

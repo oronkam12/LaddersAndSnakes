@@ -1,5 +1,6 @@
 package Model;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -163,6 +164,30 @@ public class QuestionCell extends Object{
 		a.add(newCol);
 		a.add(newRow);
 		return a;	
+		
+	}
+
+
+
+	@Override
+	ArrayList<Integer> init(Graphics2D g, int cellHeight, int cellWidth) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	ArrayList<Double> reshape(ArrayList<Integer> list) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	void plot(ArrayList<Double> list, Graphics2D g, int cellWidth, int cellHeight) {
+		// TODO Auto-generated method stub
 		
 	}
 

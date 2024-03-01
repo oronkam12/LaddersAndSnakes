@@ -663,34 +663,46 @@ public class GuiBoard extends JFrame {
 		}
 		else if(cols==10) {
 			if(movement==7 || movement ==8) {
-				System.out.println("rolled: "+movement + "easy question");
+				player.setAskedQ(true);
+				gameController.handleRolledQuestion("1", player);
+//				System.out.println("rolled: "+movement + "easy question");
 				return true;
 
 			}
 			else if(movement==9||movement ==10) {
-				System.out.println("rolled: "+movement + "medium question");
+				player.setAskedQ(true);
+				gameController.handleRolledQuestion("2", player);
+//				System.out.println("rolled: "+movement + "medium question");
 				return true;
 
 			}
 			else if(movement ==11 || movement ==12) {
-				System.out.println("rolled: "+movement + "hard question");
+				player.setAskedQ(true);
+				gameController.handleRolledQuestion("3", player);
+//				System.out.println("rolled: "+movement + "hard question");
 				return true;
 
 			}
 		}
 		else if(cols==13) {
 			if(movement == 7 || movement ==8) {
-				System.out.println("rolled: "+movement + "easy question");
+				player.setAskedQ(true);
+				gameController.handleRolledQuestion("1", player);
+//				System.out.println("rolled: "+movement + "easy question");
 				return true;
 
 			}
 			else if(movement ==9 || movement == 10) {
-				System.out.println("rolled: "+movement + "medium question");
+				player.setAskedQ(true);
+				gameController.handleRolledQuestion("2", player);
+//				System.out.println("rolled: "+movement + "medium question");
 				return true;
 
 			}
 			else if(movement>10 && movement <14) {
-				System.out.println("rolled: "+movement + "hard question");
+				player.setAskedQ(true);
+				gameController.handleRolledQuestion("3", player);
+//				System.out.println("rolled: "+movement + "hard question");
 				return true;
 
 			}
