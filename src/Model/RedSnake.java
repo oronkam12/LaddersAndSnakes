@@ -30,7 +30,7 @@ public class RedSnake extends Snake {
 		
 	}
 	
-	public ArrayList<Integer> init(Graphics2D g, int cellWidth,int cellHeight) {
+	public ArrayList<Integer> init(Graphics2D g, int cellHeight,int cellWidth) {
 		ArrayList<Integer> list = new ArrayList<>();
 		Cell headCell = this.getHeadCell();
 
@@ -39,9 +39,9 @@ public class RedSnake extends Snake {
 
 	    int endX = (this.getButtomCell().getCol() + 1) * cellHeight;
 	    int endY = (this.getButtomCell().getRow() + 1) * cellWidth;
-	    
-	    
-	    
+
+
+	      
 	    //Set dimensions in pixels - end
 	    list.add(startX);
 	    list.add(startY);
@@ -55,10 +55,11 @@ public class RedSnake extends Snake {
 		//Calculate angle to rotate image
 	    double angleInRadians = Math.atan2(list.get(3) - list.get(1), list.get(2) - list.get(0));
 
-
 	    //Calculate the middle of the image
 	    int midX = (list.get(0) + list.get(2)) / 2-list.get(5)/2;
 	    int midY = (list.get(1) +list.get(3)) / 2-list.get(4)/2;
+	    
+	    
 	    ArrayList<Double> reshaped = new ArrayList<Double>();
 	    reshaped.add(angleInRadians);
 	    reshaped.add((double) midX);
@@ -66,19 +67,19 @@ public class RedSnake extends Snake {
 	    reshaped.add((double)list.get(4));
 	    reshaped.add((double)list.get(5));
 	    return reshaped;
-		
 	}
+	
 	public void plot(ArrayList<Double> list,Graphics2D g, int cellWidth,int cellHeight) {
 		//Loading and scaling the image to fit board (Some of the calculations are for design implementations)
 	    BufferedImage snakeImage = this.getImage();
-	    Image resizedSnakeImage = snakeImage.getScaledInstance(cellWidth * (Math.abs(headCell.getCol() - this.getButtomCell().getCol()) + 2), 1+cellHeight * (Math.abs(headCell.getRow() - this.getButtomCell().getRow())), Image.SCALE_SMOOTH);
-	    
+	    System.out.println(headCell.getRow() + " " + headCell.getCol());
 	    //Calculating middle location of scaled image
 	    int width = cellWidth; // Set to cellSize
 	    int height = cellHeight; // Set to cellSize
 	    
-	    int drawX = (int) (width );
-	    int drawY = (int) (height);
+	    int drawX = (int) (list.get(1) - (width /2));
+	    int drawY = (int) (list.get(2) - (height / 2));
+	    
 	    
 	   
 	    // Draw the scaled snakeImage to fit the cellSize
