@@ -75,7 +75,7 @@ public class History extends JFrame {
 		contentPane.setLayout(null);
         setLocationRelativeTo(null);
         
-        String[] columnNames = {"Match Number","Player's Name", "Game Time", "Difficulty Level"};
+        String[] columnNames = {"Match Number","Player's Name", "Game Time", "Difficulty"};
         
         // Create the table model
         tableModel = new DefaultTableModel(columnNames, 0);
@@ -107,7 +107,7 @@ public class History extends JFrame {
         
         // Wrap the table in a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(200,300,400,300);
+        scrollPane.setBounds(200,300,400,371);
         scrollPane.setVisible(true);
      // Assuming 'table' is your JTable instance
         table.setOpaque(false);
@@ -174,6 +174,10 @@ public class History extends JFrame {
                 label.setForeground(Color.WHITE); // Setting the text color to white for better readability
                 label.setHorizontalAlignment(JLabel.CENTER); // Center-align header labels
                 label.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.BLACK)); // Add vertical separation
+                label.setFont(new Font("Stencil", Font.PLAIN, 12)); // Adjust the font size and family as needed
+                label.setForeground(Color.WHITE); // Setting the text color to white for better readability
+                label.setHorizontalAlignment(JLabel.CENTER); // Center-align header labels
+                label.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.BLACK)); // Add vertical separation
                 return label;
             }
         });
@@ -202,13 +206,7 @@ public class History extends JFrame {
 		JLabel screenLabel = new JLabel(screenImage);
 		screenLabel.setBounds(0,0,800,800);
 		screenLabel.setVisible(true);
-		contentPane.add(screenLabel);
-		
-		
-
-		
-		
-        
+		contentPane.add(screenLabel);        
 	}
  public void addMatchHistory(int matchNumber, String playerName, String gameTime, String difficultyLevel) {
      // Add a row with the match details
@@ -225,7 +223,7 @@ public class History extends JFrame {
 	        setHorizontalAlignment(CENTER);
 
 	        // Update font here to ensure it applies correctly
-	        setFont(new Font("Serif", Font.BOLD, 14));
+	        setFont(new Font("Stencil", Font.PLAIN, 14));
 
 	        // Adjusting foreground and background for better visibility and aesthetics
 	        setForeground(Color.BLACK); // Text color

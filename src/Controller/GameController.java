@@ -4,6 +4,7 @@ import Model.Object;
 import Viewers.*;
 import Viewers.GuiBoard.BoardPanel;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -29,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -215,34 +217,65 @@ public class GameController {
 	}
 	
 	public void handleQuestion(QuestionCell qc, Player player) {
-		String diff = qc.getDifficulty();
-		questions = loadQuesitons();
-		int length = questions.get(diff).size();
-		int question = new Random().nextInt(length);
-		Question q = questions.get(diff).get(question);
-		ArrayList<String> answers = q.getAnswers();
-		JList<String> jlist = new JList<String>(answers.toArray(new String[answers.size()]));
-		jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JOptionPane.showMessageDialog(null, jlist, q.getQuestion(), JOptionPane.PLAIN_MESSAGE);
-		int selected = jlist.getSelectedIndex()+1;
-		if (q.getCorrect_ans().equals(String.valueOf(selected))) {
-			String m;
-			if (diff.equals("3")) {
-				m = "Correct Answer! you move 1 step forward";
-			} else {
-				m = "Correct Answer!";
-			}
-			
-			displayAnswerStatus(m);
-			qc.setMovement(true);
-		}
-		else {
-			String m = "Wrong Answer! you move " + diff + " steps backwards!";
-			displayAnswerStatus(m);
-			qc.setMovement(false);
-		}
-		qc.MovePlayer(player);
-		return;	
+		  String diff = qc.getDifficulty();
+		    String diffTranslated = "";
+		    questions = loadQuesitons();
+		    int length = questions.get(diff).size();
+		    int question = new Random().nextInt(length);
+		    Question q = questions.get(diff).get(question);
+		    ArrayList<String> answers = q.getAnswers();
+
+//		    // Create a JPanel to hold the question, answers, and diffTranslated
+//		    JPanel panel = new JPanel(new BorderLayout());
+	//
+//		    // Create a label for the question
+//		    JLabel questionLabel = new JLabel(q.getQuestion());
+//		    panel.add(questionLabel, BorderLayout.NORTH);
+
+		    // Create a JList for the answers
+		    JList<String> jlist = new JList<>(answers.toArray(new String[answers.size()]));
+		    jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		  //  panel.add(new JScrollPane(jlist), BorderLayout.CENTER);
+
+		    // Translate difficulty
+		    switch (diff) {
+		        case "1":
+		            diffTranslated = "Easy";
+		            break;
+		        case "2":
+		            diffTranslated = "Medium";
+		            break;
+		        case "3":
+		            diffTranslated = "Hard";
+		            break;
+		        default:
+		            break;
+		    }
+
+		 // Create the question panel
+		    QuestionPanel questionPanel = new QuestionPanel(q, jlist, diffTranslated);
+
+		 // Show the panel in a dialog
+		    UIManager.put("OptionPane.minimumSize",new Dimension(400,200)); 
+		    int option = JOptionPane.showOptionDialog(null, questionPanel, "Question", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+
+		    if (option == JOptionPane.OK_OPTION) {
+		        int selected = jlist.getSelectedIndex() + 1;
+		        if (q.getCorrect_ans().equals(String.valueOf(selected))) {
+		            String m;
+		            if (diff.equals("3")) {
+		                m = "Correct Answer! You move 1 step forward";
+		            } else {
+		                m = "Correct Answer!";
+		            }
+		            displayAnswerStatus(m);
+		            qc.setMovement(true);
+		        } else {
+		            String m = "Wrong Answer! You move " + diff + " steps backwards!";
+		            displayAnswerStatus(m);
+		        }
+		        qc.MovePlayer(player);
+		    }
 	}
 	
 	

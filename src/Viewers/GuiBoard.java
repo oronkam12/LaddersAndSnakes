@@ -51,7 +51,7 @@ public class GuiBoard extends JFrame {
     JButton btnHomePage = new JButton();
 
     //Nadav
-    int CTsecond = 5, CTminute = 0, Dsecond = 0, Dminute = 0;
+    int CTsecond = 30, CTminute = 0, Dsecond = 0, Dminute = 0;
     String CTddSecond, CTddMinute, DddSecond, DddMinute;
     DecimalFormat dFormat = new DecimalFormat("00");
     JLabel lblTime;
@@ -80,7 +80,6 @@ public class GuiBoard extends JFrame {
         }
 
         this.colors = colors;
-//        System.out.println(colors);
         this.allPlayers = new ArrayList<Player>(); // array of players objects
         this.heightFactor=1;
         this.widthFactor=1;
@@ -114,11 +113,6 @@ public class GuiBoard extends JFrame {
         normalTimer();
         startTime = System.currentTimeMillis();
         duration.start();
-        System.out.println(allPlayers);
-        System.out.println(snakes.get(0).getHeadCell());
-        System.out.println(snakes.get(0).getButtomCell());
-        System.out.println(ladders.get(0).getHeadCell());
-        System.out.println(ladders.get(0).getButtomCell());
         
         this.currentPlayer = allPlayers.get(0);
         gameController = new GameController(this);
@@ -203,7 +197,7 @@ public class GuiBoard extends JFrame {
         lblTurnTime.setFont(new Font("Snap ITC", Font.PLAIN, 12));
         getContentPane().add(lblTurnTime);
         
-        JLabel lblTimer = new JLabel(" - Time left:");
+        JLabel lblTimer = new JLabel("Time left:");
         lblTimer.setForeground(new Color(255, 250, 240));
         lblTimer.setBounds(405, 91, 100, 34);
         lblTimer.setFont(new Font("Snap ITC", Font.PLAIN, 16));
@@ -761,7 +755,7 @@ public class GuiBoard extends JFrame {
         	    e.printStackTrace();
         	}
         	try {
-        		BufferedImage image = ImageIO.read(new File("Assets/questionMark.png"));
+        		BufferedImage image = ImageIO.read(new File("Images/qm.png"));
         	    Image resizedImage = image.getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH);
         	    questionMarkIcon = new ImageIcon(resizedImage);
         	}
