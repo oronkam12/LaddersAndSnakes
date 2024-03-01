@@ -81,6 +81,7 @@ public class History extends JFrame {
         
         // Create the table with the model
         table = new JTable(tableModel);
+        table.setEnabled(false);
         
         // Wrap the table in a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);

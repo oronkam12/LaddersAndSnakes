@@ -300,7 +300,8 @@ public class LoginScreen extends JFrame {
             contentPane.add(questionsBtn);
             
             CustomButton historyBtn = new CustomButton("HISTORY",295,540,200,60,e->{
-                  System.out.println("c");
+                	setVisible(false);
+                	new History().setVisible(true);
             });
             contentPane.add(historyBtn);
             
