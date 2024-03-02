@@ -151,7 +151,7 @@ public class QuestionCell extends Object{
 		if (movement && difficulty.equals("3")) {
 			
 			if (headCell.getCol() - move < 0) {
-				newCol = cols;
+				newCol = cols - 1;
 				newRow = headCell.getRow() - move;
 			}
 			else {

@@ -35,6 +35,7 @@ public class GameLobby extends JFrame {
     private ArrayList<JComboBox<String>> allComboBoxes;
     private ArrayList<CustomTextField> playersNames;
     private boolean flag;
+    private boolean clickedFlag = false;
     private CustomButton selectedButton;
     private Set<String> nameSet = new HashSet<>();
     private Set<String> chosenColors = new HashSet<>();
@@ -128,121 +129,123 @@ public class GameLobby extends JFrame {
                 } else {
                     numOfPlayers = Integer.valueOf((String) numOfPlayerBox.getSelectedItem());
                 }
+                clickedFlag = true;
                 flag = false;
                 updatePlayerComponents();
             }
         });
-       
-        for (int i = 0; i < numOfPlayers; i++) {
-            JComboBox<String> colorComboBox = new JComboBox<>();
-            colorComboBox.setFont(new Font("Stencil", Font.PLAIN, 12));
-         
-            for (String color : selectedColors) {
-                colorComboBox.addItem(color);
-            }
-            colorComboBox.setBounds(210, 460 + i * 30, 100, 20);
-            allComboBoxes.add(colorComboBox);
-            contentPane.add(colorComboBox);
-           
-            final int playerIndex = i;
-            colorComboBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String selectedColor = (String) colorComboBox.getSelectedItem();
-                    selectedColors.set(playerIndex, selectedColor); // Update selected color for this player
-
-                    // Update available colors for subsequent players
-                    for (int j = playerIndex + 1; j < numOfPlayers; j++) {
-                        JComboBox<String> comboBox = allComboBoxes.get(j);
-                        comboBox.removeItem(selectedColor);
-                    }
-                }
-            });
-
-            if (flag == false) {
-                if (i == 0) {
-                    imageIcon = new ImageIcon("Assets/YourName.png");
-                    JLabel nameLbl = new JLabel(imageIcon);
-                    nameLbl.setBounds(430, 400 + i * 30, 142, 50);
-                    nameLbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-                    contentPane.add(nameLbl);
-
-                    imageIcon = new ImageIcon("Assets/ChooseColor.png");
-                    nameLbl = new JLabel(imageIcon);
-                    nameLbl.setBounds(190, 400 + i * 30, 142, 50);
-                    nameLbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-                    contentPane.add(nameLbl);
-                }
-
-                CustomTextField playerNameTextField = new CustomTextField();
-                playerNameTextField.setBounds(440, 460 + i * 30, 100, 20);
-                contentPane.add(playerNameTextField);
-                playersNames.add(playerNameTextField);
-            } else {
-                JLabel nameLbl = new JLabel("Player name:");
-                nameLbl.setBounds(320, 460 + i * 30, 100, 20);
-                nameLbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-                contentPane.add(nameLbl);
-                CustomTextField playerNameTextField = playersNames.get(i);
-                contentPane.add(playerNameTextField);
-            }
-
-            if (i + 1 == numOfPlayers) {
-                CustomButton playBtn = new CustomButton("Play", 280, 460 + (i + 1) * 30, 200, 60, e -> {
-                    try {
-                        // Check if difficulty level is selected
-                        if (selectedButton == null)
-                            throw new Exception("Please select difficulty level!");
-                       
-                        ArrayList<String> players = new ArrayList<>();
-                        System.out.println(playersNames);
-                        for(int j=0;j<playersNames.size();j++) {
-                            players.add(playersNames.get(j).getText());
-                            
-                        }
-
-                        // Gather player names
-                        for (CustomTextField textField : playersNames) {
-                            String name = textField.getText().trim();
-                            if (name.isEmpty()) {
-                                throw new Exception("Please insert ALL players names!");
-                            }
-                        }
-
-                     // Check for duplicate names
-                        Set<String> nameSet = new HashSet<>();
-                        for (String name : players) {
-                            if (!nameSet.add(name)) {
-                                throw new Exception("Names are equal! Please change one of the names.");
-                            }
-                        }
-              
-                        // Gather selected colors
-                        ArrayList<String> colors = new ArrayList<>();
-                        for (JComboBox<String> comboBox : allComboBoxes) {
-                            colors.add((String) comboBox.getSelectedItem());
-                        }
-                        
-                       
-                        // If the color was previously chosen by another player, prevent the game from starting
-                        Set<String> chosenColors = new HashSet<>();
-                        for(String color : colors) {
-                        if(!chosenColors.add(color)) {
-                        throw new Exception("Players need to play in DIFFERENT colors!");
-                        }
-                        }
-
-                        // Create and display the game board
-                        GuiBoard guiBoard = createGuiBoard(selectedButton.getText(), players, colors);
-                        guiBoard.setVisible(true);
-                        setVisible(false);
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
-                    }
-                });
-                playBtn.setFont(new Font("Stencil", Font.PLAIN, 18));
-                contentPane.add(playBtn);
-            }
+       if (clickedFlag) {
+	        for (int i = 0; i < numOfPlayers; i++) {
+	            JComboBox<String> colorComboBox = new JComboBox<>();
+	            colorComboBox.setFont(new Font("Stencil", Font.PLAIN, 12));
+	         
+	            for (String color : selectedColors) {
+	                colorComboBox.addItem(color);
+	            }
+	            colorComboBox.setBounds(210, 460 + i * 30, 100, 20);
+	            allComboBoxes.add(colorComboBox);
+	            contentPane.add(colorComboBox);
+	           
+	            final int playerIndex = i;
+	            colorComboBox.addActionListener(new ActionListener() {
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                    String selectedColor = (String) colorComboBox.getSelectedItem();
+	                    selectedColors.set(playerIndex, selectedColor); // Update selected color for this player
+	
+	                    // Update available colors for subsequent players
+	                    for (int j = playerIndex + 1; j < numOfPlayers; j++) {
+	                        JComboBox<String> comboBox = allComboBoxes.get(j);
+	                        comboBox.removeItem(selectedColor);
+	                    }
+	                }
+	            });
+	
+	            if (flag == false) {
+	                if (i == 0) {
+	                    imageIcon = new ImageIcon("Assets/YourName.png");
+	                    JLabel nameLbl = new JLabel(imageIcon);
+	                    nameLbl.setBounds(430, 400 + i * 30, 142, 50);
+	                    nameLbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+	                    contentPane.add(nameLbl);
+	
+	                    imageIcon = new ImageIcon("Assets/ChooseColor.png");
+	                    nameLbl = new JLabel(imageIcon);
+	                    nameLbl.setBounds(190, 400 + i * 30, 142, 50);
+	                    nameLbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+	                    contentPane.add(nameLbl);
+	                }
+	
+	                CustomTextField playerNameTextField = new CustomTextField();
+	                playerNameTextField.setBounds(440, 460 + i * 30, 100, 20);
+	                contentPane.add(playerNameTextField);
+	                playersNames.add(playerNameTextField);
+	            } else {
+	                JLabel nameLbl = new JLabel("Player name:");
+	                nameLbl.setBounds(320, 460 + i * 30, 100, 20);
+	                nameLbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+	                contentPane.add(nameLbl);
+	                CustomTextField playerNameTextField = playersNames.get(i);
+	                contentPane.add(playerNameTextField);
+	            }
+	            
+	            if (i + 1 == numOfPlayers) {
+	                CustomButton playBtn = new CustomButton("Play", 280, 460 + (i + 1) * 30, 200, 60, e -> {
+	                    try {
+	                        // Check if difficulty level is selected
+	                        if (selectedButton == null)
+	                            throw new Exception("Please select difficulty level!");
+	                       
+	                        ArrayList<String> players = new ArrayList<>();
+	                        System.out.println(playersNames);
+	                        for(int j=0;j<playersNames.size();j++) {
+	                            players.add(playersNames.get(j).getText());
+	                            
+	                        }
+	
+	                        // Gather player names
+	                        for (CustomTextField textField : playersNames) {
+	                            String name = textField.getText().trim();
+	                            if (name.isEmpty()) {
+	                                throw new Exception("Please insert ALL players names!");
+	                            }
+	                        }
+	
+	                     // Check for duplicate names
+	                        Set<String> nameSet = new HashSet<>();
+	                        for (String name : players) {
+	                            if (!nameSet.add(name)) {
+	                                throw new Exception("Names are equal! Please change one of the names.");
+	                            }
+	                        }
+	              
+	                        // Gather selected colors
+	                        ArrayList<String> colors = new ArrayList<>();
+	                        for (JComboBox<String> comboBox : allComboBoxes) {
+	                            colors.add((String) comboBox.getSelectedItem());
+	                        }
+	                        
+	                       
+	                        // If the color was previously chosen by another player, prevent the game from starting
+	                        Set<String> chosenColors = new HashSet<>();
+	                        for(String color : colors) {
+	                        if(!chosenColors.add(color)) {
+	                        throw new Exception("Players need to play in DIFFERENT colors!");
+	                        }
+	                        }
+	
+	                        // Create and display the game board
+	                        GuiBoard guiBoard = createGuiBoard(selectedButton.getText(), players, colors);
+	                        guiBoard.setVisible(true);
+	                        setVisible(false);
+	                    } catch (Exception ex) {
+	                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+	                    }
+	                });
+	                playBtn.setFont(new Font("Stencil", Font.PLAIN, 18));
+	                contentPane.add(playBtn);
+	            }
+	        }
         }
         flag = true;
        

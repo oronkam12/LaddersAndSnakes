@@ -108,7 +108,6 @@ public class GuiBoard extends JFrame {
         		Player p = new Player(rows-1,cols-1,players.get(i),board,Color.ORANGE);
 	            allPlayers.add(p);
         	}
-	        	
         }
         normalTimer();
         startTime = System.currentTimeMillis();
@@ -178,8 +177,6 @@ public class GuiBoard extends JFrame {
         lblDuration.setBounds(178, 22, 70, 70);
         lblDuration.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
         ImageIcon dimg = new ImageIcon("Images/hourGlass.png");
-        //Image dimg = clockIcon.getScaledInstance(lblDuration.getWidth(), lblDuration.getHeight(),Image.SCALE_SMOOTH);
-        //ImageIcon imageIcon = new ImageIcon(dimg);
         lblDuration.setIcon(dimg);
         getContentPane().add(lblDuration);
         
@@ -268,8 +265,8 @@ public class GuiBoard extends JFrame {
         	        	lastPlayer = currentPlayer;
         	            currentPlayer = nextPlayer(currentPlayer);
         	            checkObjects();
-//        	            lastPlayer.setAskedQ(false);
                         boardPanel.repaint();
+                        gameController.checkForWin(lastPlayer);
 
         	        }
 
@@ -568,12 +565,6 @@ public class GuiBoard extends JFrame {
 			}
 		});
         getContentPane().add(btnPause);
-        
-//        JLabel lblPlayersTurn = new JLabel("Players");
-//        lblPlayersTurn.setForeground(new Color(255, 250, 240));
-//        lblPlayersTurn.setBounds(31, 250, 140, 44);
-//        lblPlayersTurn.setFont(new Font("Snap ITC", Font.BOLD, 26));
-//        getContentPane().add(lblPlayersTurn);
         
         JLabel bgLabel = new JLabel("");
         bgLabel.setBounds(0, 0, 1000, 800);
@@ -904,13 +895,12 @@ public class GuiBoard extends JFrame {
 				DddMinute = dFormat.format(Dminute);
 				lblTime.setText(DddMinute + ":" + DddSecond);
 				
-				if (Dsecond == 59) {
+				if (Dsecond == 60) {
 					Dsecond = 0;
 					Dminute++;
 					DddSecond = dFormat.format(Dsecond);
 					DddMinute = dFormat.format(Dminute);
 					lblTime.setText(DddMinute + ":" + DddSecond);
-					duration.stop();
 				}
 			}	
 		});

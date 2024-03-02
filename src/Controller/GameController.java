@@ -47,7 +47,8 @@ public class GameController {
     private HashMap<String,ArrayList<Model.Question>> questions = loadQuesitons();
 	private Clip clip;
 	private boolean isPausedByUser = false;
-
+	private boolean hasWon = false;
+	
     public GameController(GuiBoard guiBoard) {
         this.guiBoard = guiBoard;
     }
@@ -133,8 +134,8 @@ public class GameController {
         }
     }
 
-    private void checkForWin(Player player) {
-        if (player.getCol() == 0 && player.getRow() == 0) {
+    public void checkForWin(Player player) {
+        if (player.getCol() == 0 && player.getRow() == 0 && !hasWon) {
         	
         	String message = player.getName() + " has won the game!";
 
@@ -161,6 +162,7 @@ public class GameController {
         	pauseMusic();
         	GuiBoard.countDown.stop();
         	GuiBoard.duration.stop();
+        	hasWon = true;
         	guiBoard.setVisible(false);
         	LoginScreen loginScreen = new LoginScreen();
         	loginScreen.setVisible(true);
@@ -224,19 +226,9 @@ public class GameController {
 		    int question = new Random().nextInt(length);
 		    Question q = questions.get(diff).get(question);
 		    ArrayList<String> answers = q.getAnswers();
-
-//		    // Create a JPanel to hold the question, answers, and diffTranslated
-//		    JPanel panel = new JPanel(new BorderLayout());
-	//
-//		    // Create a label for the question
-//		    JLabel questionLabel = new JLabel(q.getQuestion());
-//		    panel.add(questionLabel, BorderLayout.NORTH);
-
 		    // Create a JList for the answers
 		    JList<String> jlist = new JList<>(answers.toArray(new String[answers.size()]));
 		    jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		  //  panel.add(new JScrollPane(jlist), BorderLayout.CENTER);
-
 		    // Translate difficulty
 		    switch (diff) {
 		        case "1":
