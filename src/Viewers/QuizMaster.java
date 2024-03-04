@@ -50,7 +50,7 @@ public class QuizMaster extends JFrame {
 	private ArrayList<Question> allQuestions = new ArrayList<>();
 	private String difficulty = "1";
     private HashMap<String,ArrayList<Model.Question>> questions = gc.loadQuesitons();
-    private ArrayList<Question> currentQuestionsList = currentQuestionsList = questions.get(difficulty);;
+    private ArrayList<Question> currentQuestionsList = questions.get(difficulty);;
     private Question currentQuestion = null;
     private int currentPosition = 0;
     private ArrayList<JRadioButton> correctButtons = new ArrayList<>();
@@ -123,6 +123,7 @@ public class QuizMaster extends JFrame {
 	private boolean editMode = false;
 	ButtonGroup difficultyGroup;
 	String tmpDiff = null;
+	private JButton abortBtn;
 
 
     
@@ -495,6 +496,36 @@ public class QuizMaster extends JFrame {
         hardBtn.setBounds(465, 270, 120, 30);
         contentPane.add(hardBtn);
         
+		abortBtn = new JButton("Abort");
+		abortBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				editMode = false;
+				currentPosition = 0;
+				currentQuestion = currentQuestionsList.get(currentPosition);
+				displayQuestion();
+				enableFields(true);
+			    saveBtn.setEnabled(false);
+			    addBtn.setEnabled(true);
+			    editBtn.setEnabled(true);
+			    deleteBtn.setEnabled(true);
+			    nextBtn.setEnabled(true);
+			    lastBtn.setEnabled(true);
+			    searchBtn.setEnabled(true);
+				abortBtn.setVisible(false);
+				abortBtn.setEnabled(false);
+			    backBtn.setEnabled(true);
+			    firstQuestionBtn.setEnabled(true);
+			    pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
+			}
+		});
+		abortBtn.setVisible(false);
+		abortBtn.setEnabled(false);
+		abortBtn.setForeground(new Color(240, 230, 140));
+		abortBtn.setFont(new Font("Stencil", Font.BOLD, 14));
+		abortBtn.setBackground(new Color(160, 82, 45));
+		abortBtn.setBounds(10, 607, 90, 30);
+		contentPane.add(abortBtn);
+        
         firstQuestionBtn = new JButton("|<");
         firstQuestionBtn.setHorizontalAlignment(SwingConstants.LEADING);
         firstQuestionBtn.addActionListener(new ActionListener() {
@@ -677,7 +708,13 @@ public class QuizMaster extends JFrame {
                 difficultyButton1.setVisible(true);
                 difficultyButton2.setVisible(true);
                 difficultyButton3.setVisible(true);
-              
+                nextBtn.setEnabled(false);
+                lastBtn.setEnabled(false);
+                searchBtn.setEnabled(false);
+                abortBtn.setVisible(true);
+                abortBtn.setEnabled(true);
+                backBtn.setEnabled(false);
+                firstQuestionBtn.setEnabled(false);
                 difficultyButtons.get(Integer.valueOf(currentQuestion.getDifficulty())-1).setSelected(true);
                 
          	}
@@ -730,7 +767,13 @@ public class QuizMaster extends JFrame {
         	    deleteBtn.setEnabled(true);
         	    saveBtn.setEnabled(false);
         	    questions = gc.loadQuesitons();
-        	    
+        	    nextBtn.setEnabled(true);
+        	    lastBtn.setEnabled(true);
+        	    searchBtn.setEnabled(true);
+        	    abortBtn.setVisible(false);
+        	    abortBtn.setEnabled(false);
+        	    backBtn.setEnabled(true);
+        	    firstQuestionBtn.setEnabled(false);
         	    currentQuestionsList = questions.get(difficulty);
         	    if(currentQuestionsList!=null)
                 {
@@ -759,12 +802,6 @@ public class QuizMaster extends JFrame {
         addBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		addNewQuestion();
-        	   
-
-        		
-
-        		
-
         	}
         });
         addBtn.setForeground(new Color(240, 230, 140));
@@ -820,6 +857,7 @@ public class QuizMaster extends JFrame {
 		screenLabel.setBounds(0,0,800,800);
 		screenLabel.setVisible(true);
 		contentPane.add(screenLabel);
+	
 
 	}
 private void addNewQuestion() {
@@ -834,6 +872,13 @@ private void addNewQuestion() {
     addBtn.setEnabled(false);
     editBtn.setEnabled(false);
     deleteBtn.setEnabled(false);
+    nextBtn.setEnabled(false);
+    lastBtn.setEnabled(false);
+    searchBtn.setEnabled(false);
+    abortBtn.setVisible(true);
+    abortBtn.setEnabled(true);
+    backBtn.setEnabled(false);
+    firstQuestionBtn.setEnabled(false);
     correctButtons.get(0).setSelected(true);
 	}
 protected Question createQuestion() throws IncompleteInputException  {
@@ -984,9 +1029,6 @@ private void customizeRadioButton(JRadioButton radioButton, int x, int y) {
             }
         };
     }
-
-	
-
   }
 
 

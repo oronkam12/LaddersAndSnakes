@@ -127,10 +127,10 @@ public class QuestionCell extends Object{
 		int newRow = headCell.getRow();
 		ArrayList<Integer> a = new ArrayList<>();
 		
-		if (newRow == 6 && !movement) {
+		if (newRow == rows - 1 && !movement) {
 			if (headCell.getCol() + move > cols - 1) {
-				newCol = 6;
-				newRow = 6;
+				newCol = cols - 1;
+				newRow = rows - 1;
 			}
 			else {
 				newCol = headCell.getCol() + move;
