@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import Controller.GameController;
-
 public class QuestionCell extends Object{
 	
 	private int rows;
@@ -24,7 +22,6 @@ public class QuestionCell extends Object{
 		this.cols = cols;
 		this.difficulty = difficulty;
 		try {
-	        // Use relative path from the project root directory
 	        BufferedImage image = ImageIO.read(new File("Assets/questionMark.png"));
 	        this.image = image;
 	    } catch (IOException e) {
@@ -118,15 +115,12 @@ public class QuestionCell extends Object{
 		}		
 	}
 	
-	private ArrayList<Integer> checkLocation (int move) {
-		int oldCol = headCell.getCol();
-		int oldRow = headCell.getRow();
-		
-		
+	private ArrayList<Integer> checkLocation (int move) {		
 		int newCol = headCell.getCol();
 		int newRow = headCell.getRow();
 		ArrayList<Integer> a = new ArrayList<>();
 		
+		//wrong answers
 		if (newRow == rows - 1 && !movement) {
 			if (headCell.getCol() + move > cols - 1) {
 				newCol = cols - 1;
@@ -146,7 +140,6 @@ public class QuestionCell extends Object{
 				newRow = headCell.getRow();
 			}	
 		}
-		
 		//Correct answer for diff 3
 		if (movement && difficulty.equals("3")) {
 			
@@ -159,15 +152,11 @@ public class QuestionCell extends Object{
 				newRow = headCell.getRow();
 			}
 		}
-		//wrong answers
-		
 		a.add(newCol);
 		a.add(newRow);
 		return a;	
 		
 	}
-
-
 
 	@Override
 	ArrayList<Integer> init(Graphics2D g, int cellHeight, int cellWidth) {
@@ -175,21 +164,15 @@ public class QuestionCell extends Object{
 		return null;
 	}
 
-
-
 	@Override
 	ArrayList<Double> reshape(ArrayList<Integer> list) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
-
 	@Override
 	void plot(ArrayList<Double> list, Graphics2D g, int cellWidth, int cellHeight) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 }

@@ -50,8 +50,6 @@ public abstract class Object {
 		ArrayList<Double> reshapeList = reshape(list);
 		plot(reshapeList,g, cellWidth, cellHeight);
 	}
-	// added nothing
-	
 	
 
 }

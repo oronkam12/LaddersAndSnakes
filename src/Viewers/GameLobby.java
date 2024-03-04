@@ -37,8 +37,6 @@ public class GameLobby extends JFrame {
     private boolean flag;
     private boolean clickedFlag = false;
     private CustomButton selectedButton;
-    private Set<String> nameSet = new HashSet<>();
-    private Set<String> chosenColors = new HashSet<>();
    
 
     public static void main(String[] args) {
@@ -197,7 +195,6 @@ public class GameLobby extends JFrame {
 	                            throw new Exception("Please select difficulty level!");
 	                       
 	                        ArrayList<String> players = new ArrayList<>();
-	                        System.out.println(playersNames);
 	                        for(int j=0;j<playersNames.size();j++) {
 	                            players.add(playersNames.get(j).getText());
 	                            
@@ -289,7 +286,7 @@ public class GameLobby extends JFrame {
     }
 
     private GuiBoard createGuiBoard(String difficulty, ArrayList<String> players, ArrayList<String> colors) {
-    BoardFactory boardFactory = new BoardFactory();
+    	BoardFactory boardFactory = new BoardFactory();
         BoardCreation boardCreation = boardFactory.makeBoard(difficulty);
         return new GuiBoard(boardCreation.getRows(), boardCreation.getCols(), boardCreation.getSnakes(), boardCreation.getLadders(), boardCreation.getBoard(), boardCreation.getCellWidth(), boardCreation.getCellHeight(), players, colors);
     }    

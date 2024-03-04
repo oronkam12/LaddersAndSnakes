@@ -1,14 +1,7 @@
 package Model;
-import java.lang.reflect.Executable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
-import java.util.Scanner;
 
-import javax.swing.SwingUtilities;
-
-import Controller.GameController;
-import Viewers.GuiBoard;
 
 public class BoardCreation {
     private final int rows;
@@ -20,7 +13,7 @@ public class BoardCreation {
     private int cellHeight;
     private ArrayList<Ladder> ladders;
     private ArrayList<Integer> snakesDis;
-    private ArrayList<Question> questionsList;
+    
     private int numLadders;
     
     
@@ -94,32 +87,25 @@ public class BoardCreation {
         while (generatedLadders < numLadders) {  // Change this loop to ensure you get 5 snakes
             int row1;
             int row2;
-            
-            
             while (true) {
                 row1 = random.nextInt(this.rows);
                 row2 = random.nextInt(this.rows);
-
                 if ( row1 - row2 == distance) {
                     break;
                 }
             }
-            
-            	boolean done = false;
-            	while(!done) {
-            		try {
-            			addLadder(row1,row2);
-            			done=true;
-            		}
-            		catch (Exception e) {
-					}
-            	}
-            	distance = distance+1;
-            	generatedLadders++;
-            
-            
+        	boolean done = false;
+        	while(!done) {
+        		try {
+        			addLadder(row1,row2);
+        			done=true;
+        		}
+        		catch (Exception e) {
+				}
+        	}
+        	distance = distance+1;
+        	generatedLadders++;
         }
-           
     }
         
 	private void addPresent() {
@@ -161,8 +147,6 @@ public class BoardCreation {
 	    	board[cell1.getRow()][cell1.getCol()].setSnakeOrLadder(qc);
 		}
 	}
-	
-	
 	
     
     private void addYellowSnake(int row1,int row2) {
@@ -214,8 +198,7 @@ public class BoardCreation {
     
     private void addRedSnake(int row1) {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0) || (board[rows-1][cols-1]==cell1)) {
-    		System.out.println("stuck red");
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol() == 0 && cell1.getRow() == 0) || (cell1.getCol()== cols -1 && cell1.getRow()== rows - 1)) {
     		cell1 = GenerateCell(row1);
     	}
 
@@ -227,7 +210,7 @@ public class BoardCreation {
     
     private void addLadder(int row1,int row2) throws Exception {
     	Cell cell1 = GenerateCell(row1);
-    	while(cell1.getSnakeOrLadder()!=null || (cell1.getRow()==0 && cell1.getCol()==0) || (board[rows-1][cols-1]==cell1) || (cell1.getCol()== cols-1 && cell1.getRow()== rows-1))
+    	while(cell1.getSnakeOrLadder()!=null || (cell1.getRow() == 0 && cell1.getCol() == 0) || (board[rows-1][cols-1]==cell1) || (cell1.getCol()== cols-1 && cell1.getRow()== rows-1))
     		cell1 = GenerateCell(row1);
     	
     	Cell cell2 = GenerateCell(row2);
@@ -236,7 +219,6 @@ public class BoardCreation {
     		cell2 = GenerateCell(row2);
     		counter--;
     		if(counter<=0)
-    			System.out.println("stuck here:");
     			throw new Exception();
     	}
     	Ladder l = new Ladder(cell2,cell1);
@@ -260,8 +242,6 @@ public class BoardCreation {
         return (position - 1) % cols;
     }
 
-    
-    
     public ArrayList<Snake> getSnakes() {
         return this.snakes;
     }
@@ -270,10 +250,6 @@ public class BoardCreation {
         return this.board;
     }
     
-    
-    
-
-
 	public int getCellWidth() {
 		return cellWidth;
 	}
@@ -297,6 +273,4 @@ public class BoardCreation {
 	public void setLadders(ArrayList<Ladder> ladders) {
 		this.ladders = ladders;
 	}
-
-
 }

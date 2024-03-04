@@ -1,7 +1,5 @@
-
 package Viewers;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -10,37 +8,22 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
-import javax.swing.border.LineBorder;
 
 import Model.CustomButton;
 
 public class LoginScreen extends JFrame {
-      private LoginScreen loginScreen;
-      private JButton SinglePlayerBtn;
       private ImageIcon cubeImage ;
       private ImageIcon gameIconImage;
       private ImageIcon screenImage;
       private ImageIcon logoImage;
-      private ImageIcon startImage;
-      private ImageIcon instructionsImage;
-      private ImageIcon historyImage;
-      private ImageIcon questionsImage;
-      private ImageIcon exitImage ;
       /**
        * Create the frame.
        */
@@ -64,9 +47,7 @@ public class LoginScreen extends JFrame {
             JLabel logoLabel = new JLabel(logoImage);
             logoLabel.setBounds(100,150,560,125);
             logoLabel.setVisible(true);
-            contentPane.add(logoLabel);
-            
-            
+            contentPane.add(logoLabel);          
             
             gameIconImage  = new ImageIcon("Assets/ladder2.png");
             JLabel gameIconLabel = new JLabel(gameIconImage);
@@ -75,16 +56,13 @@ public class LoginScreen extends JFrame {
             gameIconLabel.setBounds(500,450,250,250);
             gameIconLabel.setVisible(true);
             contentPane.add(gameIconLabel);
-
-
             
             CustomButton startBtn = new CustomButton("START", 295, 338, 200, 50, e ->{
                   LoginScreen.this.setVisible(false);
                   GameLobby gameLobby = new GameLobby();
                   
                   gameLobby.setVisible(true);
-                  
-                  
+                                    
                   // opening back the last page
                   gameLobby.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                   gameLobby.addWindowListener(new WindowAdapter() {
@@ -93,8 +71,7 @@ public class LoginScreen extends JFrame {
                         // This code is executed when InstructionsPage is closed
                         LoginScreen.this.setVisible(true);
                     }
-                });
-                  
+                });          
             });
             startBtn.setFont(new Font("Stencil", Font.BOLD, 18));
             contentPane.add(startBtn);
@@ -102,10 +79,7 @@ public class LoginScreen extends JFrame {
             CustomButton instructionsBtn = new CustomButton("instructions",295, 405, 200, 60,e->{
                   LoginScreen.this.setVisible(false);
                   InstructionsPage ip = new InstructionsPage();
-                  
                   ip.setVisible(true);
-                  
-                  
                   // opening back the last page
                   ip.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                   ip.addWindowListener(new WindowAdapter() {
@@ -153,7 +127,6 @@ public class LoginScreen extends JFrame {
 
       }
 
-      
       public static void main(String[] args) {
             EventQueue.invokeLater(new Runnable() {
                   public void run() {

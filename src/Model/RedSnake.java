@@ -1,7 +1,5 @@
 package Model;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -39,8 +37,6 @@ public class RedSnake extends Snake {
 
 	    int endX = (this.getButtomCell().getCol() + 1) * cellHeight;
 	    int endY = (this.getButtomCell().getRow() + 1) * cellWidth;
-
-
 	      
 	    //Set dimensions in pixels - end
 	    list.add(startX);
@@ -72,20 +68,15 @@ public class RedSnake extends Snake {
 	public void plot(ArrayList<Double> list,Graphics2D g, int cellWidth,int cellHeight) {
 		//Loading and scaling the image to fit board (Some of the calculations are for design implementations)
 	    BufferedImage snakeImage = this.getImage();
-	    System.out.println(headCell.getRow() + " " + headCell.getCol());
 	    //Calculating middle location of scaled image
 	    int width = cellWidth; // Set to cellSize
 	    int height = cellHeight; // Set to cellSize
 	    
 	    int drawX = (int) (list.get(1) - (width /2));
 	    int drawY = (int) (list.get(2) - (height / 2));
-	    
-	    
 	   
 	    // Draw the scaled snakeImage to fit the cellSize
 	    g.drawImage(snakeImage, drawX, drawY, width, height, null);
-	    
-	    
 	}
 	
 
@@ -93,8 +84,4 @@ public class RedSnake extends Snake {
 	public String toString() {
 		return "RedSnake [headCell=" + headCell + ", buttomCell=" + buttomCell;
 	}
-	
-	
-
-
 }

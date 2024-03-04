@@ -1,5 +1,4 @@
 package Model;
-import java.awt.Color;
 
 public enum CellColor {
     RED, BLUE, GREEN, CYAN, PINK;

@@ -2,7 +2,6 @@ package Controller;
 import Model.* ;
 import Model.Object;
 import Viewers.*;
-import Viewers.GuiBoard.BoardPanel;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -11,7 +10,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -20,14 +18,12 @@ import java.util.concurrent.TimeUnit;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -64,15 +60,13 @@ public class GameController {
             public void actionPerformed(ActionEvent e) {
             	//----- in case need to move forward on the board -----
                 if (movesLeft > 0) {
-                	if (!player.getName().equals("bot")) {
-                		player.setAskedQ(false);
-                	}
+                	player.setAskedQ(false);
                     movesLeft = Move(player, 1 ,movesLeft);
                     boardPanel.repaint();
                 }
                 else {
                 	//----- in case passed last col of winning and need to go back -------
-                	if(movesLeft<0) {
+                	if(movesLeft < 0) {
                 		while(movesLeft!=0) {
                 			MoveBackWards(player,1,movesLeft);
                     		movesLeft = movesLeft+1;
@@ -173,7 +167,7 @@ public class GameController {
 		Object o = null;
 		if (guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder()!=null) {
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof QuestionCell) {
-				if (!player.getName().equals("bot") && !player.isAskedQ()) {
+				if (!player.isAskedQ()) {
 					QuestionCell qc = null;
 					qc = (QuestionCell)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
 					handleQuestion(qc, player);
@@ -204,8 +198,8 @@ public class GameController {
 		}
 		//-------- move 1 col to the left --------------
 		else
-			    player.setCol(player.getCol() - 1);  // Assuming player and boardPanel are defined elsewhere in your code
-				return movesLeft-1;
+		    player.setCol(player.getCol() - 1);  // Assuming player and boardPanel are defined elsewhere in your code
+			return movesLeft-1;
 	}
 	public int MoveBackWards(Player player ,int i, int movesLeft) {
 		 if(player.getCol()+i >getBoardCols()-1 )
@@ -214,8 +208,8 @@ public class GameController {
 			player.setCol(player.getCol()+i-this.getBoardCols());
 		}
 		else
-			    player.setCol(player.getCol() + 1);  // Assuming player and boardPanel are defined elsewhere in your code
-				return movesLeft+1;
+		    player.setCol(player.getCol() + 1);  // Assuming player and boardPanel are defined elsewhere in your code
+			return movesLeft+1;
 	}
 	
 	public void handleQuestion(QuestionCell qc, Player player) {
@@ -357,10 +351,7 @@ public class GameController {
 	
 	
 	
-	public void addQuestion(Question question, String path)
-	{
-		
-
+	public void addQuestion(Question question, String path) {
 		 ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 	        File file = new File(path);
 	        ObjectNode rootNode;
@@ -427,19 +418,12 @@ public class GameController {
 	    }
 
 	    // Update the question in the list
-	    boolean found = false;
 	    for (int i = 0; i < questionsList.size(); i++) {
 	        Question q = questionsList.get(i);
 	        if (q.getQuestion().equals(originalQuestion)) {
 	            questionsList.set(i, updatedQuestion);
-	            found = true;
 	            break;
 	        }
-	    }
-
-	    if (!found) {
-	        System.out.println("Question not found: " + originalQuestion);
-	        return;
 	    }
 
 	    // Update the questions node
@@ -478,8 +462,7 @@ public class GameController {
             return false;
         }
 
-        public  ArrayList<Match> getMatchesAsList(String path)
-    	{
+        public  ArrayList<Match> getMatchesAsList(String path) {
     		ArrayList<Match> matchesList = new ArrayList<>();
     		ObjectMapper objectMapper = new ObjectMapper();
     		try {
@@ -491,61 +474,53 @@ public class GameController {
                 	  matchesList = (ArrayList<Match>) objectMapper.convertValue(matchesNode, new TypeReference<List<Match>>(){});
                   }
     		}
-    	 catch (IOException e) {
-            e.printStackTrace();
-        }
+    		catch (IOException e) {
+    			e.printStackTrace();
+    		}
             return matchesList;
     	}	
-        public void addMatch(String path,Match match)
-    	{
-        	System.out.println("zz");
-    		 ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-    	        File file = new File(path);
-    	        ObjectNode rootNode;
-    	        List<Match> matches = new ArrayList<>();
+        
+        public void addMatch(String path,Match match) {
+    		ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+	        File file = new File(path);
+	        ObjectNode rootNode;
+	        List<Match> matches = new ArrayList<>();
 
-    	        if (file.exists() && file.length() > 0) {
-    	            try {
-    	                rootNode = (ObjectNode) objectMapper.readTree(file);
-    	            } catch (IOException e) {
-    	                e.printStackTrace();
-    	                return; // Exit if reading fails
-    	            }
-    	        } else {
-    	            // Initialize rootNode as an empty ObjectNode if the file doesn't exist or is empty
-    	            rootNode = objectMapper.createObjectNode();
-    	            rootNode.putArray("matches"); // Initialize questions as an empty array
-    	        }
+	        if (file.exists() && file.length() > 0) {
+	            try {
+	                rootNode = (ObjectNode) objectMapper.readTree(file);
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                return; // Exit if reading fails
+	            }
+	        } else {
+	            // Initialize rootNode as an empty ObjectNode if the file doesn't exist or is empty
+	            rootNode = objectMapper.createObjectNode();
+	            rootNode.putArray("matches"); // Initialize questions as an empty array
+	        }
 
-    	        // Retrieve or create the questions array node
-    	        ArrayNode matchNode = (ArrayNode) rootNode.path("matches");
-    	        if (!matchNode.isArray()) {
-    	        	matchNode = rootNode.putArray("matches");
-    	        }
+	        // Retrieve or create the questions array node
+	        ArrayNode matchNode = (ArrayNode) rootNode.path("matches");
+	        if (!matchNode.isArray()) {
+	        	matchNode = rootNode.putArray("matches");
+	        }
 
-    	        // Deserialize existing questions, if any
-    	        if (matchNode.size() > 0) {
-    	            matches = objectMapper.convertValue(matchNode, new TypeReference<List<Match>>() {});
-    	        }
+	        // Deserialize existing questions, if any
+	        if (matchNode.size() > 0) {
+	            matches = objectMapper.convertValue(matchNode, new TypeReference<List<Match>>() {});
+	        }
 
-    	        // Add the new question to the list
-    	        matches.add(match);
+	        // Add the new question to the list
+	        matches.add(match);
 
-    	        // Replace the existing questions array with the updated list
-    	        rootNode.set("matches", objectMapper.valueToTree(matches));
+	        // Replace the existing questions array with the updated list
+	        rootNode.set("matches", objectMapper.valueToTree(matches));
 
-    	        // Serialize the rootNode (which now includes the updated questions list) back to JSON and write it to the file
-    	        try {
-    	            objectMapper.writeValue(file, rootNode);
-    	        } catch (IOException e) {
-    	            e.printStackTrace();
-    	        }
-
-    	}
-
-		
-    
-	
-	
-	
+	        // Serialize the rootNode (which now includes the updated questions list) back to JSON and write it to the file
+	        try {
+	            objectMapper.writeValue(file, rootNode);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+    	}	
 }

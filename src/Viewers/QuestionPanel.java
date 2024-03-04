@@ -22,8 +22,6 @@ public class QuestionPanel extends JPanel {
 
     public QuestionPanel(Question question, JList<String> jlist, String diffTranslated) {
         setLayout(new BorderLayout());
-
-
         // Create a label for the question
         JLabel questionLabel = new JLabel(question.getQuestion());
         questionLabel.setFont(new Font("Stencil", Font.PLAIN, 18));
@@ -34,7 +32,6 @@ public class QuestionPanel extends JPanel {
         diffLabel.setFont(new Font("Stencil", Font.PLAIN, 16));
         add(diffLabel, BorderLayout.SOUTH);
 
-        
         // Use the provided JList for the answers
         jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jlist.setFont(new Font("Segue OU", Font.PLAIN, 16));

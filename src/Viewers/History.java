@@ -4,25 +4,18 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
-import java.util.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoundedRangeModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,7 +34,6 @@ import Model.Match;
 
 public class History extends JFrame {
 
-	private JPanel contentPane;
 	private ImageIcon screenImage;
 	private ImageIcon historyImage;
 	private JTable table;
@@ -163,8 +155,6 @@ public class History extends JFrame {
          });
 
      //    To make the table header background transparent (optional)
-//        table.getTableHeader().setOpaque(false);
-//        table.getTableHeader().setBackground(new Color(0, 0, 0, 0)); // Set a transparent color
         table.setDefaultRenderer(Object.class, new PrettyCellRenderer ());
         table.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override

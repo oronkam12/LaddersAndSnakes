@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -28,7 +27,6 @@ public class GuiBoard extends JFrame {
     private final ArrayList<Snake> snakes;
     private final ArrayList<Ladder> ladders;
     private final Cell[][] board;
-    private Player player; // Add a Player object to represent the character
     private boolean botFlag; // to create players only 1 time and not every board refresh
     private final GameController gameController;
     private int cellWidth;
@@ -36,10 +34,6 @@ public class GuiBoard extends JFrame {
     private ArrayList<String> players;
     private ArrayList<Player> allPlayers;
     private Player currentPlayer;
-    private double heightFactor;
-    private double widthFactor;
-    private ArrayList<String> colors;
-    private HashMap<String,ArrayList<Question>> questions;
     private JLabel[] playerLabels;
     private JLabel[] markTurnsLabels;
     JButton btnPlay = new JButton();
@@ -50,7 +44,6 @@ public class GuiBoard extends JFrame {
     JButton btnInfo = new JButton();
     JButton btnHomePage = new JButton();
 
-    //Nadav
     int CTsecond = 30, CTminute = 0, Dsecond = 0, Dminute = 0;
     String CTddSecond, CTddMinute, DddSecond, DddMinute;
     DecimalFormat dFormat = new DecimalFormat("00");
@@ -64,7 +57,7 @@ public class GuiBoard extends JFrame {
 	private Player lastPlayer;
 	
     // constructor of Gui Board
-    public GuiBoard(int rows, int cols, ArrayList<Snake> snakes,ArrayList<Ladder>ladders, Cell[][] board,int cellWidth,int cellHeight,ArrayList<String> players,ArrayList<String> colors) {
+    public GuiBoard(int rows, int cols, ArrayList<Snake> snakes,ArrayList<Ladder>ladders, Cell[][] board,int cellWidth,int cellHeight, ArrayList<String> players ,ArrayList<String> colors) {
         this.rows = rows;
         this.cols = cols;
         this.snakes = snakes;
@@ -74,15 +67,7 @@ public class GuiBoard extends JFrame {
         this.ladders = ladders;
         this.players = players; // array of players string names
         this.botFlag = false;
-        
-        if(players.contains("bot")) {
-            this.botFlag = true;
-        }
-
-        this.colors = colors;
         this.allPlayers = new ArrayList<Player>(); // array of players objects
-        this.heightFactor=1;
-        this.widthFactor=1;
         for(int i=0;i<colors.size();i++) {
         	if(colors.get(i).equals("Red")) {
         		Player p = new Player(rows-1,cols-1,players.get(i),board,Color.RED);
@@ -109,7 +94,7 @@ public class GuiBoard extends JFrame {
 	            allPlayers.add(p);
         	}
         }
-        normalTimer();
+        durationTimer();
         startTime = System.currentTimeMillis();
         duration.start();
         
@@ -228,12 +213,8 @@ public class GuiBoard extends JFrame {
             	        gameController.movePlayer(currentPlayer, boardPanel,movement);
             	        lblTimer.setText("Time left: ");
             	        boardPanel.repaint();// repaint for ladders or snakes cases
-        	        }
-        	        
-        	      
+        	        }      	        
         	        timerActiovation();
-
-        	        
         	        // Delay before bot's move or replacing turn 
         	        Timer timer = new Timer(150*(movement+1), new ActionListener() { // Adjust the delay time in milliseconds (e.g., 2000 for 2 seconds)
         	            @Override
@@ -243,7 +224,6 @@ public class GuiBoard extends JFrame {
                 	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
                 	        		playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 26));
                 	        		markTurnsLabels[i].setVisible(true);
-                	        		
                 	        	}
                 	        	else {
                 	        		playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 22));
@@ -251,28 +231,21 @@ public class GuiBoard extends JFrame {
                 				}
                 	        }
     	                    checkObjects();
-        	               
-        	                    // Enable the button immediately if the next player is not a bot
-        	                    btnDiceRoll.setEnabled(true);
-        	                    checkObjects();
-	                            boardPanel.repaint();
+    	                    btnDiceRoll.setEnabled(true);
+    	                    checkObjects();
+                            boardPanel.repaint();
     	                }
         	        });
         	        timer.setRepeats(false); // Ensure the timer only fires once
-        	       
-
         	        if (botFlag == false) {
         	        	lastPlayer = currentPlayer;
         	            currentPlayer = nextPlayer(currentPlayer);
         	            checkObjects();
                         boardPanel.repaint();
                         gameController.checkForWin(lastPlayer);
-
         	        }
-
         	        timer.start();
                     boardPanel.repaint();
-
         	 }
         	 public void checkObjects() {
         		 for(Player p:allPlayers) {
@@ -281,87 +254,78 @@ public class GuiBoard extends JFrame {
         		 }
         	 }
         	 
-        	 
         	 private int rollDice() {
         		 if(cols==7) {
          	        return new Random().nextInt(8);
-
         		 }
         		 if(cols==10) {
           	        return new Random().nextInt(14);
         		 }
         		 else {
            	        return new Random().nextInt(16);
-
         		 }
-        	    }
-        	 
-
-        	 
+        	 }
         	 
         	 private void rollingDiceDisplay(int movement) {
-        		 int movement2 = movement + 1;
-     	        switch (movement2) {
+        		 switch (movement) {
+        			case 0:
+					    lblDiceRoll1.setIcon(new ImageIcon("Images/disable.png"));
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setVisible(false);
+						break;				 
 					case 1:
-				        lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
+					    lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setVisible(false);
 						break;
 					case 2:
-				        lblDiceRoll1.setIcon(new ImageIcon("Images/2Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-				        break;
+					    lblDiceRoll1.setIcon(new ImageIcon("Images/2Dice.png"));
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setVisible(false);
+					    break;
 					case 3:
 						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-				        break;
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setVisible(false);
+					    break;
 					case 4:
 						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-				        break;
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setVisible(false);
+					    break;
 					case 5:
 						lblDiceRoll1.setIcon(new ImageIcon("Images/5Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-				        break;
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setVisible(false);
+					    break;
 					case 6:
 						lblDiceRoll1.setIcon(new ImageIcon("Images/6Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setVisible(false);
-				        break;
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setVisible(false);
+					    break;
 					case 7:
 						lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
-				        lblRollDice2.setVisible(true);
-				        break;
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
+					    lblRollDice2.setVisible(true);
+					    break;
 					case 8:
 						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
-				        lblRollDice2.setVisible(true);
-				        break;
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
+					    lblRollDice2.setVisible(true);
+					    break;
 					case 9:
 						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
-				        lblRollDice2.setVisible(true);
-				        break;
-					case 10:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
-				        lblDiceRoll1.setVisible(true);
-				        lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
-				        lblRollDice2.setVisible(true);
-				        break;
-
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
+					    lblRollDice2.setVisible(true);
+					    break;
 					default:
 						break;
-					}
-        	 }
-        });
+				}
+    	 	}
+    	});
         
         getContentPane().add(btnDiceRoll);
         
@@ -382,10 +346,8 @@ public class GuiBoard extends JFrame {
             	duration.stop();
             	if (countDown != null) {
             		countDown.stop();	
-            	}
-            	
+            	}	
                 dispose();
-
                 // Open a new LoginScreen window
                 LoginScreen loginScreen = new LoginScreen();
                 loginScreen.setVisible(true);
@@ -415,16 +377,12 @@ public class GuiBoard extends JFrame {
         btnMute.setVisible(true);
         btnMute.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
                 gameController.pauseMusic();
                 btnUnmute.setVisible(true);
                 btnMute.setVisible(false);
-
             }
         });
         
-
-
         gameController.loadMusic("maplestoryMusic.wav");
         gameController.playMusic();
 
@@ -594,77 +552,57 @@ public class GuiBoard extends JFrame {
     }
     
     public boolean checkQuestion(int movement,Player player) {
-//    	System.out.println("cols: "+cols);
-//    	System.out.println(movement);
 		if(cols==7) {
 			if(movement==5) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
-//				System.out.println("rolled: "+movement + "easy question");
 				return true;
 			}
 			else if(movement ==6) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
-//				System.out.println("rolled: "+movement + "medium question");
 				return true;
-
 			}
 			else if (movement==7){
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("3", player);
-//				System.out.println("rolled: "+movement + "hard question");
 				return true;
-
 			}
 		}
 		else if(cols==10) {
 			if(movement==7 || movement ==8) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
-//				System.out.println("rolled: "+movement + "easy question");
 				return true;
-
 			}
 			else if(movement==9||movement ==10) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
-//				System.out.println("rolled: "+movement + "medium question");
 				return true;
-
 			}
 			else if(movement ==11 || movement ==12) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("3", player);
-//				System.out.println("rolled: "+movement + "hard question");
 				return true;
-
 			}
 		}
 		else if(cols==13) {
 			if(movement == 7 || movement ==8) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
-//				System.out.println("rolled: "+movement + "easy question");
 				return true;
-
 			}
 			else if(movement == 9 || movement == 10) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
-//				System.out.println("rolled: "+movement + "medium question");
 				return true;
-
 			}
 			else if(movement>10 && movement < 16) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("3", player);
-//				System.out.println("rolled: "+movement + "hard question");
 				return true;
-
 			}
 		}
-		
 		return false;
 	}
 
@@ -675,16 +613,13 @@ public class GuiBoard extends JFrame {
      	}
      	else {
      		for(int i=0;i<allPlayers.size();i++) {
-         		if(allPlayers.get(i) ==p && i+1<allPlayers.size()) {
+         		if(allPlayers.get(i) == p && i+1<allPlayers.size()) {
          			return allPlayers.get(i+1);
          		}
-             		
          	}
      		return allPlayers.get(0);
-     		
      	}
      }
-    
     
 	// board creating as a class 
 	public class BoardPanel extends JPanel {
@@ -695,11 +630,9 @@ public class GuiBoard extends JFrame {
 		private ImageIcon crownIcon;
 		private ImageIcon presentIcon;
 		private ImageIcon questionMarkIcon;
-		private ImageIcon backgroundIcon;
         public BoardPanel() {
         	
         	// loading assets to the board
-        	
         	try {
         		BufferedImage image = ImageIO.read(new File("Assets/crown.png"));
         	    Image resizedImage = image.getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH);
@@ -739,24 +672,16 @@ public class GuiBoard extends JFrame {
                     Cell currentCell = board[i][j];
                     int x = j * cellWidth;
                     int y = i * cellHeight;
-                    
-                    
-                    
                     // ---------------- draw cell border ---------------------
-//                    g.setColor(getColorForCell(currentCell.getValue()));
-//                    g.fillRect(x, y, cellSize, cellSize);
                     g.setColor(Color.BLACK); // color of the border of the whole board
                     g.drawRect(x + borderWidth, y + borderWidth, cellWidth - 1 * borderWidth, cellHeight - 1 * borderWidth);
-
                     // ----------------- draw cell value ----------------------
                     g.setColor(Color.BLACK);
                     g.drawString(Integer.toString(currentCell.getValue()), x + 10, y + 20);
-
                     if (i == 0 && j == 0) {
                         // Calculate the center position for the crown image in the cell
                         int crownX = x + (cellWidth - crownIcon.getIconWidth()) / 2;
                         int crownY = y + (cellHeight - crownIcon.getIconHeight()) / 2;
-
                         // Draw the crown icon at the calculated position
                         crownIcon.paintIcon(this, g, crownX, crownY);
                     }
@@ -769,12 +694,9 @@ public class GuiBoard extends JFrame {
                     	}
                     }
                     else if(board[i][j].getSnakeOrLadder() instanceof QuestionCell) {
-                    	//QuestionCell temp = (QuestionCell)board[i][j].getSnakeOrLadder();
-                    	//if(temp.isMovement()==true) {
-                        	int questionX = x + (cellWidth - questionMarkIcon.getIconWidth()) / 2;
-                            int questionY = y + (cellHeight - questionMarkIcon.getIconHeight()) / 2;
-                            questionMarkIcon.paintIcon(this, g, questionX, questionY);
-                    	//}
+                    	int questionX = x + (cellWidth - questionMarkIcon.getIconWidth()) / 2;
+                        int questionY = y + (cellHeight - questionMarkIcon.getIconHeight()) / 2;
+                        questionMarkIcon.paintIcon(this, g, questionX, questionY);
                     }
                 }
             }
@@ -800,8 +722,6 @@ public class GuiBoard extends JFrame {
             return new Dimension(cols * cellWidth, rows * cellHeight);
         }
        
-        
-
         private Color getColorForCell(int value) {
             CellColor cellColor = CellColor.getColorForValue(value);
             switch (cellColor) {
@@ -819,13 +739,7 @@ public class GuiBoard extends JFrame {
                     return Color.WHITE;
             }
         }
-    }
-	
-	private void drawBackground(Graphics g) {
-        Image backgroundImage = backgroundIcon.getImage();
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-    }
-	
+    }	
 	
 	void timerActiovation(){
 	      //Timer activation
@@ -865,9 +779,7 @@ public class GuiBoard extends JFrame {
 					turnEnded();
 					timerActiovation();
 					CTsecond = 30;
-					System.out.println(currentPlayer.getName());
 					currentPlayer = nextPlayer(currentPlayer);
-					System.out.println(currentPlayer.getName());
 				}
 			}	
 		});
@@ -885,7 +797,7 @@ public class GuiBoard extends JFrame {
         dialog.setVisible(true);
 	}
 	
-	public void normalTimer() {
+	public void durationTimer() {
 		duration = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -909,10 +821,6 @@ public class GuiBoard extends JFrame {
 	// getters and setters
     public Player getCurrentPlayer() {
 		return currentPlayer;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
 	}
 
 	public int getRows() {
