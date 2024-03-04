@@ -8,7 +8,7 @@ public class Question {
 	private ArrayList<String> answers;
 	private String correct_ans;
 	private String difficulty;
-	private ArrayList<Player> askedPlayers;
+//	private ArrayList<Player> askedPlayers;
 	public Question(String question, ArrayList<String> answers, String correct_ans, String difficulty) {
 		super();
 		this.question = question;
@@ -46,13 +46,13 @@ public class Question {
 		this.difficulty = difficulty;
 	}
 	
-	public ArrayList<Player> getAskedPlayers() {
-		return askedPlayers;
-	}
-
-	public void setAskedPlayers(ArrayList<Player> askedPlayers) {
-		this.askedPlayers = askedPlayers;
-	}
+//	public ArrayList<Player> getAskedPlayers() {
+//		return askedPlayers;
+//	}
+//
+//	public void setAskedPlayers(ArrayList<Player> askedPlayers) {
+//		this.askedPlayers = askedPlayers;
+//	}
 
 	@Override
 	public String toString() {

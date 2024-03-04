@@ -383,7 +383,7 @@ public class QuizMaster extends JFrame {
          mediumBtn = new JButton("Medium");
         mediumBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		enableFields(false);
+        		//enableFields(false);
         		currentPosition = 0;
         		difficulty = "2";
         		currentQuestionsList = gc.loadQuesitons().get("2");
@@ -420,7 +420,7 @@ public class QuizMaster extends JFrame {
          easyBtn = new JButton("Easy");
         easyBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		enableFields(false);
+        		//enableFields(false);
         		currentPosition = 0;
         		difficulty = "1";
 
@@ -462,7 +462,7 @@ public class QuizMaster extends JFrame {
          hardBtn = new JButton("Hard");
         hardBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		enableFields(false);
+        		//enableFields(false);
         		currentPosition = 0;
         		difficulty = "3";
         		currentQuestionsList = gc.loadQuesitons().get(difficulty);
@@ -696,6 +696,7 @@ public class QuizMaster extends JFrame {
 					q = createQuestion();
 				} catch (IncompleteInputException e1) {
 				    JOptionPane.showMessageDialog(null, e1.getMessage());
+				    return;
 				}
         		if(editMode)
         		{
@@ -872,6 +873,7 @@ protected Question createQuestion() throws IncompleteInputException  {
 	if(question.equals("")|| answer1.equals("")||answer2.equals("")||answer3.equals("")	||answer4.equals(""))
 	{
 		throw new IncompleteInputException("please make sure you insert input in all fields");
+		
 	}
 	
 	Question q = new Question(question,answers,correctPosition,difficulty);

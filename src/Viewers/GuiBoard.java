@@ -288,10 +288,10 @@ public class GuiBoard extends JFrame {
 
         		 }
         		 if(cols==10) {
-          	        return new Random().nextInt(13);
+          	        return new Random().nextInt(14);
         		 }
         		 else {
-           	        return new Random().nextInt(17);
+           	        return new Random().nextInt(16);
 
         		 }
         	    }
@@ -594,8 +594,8 @@ public class GuiBoard extends JFrame {
     }
     
     public boolean checkQuestion(int movement,Player player) {
-    	System.out.println("cols: "+cols);
-    	System.out.println(movement);
+//    	System.out.println("cols: "+cols);
+//    	System.out.println(movement);
 		if(cols==7) {
 			if(movement==5) {
 				player.setAskedQ(true);
@@ -649,14 +649,14 @@ public class GuiBoard extends JFrame {
 				return true;
 
 			}
-			else if(movement ==9 || movement == 10) {
+			else if(movement == 9 || movement == 10) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
 //				System.out.println("rolled: "+movement + "medium question");
 				return true;
 
 			}
-			else if(movement>10 && movement <14) {
+			else if(movement>10 && movement < 16) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("3", player);
 //				System.out.println("rolled: "+movement + "hard question");
