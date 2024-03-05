@@ -359,7 +359,7 @@ public class QuizMaster extends JFrame {
         mediumBtn = new JButton("Medium");
         mediumBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		//enableFields(false);
+        		enableFields(false);
         		currentPosition = 0;
         		difficulty = "2";
         		currentQuestionsList = gc.loadQuesitons().get("2");
@@ -391,7 +391,7 @@ public class QuizMaster extends JFrame {
         easyBtn = new JButton("Easy");
         easyBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		//enableFields(false);
+        		enableFields(false);
         		currentPosition = 0;
         		difficulty = "1";
 
@@ -462,8 +462,8 @@ public class QuizMaster extends JFrame {
 				editMode = false;
 				currentPosition = 0;
 				currentQuestion = currentQuestionsList.get(currentPosition);
+				enableFields(false);
 				displayQuestion();
-				enableFields(true);
 			    saveBtn.setEnabled(false);
 			    addBtn.setEnabled(true);
 			    editBtn.setEnabled(true);
