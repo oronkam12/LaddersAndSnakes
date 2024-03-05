@@ -135,7 +135,7 @@ public class GuiBoard extends JFrame {
     }
         
        enter = 0;
-       ImageIcon markerIcon = new ImageIcon("Images/markerIcon.png"); 
+       ImageIcon markerIcon = new ImageIcon("Images/markerIcon2.png"); 
        // creating the markers of the turns
        markTurnsLabels = new JLabel[allPlayers.size()];
        for (int i = 0; i < allPlayers.size(); i++) {
@@ -147,9 +147,9 @@ public class GuiBoard extends JFrame {
     	   getContentPane().add(markTurnsLabels[i]);
        }
 
-        
-        playerLabels[0].setFont(new Font("Snap ITC", Font.BOLD, 26));
-        markTurnsLabels[0].setVisible(true);
+       // color the first turn
+       coloredName();
+       
         
         BufferedImage clockIcon = null;
         try {
@@ -219,17 +219,7 @@ public class GuiBoard extends JFrame {
         	        Timer timer = new Timer(150*(movement+1), new ActionListener() { // Adjust the delay time in milliseconds (e.g., 2000 for 2 seconds)
         	            @Override
         	            public void actionPerformed(ActionEvent e) {
-                	        // mark which player is playing now 
-                	        for(int i=0; i<playerLabels.length; i++) {
-                	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
-                	        		playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 26));
-                	        		markTurnsLabels[i].setVisible(true);
-                	        	}
-                	        	else {
-                	        		playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 22));
-                	        		markTurnsLabels[i].setVisible(false);
-                				}
-                	        }
+        	            	coloredName();
     	                    checkObjects();
     	                    btnDiceRoll.setEnabled(true);
     	                    checkObjects();
@@ -265,11 +255,11 @@ public class GuiBoard extends JFrame {
            	        return new Random().nextInt(16);
         		 }
         	 }
-        	 
+        	
         	 private void rollingDiceDisplay(int movement) {
         		 switch (movement) {
         			case 0:
-					    lblDiceRoll1.setIcon(new ImageIcon("Images/disable.png"));
+					    lblDiceRoll1.setIcon(new ImageIcon("Images/emptyDice.png"));
 					    lblDiceRoll1.setVisible(true);
 					    lblRollDice2.setVisible(false);
 						break;				 
@@ -550,6 +540,21 @@ public class GuiBoard extends JFrame {
 			}
 		});
     }
+    
+	 public void coloredName() {
+    for (int i = 0; i < allPlayers.size(); i++) {
+        Player player = allPlayers.get(i);
+        if (player.equals(currentPlayer)) {
+            playerLabels[i].setForeground(player.getColor()); // Set the color of the player's name
+            playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 26)); // Set the font style
+            markTurnsLabels[i].setVisible(true); // Show the marker for the current player
+        } else {
+            playerLabels[i].setForeground(new Color(255, 250, 240)); // Set default color for other players
+            playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 22)); // Set default font style
+            markTurnsLabels[i].setVisible(false); // Hide the marker for other players
+        }
+    }
+}
     
     public boolean checkQuestion(int movement,Player player) {
 		if(cols==7) {

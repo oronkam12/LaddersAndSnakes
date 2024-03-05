@@ -247,6 +247,7 @@ public class GameController {
 
 		    if (option == JOptionPane.OK_OPTION) {
 		        int selected = jlist.getSelectedIndex() + 1;
+
 		        if (q.getCorrect_ans().equals(String.valueOf(selected))) {
 		            String m;
 		            if (diff.equals("3")) {
