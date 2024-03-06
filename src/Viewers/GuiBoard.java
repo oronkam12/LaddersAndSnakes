@@ -249,10 +249,10 @@ public class GuiBoard extends JFrame {
          	        return new Random().nextInt(8);
         		 }
         		 if(cols==10) {
-          	        return new Random().nextInt(14);
+          	        return new Random().nextInt(13);
         		 }
         		 else {
-           	        return new Random().nextInt(16);
+           	        return new Random().nextInt(15);
         		 }
         	 }
         	
@@ -306,7 +306,34 @@ public class GuiBoard extends JFrame {
 					    lblRollDice2.setVisible(true);
 					    break;
 					case 9:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
+					    lblRollDice2.setVisible(true);
+					    break;
+					case 10:
 						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setVisible(false);
+					    break;
+					case 11:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/5Dice.png"));
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setVisible(false);
+					    break;
+					case 12:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/6Dice.png"));
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setVisible(false);
+					    break;
+					case 13:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
+					    lblDiceRoll1.setVisible(true);
+					    lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
+					    lblRollDice2.setVisible(true);
+					    break;
+					case 14:
+						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
 					    lblDiceRoll1.setVisible(true);
 					    lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
 					    lblRollDice2.setVisible(true);
@@ -444,7 +471,7 @@ public class GuiBoard extends JFrame {
 		        btnPause.setVisible(true);
 		        
 		        currentPlayer = allPlayers.get(0);
-		        for(int i=0; i<playerLabels.length; i++) {
+		        for(int i = 0; i < playerLabels.length; i++) {
     	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
     	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
     	        		markTurnsLabels[i].setVisible(true);
@@ -556,43 +583,43 @@ public class GuiBoard extends JFrame {
     }
 }
     
-    public boolean checkQuestion(int movement,Player player) {
-		if(cols==7) {
-			if(movement==5) {
+    public boolean checkQuestion(int movement, Player player) {
+		if(cols == 7) {
+			if(movement == 5) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
 				return true;
 			}
-			else if(movement ==6) {
+			else if(movement == 6) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
 				return true;
 			}
-			else if (movement==7){
+			else if (movement == 7){
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("3", player);
 				return true;
 			}
 		}
-		else if(cols==10) {
-			if(movement==7 || movement ==8) {
+		else if(cols == 10) {
+			if(movement == 7 || movement == 8) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
 				return true;
 			}
-			else if(movement==9||movement ==10) {
+			else if(movement == 9||movement == 10) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
 				return true;
 			}
-			else if(movement ==11 || movement ==12) {
+			else if(movement == 11 || movement == 12) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("3", player);
 				return true;
 			}
 		}
 		else if(cols==13) {
-			if(movement == 7 || movement ==8) {
+			if(movement == 7 || movement == 8) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
 				return true;
@@ -602,7 +629,7 @@ public class GuiBoard extends JFrame {
 				gameController.handleRolledQuestion("2", player);
 				return true;
 			}
-			else if(movement>10 && movement < 16) {
+			else if(movement > 10 && movement < 15) {
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("3", player);
 				return true;
@@ -613,12 +640,12 @@ public class GuiBoard extends JFrame {
 
     
     private Player nextPlayer(Player p) {
-     	if(p==null) {
+     	if(p == null) {
      		return allPlayers.get(0);
      	}
      	else {
-     		for(int i=0;i<allPlayers.size();i++) {
-         		if(allPlayers.get(i) == p && i+1<allPlayers.size()) {
+     		for(int i = 0; i < allPlayers.size(); i++) {
+         		if(allPlayers.get(i) == p && i+1 < allPlayers.size()) {
          			return allPlayers.get(i+1);
          		}
          	}

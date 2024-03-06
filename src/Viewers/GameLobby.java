@@ -226,21 +226,25 @@ public class GameLobby extends JFrame {
 	                        // If the color was previously chosen by another player, prevent the game from starting
 	                        Set<String> chosenColors = new HashSet<>();
 	                        for(String color : colors) {
-	                        if(!chosenColors.add(color)) {
-	                        throw new Exception("Players need to play in DIFFERENT colors!");
-	                        }
+		                        if(!chosenColors.add(color)) {
+		                        	throw new Exception("Players need to play in DIFFERENT colors!");
+		                        }
 	                        }
 	
 	                        // Create and display the game board
+	                        setEnabled(false);
 	                        GuiBoard guiBoard = createGuiBoard(selectedButton.getText(), players, colors);
 	                        guiBoard.setVisible(true);
 	                        setVisible(false);
+	                        
 	                    } catch (Exception ex) {
+	                    	ex.printStackTrace();
 	                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
 	                    }
 	                });
 	                playBtn.setFont(new Font("Stencil", Font.PLAIN, 18));
 	                contentPane.add(playBtn);
+	                playBtn.setEnabled(true);
 	            }
 	        }
         }

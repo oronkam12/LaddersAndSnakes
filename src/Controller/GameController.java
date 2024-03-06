@@ -263,6 +263,12 @@ public class GameController {
 		        }
 		        qc.MovePlayer(player);
 		    }
+		    else if (option == JOptionPane.CLOSED_OPTION) {
+		    	String m = "You tried to escape without answering! move " + diff + " steps backwards!";
+		    	displayAnswerStatus(m);
+		    	qc.setMovement(false);
+		    	qc.MovePlayer(player);
+		    }
 	}
 	
 	
