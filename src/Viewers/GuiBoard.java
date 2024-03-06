@@ -284,61 +284,22 @@ public class GuiBoard extends JFrame {
 					    lblRollDice2.setVisible(false);
 					    break;
 					case 5:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/5Dice.png"));
-					    lblDiceRoll1.setVisible(true);
-					    lblRollDice2.setVisible(false);
-					    break;
+						if (rows != 7) {
+							lblDiceRoll1.setIcon(new ImageIcon("Images/5Dice.png"));
+						    lblDiceRoll1.setVisible(true);
+						    lblRollDice2.setVisible(false);
+						}
+						break;
 					case 6:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/6Dice.png"));
-					    lblDiceRoll1.setVisible(true);
-					    lblRollDice2.setVisible(false);
-					    break;
-					case 7:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
-					    lblDiceRoll1.setVisible(true);
-					    lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
-					    lblRollDice2.setVisible(true);
-					    break;
-					case 8:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
-					    lblDiceRoll1.setVisible(true);
-					    lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
-					    lblRollDice2.setVisible(true);
-					    break;
-					case 9:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
-					    lblDiceRoll1.setVisible(true);
-					    lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
-					    lblRollDice2.setVisible(true);
-					    break;
-					case 10:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/4Dice.png"));
-					    lblDiceRoll1.setVisible(true);
-					    lblRollDice2.setVisible(false);
-					    break;
-					case 11:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/5Dice.png"));
-					    lblDiceRoll1.setVisible(true);
-					    lblRollDice2.setVisible(false);
-					    break;
-					case 12:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/6Dice.png"));
-					    lblDiceRoll1.setVisible(true);
-					    lblRollDice2.setVisible(false);
-					    break;
-					case 13:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/1Dice.png"));
-					    lblDiceRoll1.setVisible(true);
-					    lblRollDice2.setIcon(new ImageIcon("Images/6Dice.png"));
-					    lblRollDice2.setVisible(true);
-					    break;
-					case 14:
-						lblDiceRoll1.setIcon(new ImageIcon("Images/3Dice.png"));
-					    lblDiceRoll1.setVisible(true);
-					    lblRollDice2.setIcon(new ImageIcon("Images/5Dice.png"));
-					    lblRollDice2.setVisible(true);
-					    break;
+						if (rows != 7) {
+							lblDiceRoll1.setIcon(new ImageIcon("Images/6Dice.png"));
+						    lblDiceRoll1.setVisible(true);
+						    lblRollDice2.setVisible(false);
+						}
+						break;
 					default:
+					    lblDiceRoll1.setVisible(false);
+					    lblRollDice2.setVisible(false);
 						break;
 				}
     	 	}
@@ -586,16 +547,19 @@ public class GuiBoard extends JFrame {
     public boolean checkQuestion(int movement, Player player) {
 		if(cols == 7) {
 			if(movement == 5) {
+				rolledQuestion("easy");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
 				return true;
 			}
 			else if(movement == 6) {
+				rolledQuestion("medium");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
 				return true;
 			}
 			else if (movement == 7){
+				rolledQuestion("hard");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("3", player);
 				return true;
@@ -603,16 +567,19 @@ public class GuiBoard extends JFrame {
 		}
 		else if(cols == 10) {
 			if(movement == 7 || movement == 8) {
+				rolledQuestion("easy");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
 				return true;
 			}
 			else if(movement == 9||movement == 10) {
+				rolledQuestion("medium");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
 				return true;
 			}
 			else if(movement == 11 || movement == 12) {
+				rolledQuestion("hard");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("3", player);
 				return true;
@@ -620,16 +587,19 @@ public class GuiBoard extends JFrame {
 		}
 		else if(cols==13) {
 			if(movement == 7 || movement == 8) {
+				rolledQuestion("easy");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
 				return true;
 			}
 			else if(movement == 9 || movement == 10) {
+				rolledQuestion("medium");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
 				return true;
 			}
 			else if(movement > 10 && movement < 15) {
+				rolledQuestion("hard");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("3", player);
 				return true;
@@ -811,7 +781,6 @@ public class GuiBoard extends JFrame {
 					turnEnded();
 					timerActiovation();
 					CTsecond = 30;
-					currentPlayer = nextPlayer(currentPlayer);
 				}
 			}	
 		});
@@ -819,8 +788,10 @@ public class GuiBoard extends JFrame {
 	
 	public void turnEnded() {
 		String message = currentPlayer.getName() + " your time ran out! \n Turn passed to " + nextPlayer(currentPlayer).getName();
+		currentPlayer = nextPlayer(currentPlayer);
+		coloredName();
 		final JOptionPane pane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE);
-        final JDialog dialog = pane.createDialog(null, "Timed Dialog");
+        final JDialog dialog = pane.createDialog(null, "Turn Ended");
         // Create a Timer that will close the dialog after 1.5 seconds (1500 ms)
         Timer timer = new Timer(3000, e -> dialog.dispose());
         timer.setRepeats(false);
@@ -828,6 +799,19 @@ public class GuiBoard extends JFrame {
         timer.start();
         dialog.setVisible(true);
 	}
+	
+	public void rolledQuestion(String difficulty) {
+		String message = "You rolled " + difficulty + " question.";
+		final JOptionPane pane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE);
+        final JDialog dialog = pane.createDialog(null, "A Wild Question Appeared!");
+        // Create a Timer that will close the dialog after 1.5 seconds (1500 ms)
+        Timer timer = new Timer(3000, e -> dialog.dispose());
+        timer.setRepeats(false);
+        // Start the timer and make the dialog visible
+        timer.start();
+        dialog.setVisible(true);
+	}
+	
 	
 	public void durationTimer() {
 		duration = new Timer(1000, new ActionListener() {
