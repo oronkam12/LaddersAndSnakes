@@ -140,7 +140,7 @@ public class GuiBoard extends JFrame {
        markTurnsLabels = new JLabel[allPlayers.size()];
        for (int i = 0; i < allPlayers.size(); i++) {
     	   markTurnsLabels[i] = new JLabel("");
-    	   markTurnsLabels[i].setBounds(25, 250+enter, 100, 50);
+    	   markTurnsLabels[i].setBounds(15, 250+enter, 100, 50);
     	   enter += 40;
     	   markTurnsLabels[i].setIcon(markerIcon);
     	   markTurnsLabels[i].setVisible(false);
@@ -434,7 +434,7 @@ public class GuiBoard extends JFrame {
 		        currentPlayer = allPlayers.get(0);
 		        for(int i = 0; i < playerLabels.length; i++) {
     	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
-    	        		playerLabels[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+    	        		playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 24));
     	        		markTurnsLabels[i].setVisible(true);
     	        	}
     	        	else {
