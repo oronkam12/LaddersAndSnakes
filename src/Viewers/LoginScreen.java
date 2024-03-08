@@ -57,6 +57,7 @@ public class LoginScreen extends JFrame {
             gameIconLabel.setVisible(true);
             contentPane.add(gameIconLabel);
             
+            // Start button for starting a game
             CustomButton startBtn = new CustomButton("START", 295, 338, 200, 50, e ->{
                   LoginScreen.this.setVisible(false);
                   GameLobby gameLobby = new GameLobby();
@@ -76,6 +77,7 @@ public class LoginScreen extends JFrame {
             startBtn.setFont(new Font("Stencil", Font.BOLD, 18));
             contentPane.add(startBtn);
             
+            // Instructions button for reading game's instructions
             CustomButton instructionsBtn = new CustomButton("instructions",295, 405, 200, 60,e->{
                   LoginScreen.this.setVisible(false);
                   InstructionsPage ip = new InstructionsPage();
@@ -93,6 +95,7 @@ public class LoginScreen extends JFrame {
             instructionsBtn.setFont(new Font("Stencil", Font.BOLD, 18));
             contentPane.add(instructionsBtn);
             
+            // Questions button for quiz master page 
             CustomButton questionsBtn = new CustomButton("Questions",295,470,200,60,e->{
                   System.out.println("b");
             });
@@ -106,6 +109,7 @@ public class LoginScreen extends JFrame {
             });
             contentPane.add(questionsBtn);
             
+            // History button for watch previous games
             CustomButton historyBtn = new CustomButton("HISTORY",295,540,200,60,e->{
                 	setVisible(false);
                 	new History().setVisible(true);
@@ -113,6 +117,7 @@ public class LoginScreen extends JFrame {
             historyBtn.setFont(new Font("Stencil", Font.BOLD, 18));
             contentPane.add(historyBtn);
             
+            // Exit button for quit the game 
             CustomButton exitBtn = new CustomButton("EXIT",295,610,200,60,e->{
                   SwingUtilities.getWindowAncestor((JButton)e.getSource()).dispose();
             });

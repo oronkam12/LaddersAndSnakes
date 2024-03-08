@@ -15,7 +15,7 @@ public class QuestionsInstructions extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
+	 *  Displays instructions for answering questions in the game.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

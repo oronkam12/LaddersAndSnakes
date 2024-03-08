@@ -122,7 +122,7 @@ public class BoardCreation {
 
     	int colMax;
     	int rowMax;
-    	if(cell1.getCol()+10>cols ) {
+    	if(cell1.getCol()+10>cols-1) {
     		colMax = cell1.getCol()+10-cols;
     		rowMax = cell1.getRow()-1;
     		
