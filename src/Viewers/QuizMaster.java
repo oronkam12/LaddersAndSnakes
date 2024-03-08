@@ -125,6 +125,7 @@ public class QuizMaster extends JFrame {
 	
 	public QuizMaster() {
 		
+		//basic window settings
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 800);
         JPanel contentPane = new JPanel();
@@ -133,13 +134,14 @@ public class QuizMaster extends JFrame {
         contentPane.setLayout(null);
         setLocationRelativeTo(null);
         
+        //title for the window
         logoImage  = new ImageIcon("Assets/quizMasterLogo.png");
 		JLabel logoLabel = new JLabel(logoImage);
 		logoLabel.setBounds(100,100,560,125);
 		logoLabel.setVisible(true);
 		contentPane.add(logoLabel);
       
-        //questionImage  = new ImageIcon("Assets/questionImage2.png");
+		//question label
 		JLabel questionLabel = new JLabel("Question");
 		questionLabel.setForeground(new Color(255, 250, 240));
 		questionLabel.setFont(new Font("Stencil", Font.BOLD, 25));
@@ -147,6 +149,7 @@ public class QuizMaster extends JFrame {
 		questionLabel.setVisible(true);
 		contentPane.add(questionLabel);
 		
+		//button to return to home page
 		JButton btnHomePage = new JButton("");
         btnHomePage.setBounds(10, 10, 65, 65);
         ImageIcon homePageIcon = new ImageIcon("Images/btnHomePage.png");
@@ -167,7 +170,8 @@ public class QuizMaster extends JFrame {
                 loginScreen.setVisible(true);
             }
         });
-
+        
+        //field for first answer
 		answer1Txt = new JTextArea("m");
 		answer1Txt.setRows(1); // Set the height of the text area
 		answer1Txt.setColumns(20); // Set the width of the text area
@@ -176,14 +180,14 @@ public class QuizMaster extends JFrame {
 		answer1Txt.setFont(new Font("Consolas",Font.PLAIN,15));
 		answer1Txt.setBackground(new Color(255, 250, 240));
 		answer1Txt.setForeground(new Color(0, 0, 0));
-		
-        // Making the JTextArea scrollable
+        // Making the JTextArea scrollable if the answer is long
 		answer1Pane = new JScrollPane(answer1Txt);
         answer1Pane.setBounds(280, 413, 380, 38);
         answer1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // Hide vertical scroll bar
         answer1Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(answer1Pane);
         
+        //field for the second answer
         answer2Txt = new JTextArea("m");
         answer2Txt.setRows(1); // Set the height of the text area
         answer2Txt.setColumns(20); // Set the width of the text area
@@ -192,13 +196,14 @@ public class QuizMaster extends JFrame {
 		answer2Txt.setFont(new Font("Consolas",Font.PLAIN,15));
 		answer2Txt.setBackground(new Color(255, 250, 240));
 		answer2Txt.setForeground(new Color(0, 0, 0));
-		
-        // Making the JTextArea scrollable
         answer2Pane = new JScrollPane(answer2Txt);
         answer2Pane.setBounds(280, 453, 380, 38);
         answer2Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // Hide vertical scroll bar
         answer2Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(answer2Pane);
+        
+        //field for the third answer
+
         
         answer3Txt = new JTextArea("m");
         answer3Txt.setRows(1); // Set the height of the text area
@@ -208,14 +213,14 @@ public class QuizMaster extends JFrame {
 		answer3Txt.setFont(new Font("Consolas",Font.PLAIN,15));
 		answer3Txt.setBackground(new Color(255, 250, 240));
 		answer3Txt.setForeground(new Color(0, 0, 0));
-		
-        // Making the JTextArea scrollable
         answer3Pane = new JScrollPane(answer3Txt);
         answer3Pane.setBounds(280, 493, 380, 38);
         answer3Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // Hide vertical scroll bar
         answer3Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(answer3Pane);
         
+        //field for the forth  answer
+
         answer4Txt = new JTextArea("m");
         answer4Txt.setRows(1); // Set the height of the text area
         answer4Txt.setColumns(20); // Set the width of the text area
@@ -224,8 +229,6 @@ public class QuizMaster extends JFrame {
 		answer4Txt.setFont(new Font("Consolas",Font.PLAIN,15));
 		answer4Txt.setBackground(new Color(255, 250, 240));
 		answer4Txt.setForeground(new Color(0, 0, 0));
-		
-        // Making the JTextArea scrollable
         answer4Pane = new JScrollPane(answer4Txt);
         answer4Pane.setBounds(280, 533, 380, 38);
         answer4Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // Hide vertical scroll bar
@@ -234,7 +237,7 @@ public class QuizMaster extends JFrame {
         
         
         
-        
+        //field for the question
 		questionArea = new JTextArea("m");
 		questionArea.setRows(1); // Set the height of the text area
 		questionArea.setColumns(20); // Set the width of the text area
@@ -243,67 +246,57 @@ public class QuizMaster extends JFrame {
 		questionArea.setFont(new Font("Consolas",Font.PLAIN,15));
 		questionArea.setBackground(new Color(255, 250, 240));
 		questionArea.setForeground(new Color(0, 0, 0));
-		
-        // Making the JTextArea scrollable
         questionPane = new JScrollPane(questionArea);
         questionPane.setBounds(280, 372, 380, 38);
         questionPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // Hide vertical scroll bar
         questionPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Hide horizontal scroll bar
         contentPane.add(questionPane);
         
+        //answer lables
     	JLabel answer1Label = new JLabel("Answer 1:");
 		answer1Label.setFont(new Font("Stencil", Font.BOLD, 20));
 		answer1Label.setForeground(new Color(255, 250, 240));
-
 		answer1Label.setBounds(164, 410, 111, 30);
 		contentPane.add(answer1Label);
-		
 		JLabel answer2Label;
 		answer2Label = new JLabel("Answer 2:");
 		answer2Label.setForeground(new Color(255, 250, 240));
-
 		answer2Label.setFont(new Font("Stencil", Font.BOLD, 20));
 		answer2Label.setBounds(164, 450, 111, 30);
 		contentPane.add(answer2Label);
-		
 		JLabel answer3Label;
 		answer3Label = new JLabel("Answer 3:");
 		answer3Label.setForeground(new Color(255, 250, 240));
-
 		answer3Label.setFont(new Font("Stencil", Font.BOLD, 20));
 		answer3Label.setBounds(164, 490, 111, 30);
 		contentPane.add(answer3Label);
-		
 		JLabel answer4Label;
 		answer4Label = new JLabel("Answer 4:");
 		answer4Label.setForeground(new Color(255, 250, 240));
 		answer4Label.setFont(new Font("Stencil", Font.BOLD, 20));
 		answer4Label.setBounds(164, 530, 111, 30);
 		contentPane.add(answer4Label);
-		
 		JLabel correctAnswerLabel;
 		correctAnswerLabel = new JLabel("Correct Answer:");
 		correctAnswerLabel.setForeground(new Color(255, 250, 240));
 		correctAnswerLabel.setFont(new Font("Stencil", Font.BOLD, 20));
 		correctAnswerLabel.setBounds(164, 580, 200, 30);
 		contentPane.add(correctAnswerLabel);
-		 
+		
+		 //difficulty buttons
 		difficultyLabel = new JLabel("Difficulty:");
 		difficultyLabel.setForeground(new Color(255, 250, 240));
 		difficultyLabel.setFont(new Font("Stencil", Font.BOLD, 20));
 		difficultyLabel.setBounds(164, 630, 200, 30);
 		contentPane.add(difficultyLabel);
-		
 		difficultyButton1 = new JRadioButton("1");
         difficultyButton2 = new JRadioButton("2");
         difficultyButton3 = new JRadioButton("3");
-        
-        //Customize and position radio buttons
+        //customize and position radio buttons
         customizeRadioButton(difficultyButton1, 305, 625);
         customizeRadioButton(difficultyButton2, 355, 625);
         customizeRadioButton(difficultyButton3, 405, 625);
-
-        // Create a button group and add radio buttons to ensure mutual exclusivity
+        // create a button group and add radio buttons 
         difficultyGroup = new ButtonGroup();
         difficultyGroup.add(difficultyButton1);
         difficultyGroup.add(difficultyButton2);
@@ -312,11 +305,11 @@ public class QuizMaster extends JFrame {
         difficultyButton1.setVisible(false);
         difficultyButton2.setVisible(false);
         difficultyButton3.setVisible(false);
-
         contentPane.add(difficultyButton1);
         contentPane.add(difficultyButton2);
         contentPane.add(difficultyButton3);
 		
+        //radio buttons for which asnwer is correct
         radioButton1 = new JRadioButton("1");
         radioButton2 = new JRadioButton("2");
         radioButton3 = new JRadioButton("3");
@@ -325,30 +318,23 @@ public class QuizMaster extends JFrame {
         answersButtons.add(radioButton2);
         answersButtons.add(radioButton3);
         answersButtons.add(radioButton4);
-        
         correctButtons.add(radioButton1);
         correctButtons.add(radioButton2);
         correctButtons.add(radioButton3);
         correctButtons.add(radioButton4);
-        
         difficultyButtons.add(difficultyButton1);
         difficultyButtons.add(difficultyButton2);
         difficultyButtons.add(difficultyButton3);
-        
-        // Customize and position radio buttons
         customizeRadioButton(radioButton1, 370, 575);
         customizeRadioButton(radioButton2, 420, 575);
         customizeRadioButton(radioButton3, 470, 575);
         customizeRadioButton(radioButton4, 520, 575);
-
-        // Create a button group and add radio buttons to ensure mutual exclusivity
         group= new ButtonGroup();
         group.add(radioButton1);
         group.add(radioButton2);
         group.add(radioButton3);
         group.add(radioButton4);
 
-        // Add radio buttons to the JFrame
         contentPane.add(radioButton1);
         contentPane.add(radioButton2);
         contentPane.add(radioButton3);
@@ -356,31 +342,14 @@ public class QuizMaster extends JFrame {
 
         setVisible(true);
         
+        //medium difficulty button
         mediumBtn = new JButton("Medium");
         mediumBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		enableFields(false);
-        		currentPosition = 0;
-        		difficulty = "2";
-        		currentQuestionsList = gc.loadQuesitons().get("2");
-        		if(currentQuestionsList==null)
-        		{
-        			addNewQuestion();
-        			pagesField.setText("0/0");
-        		}
-        		else {
-	        		currentQuestion = currentQuestionsList.get(0);
-	        		displayQuestion();
-	        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
-	        		addBtn.setEnabled(true);
-	        		saveBtn.setEnabled(false);
-	        		deleteBtn.setEnabled(true);
-	        		editBtn.setEnabled(true);
-        		}
-        		mediumBtn.setEnabled(false);
-        		easyBtn.setEnabled(true);
-        		hardBtn.setEnabled(true);        		
+        		
+        		displayQuestionsByDifficulty("2");
         	}
+
         });
         mediumBtn.setForeground(new Color(240, 230, 140));
         mediumBtn.setBackground(new Color(160, 82, 45));
@@ -388,34 +357,14 @@ public class QuizMaster extends JFrame {
         mediumBtn.setBounds(315, 270, 140, 30);
         contentPane.add(mediumBtn);
         
+        //easy diffuclty button
         easyBtn = new JButton("Easy");
         easyBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		enableFields(false);
-        		currentPosition = 0;
-        		difficulty = "1";
-
-        		currentQuestionsList = gc.loadQuesitons().get("1");
-        		
-        		if(currentQuestionsList==null)
-        		{
-        			addNewQuestion();
-        			pagesField.setText("0/0");
-        		}
-        		else {
-	        		currentQuestion = currentQuestionsList.get(0);
-	        		displayQuestion();
-	        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
-	        		addBtn.setEnabled(true);
-	        		saveBtn.setEnabled(false);
-	        		deleteBtn.setEnabled(true);
-	        		editBtn.setEnabled(true);
-        		}
-        		easyBtn.setEnabled(false);
-        		mediumBtn.setEnabled(true);
-        		hardBtn.setEnabled(true);
+        		displayQuestionsByDifficulty("1");
         	}
         });
+        
         easyBtn.setForeground(new Color(240, 230, 140));
         easyBtn.setBackground(new Color(160, 82, 45));
         easyBtn.setFont(new Font("Stencil", Font.BOLD, 20));
@@ -423,31 +372,12 @@ public class QuizMaster extends JFrame {
         contentPane.add(easyBtn); 
         easyBtn.setEnabled(false);
         
-        
+        //hard button
         hardBtn = new JButton("Hard");
         hardBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		//enableFields(false);
-        		currentPosition = 0;
-        		difficulty = "3";
-        		currentQuestionsList = gc.loadQuesitons().get(difficulty);
-        		if(currentQuestionsList==null)
-        		{
-        			addNewQuestion();
-        			pagesField.setText("0/0");
-        		}
-        		else {
-	        		currentQuestion = currentQuestionsList.get(0);
-	        		displayQuestion();
-	        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
-	        		addBtn.setEnabled(true);
-	        		saveBtn.setEnabled(false);
-	        		deleteBtn.setEnabled(true);
-	        		editBtn.setEnabled(true);
-        		}
-        		hardBtn.setEnabled(false);
-        		easyBtn.setEnabled(true);
-        		mediumBtn.setEnabled(true);
+        		displayQuestionsByDifficulty("3");
+
         	}
         });
         hardBtn.setForeground(new Color(240, 230, 140));
@@ -456,9 +386,11 @@ public class QuizMaster extends JFrame {
         hardBtn.setBounds(465, 270, 120, 30);
         contentPane.add(hardBtn);
         
+        //when click on it we canceling the action of addint new question/editing.
 		abortBtn = new JButton("Abort");
 		abortBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//incase we were editing a question
 				editMode = false;
 				currentPosition = 0;
 				currentQuestion = currentQuestionsList.get(currentPosition);
@@ -478,6 +410,7 @@ public class QuizMaster extends JFrame {
 			    pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
 			}
 		});
+		
 		abortBtn.setVisible(false);
 		abortBtn.setEnabled(false);
 		abortBtn.setForeground(new Color(240, 230, 140));
@@ -486,6 +419,7 @@ public class QuizMaster extends JFrame {
 		abortBtn.setBounds(10, 607, 90, 30);
 		contentPane.add(abortBtn);
         
+		//button to go to the first question
         firstQuestionBtn = new JButton("|<");
         firstQuestionBtn.setHorizontalAlignment(SwingConstants.LEADING);
         firstQuestionBtn.addActionListener(new ActionListener() {
@@ -500,7 +434,6 @@ public class QuizMaster extends JFrame {
         		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
         	}
         });
-        
         firstQuestionBtn.setEnabled(false);
         firstQuestionBtn.setForeground(new Color(240, 230, 140));
         firstQuestionBtn.setBackground(new Color(160, 82, 45));
@@ -508,11 +441,14 @@ public class QuizMaster extends JFrame {
         firstQuestionBtn.setBounds(93, 703, 54, 30);
         contentPane.add(firstQuestionBtn); 
         
+        
+        //button to go back to previous question
         backBtn = new JButton("<<");
         backBtn.setHorizontalAlignment(SwingConstants.LEADING);
         backBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
          		currentPosition--;
+         		//disabling the buttons incase we reach the first question
          		if(currentPosition==0)
          		{
          			firstQuestionBtn.setEnabled(false);
@@ -533,6 +469,7 @@ public class QuizMaster extends JFrame {
         
         contentPane.add(backBtn); 
         
+        //field to show the number of the current question number out of the number of questions in the list
         pagesField = new JTextField();
         pagesField.setFont(new Font("Stencil", Font.PLAIN, 12));
 		pagesField.setBounds(222, 704, 80, 30);
@@ -540,7 +477,7 @@ public class QuizMaster extends JFrame {
 		pagesField.setColumns(10);
 		
 		//pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
-		
+		//button to go to the next question
 		nextBtn = new JButton(">>");
 		nextBtn.setHorizontalAlignment(SwingConstants.TRAILING);
 		nextBtn.addActionListener(new ActionListener() {
@@ -548,12 +485,13 @@ public class QuizMaster extends JFrame {
 				currentPosition++;
 				firstQuestionBtn.setEnabled(true);
 				backBtn.setEnabled(true);
-				
+				//incase we reach the last question we disable the buttons.
 				if(currentPosition+1==currentQuestionsList.size()) 
 				{
 					lastBtn.setEnabled(false);
 					nextBtn.setEnabled(false);
 				}
+				
 				currentQuestion = currentQuestionsList.get(currentPosition);
         		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
 				displayQuestion();
@@ -565,7 +503,7 @@ public class QuizMaster extends JFrame {
 		nextBtn.setBounds(312, 703, 60, 30);
 		if(questions.size()==1) nextBtn.setEnabled(false);
         contentPane.add(nextBtn); 
-        
+        //question to reach to the last question
         lastBtn = new JButton(">|");
         lastBtn.setHorizontalAlignment(SwingConstants.TRAILING);
         lastBtn.addActionListener(new ActionListener() {
@@ -597,10 +535,12 @@ public class QuizMaster extends JFrame {
 		searchBtn = new JButton("Search");
 		searchBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				allQuestions = gc.getQuestionsAsList(path);
 				ArrayList<Question> questionsFound = new ArrayList<>();
 				boolean found = false;
 				int counter = 0;
+				//goes through all the questions and search if a question included the term that is entered.
 				for(int i =0; i<allQuestions.size();i++)
 				{
 					if(allQuestions.get(i).getQuestion().contains(searchField.getText()))
@@ -615,6 +555,7 @@ public class QuizMaster extends JFrame {
 					JOptionPane.showMessageDialog(null, "No such question exists");
 					return;
 				}
+				//set the current list of questions to displayed to be the questions we found
 				else
 				{
 					currentPosition = 0;
@@ -624,6 +565,7 @@ public class QuizMaster extends JFrame {
 					backBtn.setEnabled(false);
 					JOptionPane.showMessageDialog(null, counter + " questions found");
 				}
+				
 				if(currentQuestionsList.size()>1)
 				{				
 					nextBtn.setEnabled(true);
@@ -642,9 +584,11 @@ public class QuizMaster extends JFrame {
 		searchBtn.setBounds(572, 703, 111, 30);
         contentPane.add(searchBtn); 
         
+        //
         editBtn = new JButton("Edit");
         editBtn.addActionListener(new ActionListener() {
          	public void actionPerformed(ActionEvent e) {
+         		//enabling fields for editing and disabling other unneeded fields.
          		editMode = true;
         		enableFields(true);
         	    saveBtn.setEnabled(true);
@@ -674,15 +618,19 @@ public class QuizMaster extends JFrame {
         saveBtn = new JButton("Save");
         saveBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		
         		Question q = null;
         		try {
 					q = createQuestion();
+				//if not all field are enetered, return error
 				} catch (IncompleteInputException e1) {
 				    JOptionPane.showMessageDialog(null, e1.getMessage());
 				    return;
 				}
+        		//if question creation succceded incase we are in edititing
         		if(editMode)
         		{
+        			//seeting the difficulty of the edited question
         			try {
         				Enumeration<AbstractButton> positionButtons = difficultyGroup.getElements();
                         while (positionButtons.hasMoreElements()) {
@@ -699,11 +647,14 @@ public class QuizMaster extends JFrame {
 					}
         			JOptionPane.showMessageDialog(null, "question edited succefully");
         		}
+    			//if we add a new question
         		else
         		{
         			gc.addQuestion(q, path);
         			JOptionPane.showMessageDialog(null, "question added succefully");
         		}
+        		
+        		//setting to display the first question of the list.
         		currentPosition = 0;
         		addBtn.setEnabled(true);
         	    editBtn.setEnabled(true);
@@ -736,6 +687,7 @@ public class QuizMaster extends JFrame {
         saveBtn.setBounds(10, 450, 90, 30);
         contentPane.add(saveBtn); 
         
+        //add new question button
         addBtn = new JButton("Add");
         addBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -755,11 +707,13 @@ public class QuizMaster extends JFrame {
         		gc.deleteQuestion(currentQuestion.getQuestion(), path);
         		questions = gc.loadQuesitons();
         	    currentQuestionsList = questions.get(difficulty);
+        	    //if the question list for the difficulty is empty showing blank fields
         	    if(currentQuestionsList==null)
         	    {
         	    	addNewQuestion();
         			pagesField.setText("0/0");
         	    }
+        	    //else show first question from the list.
         	    else {
 	        	    currentQuestion = currentQuestionsList.get(0);
 	        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
@@ -777,17 +731,20 @@ public class QuizMaster extends JFrame {
         enableFields(false);
         saveBtn.setEnabled(false);
         
+        //if question list for difficulty 1 is not empty at start
         if(currentQuestionsList!=null)
         {
         	currentQuestion = currentQuestionsList.get(0);
    	     	displayQuestion();
    	     	pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
         }
+        //else show blank fields.
         else {
         	addNewQuestion();
         	pagesField.setText("0/0");
         }
-
+        
+        //setting the background image for the screen.
 		screenImage  = new ImageIcon("Images/InsBackground.jpg");
 		JLabel screenLabel = new JLabel(screenImage);
 		screenLabel.setBounds(0,0,800,800);
@@ -795,14 +752,65 @@ public class QuizMaster extends JFrame {
 		contentPane.add(screenLabel);
 	}
 	
+	//when clicking on easy/medium/hard buttons seeting up the questions list
+	private void displayQuestionsByDifficulty(String diff )
+	{
+		//enable fields to not be editable
+		enableFields(false);
+		//setting up the the current position to be 0 to display the first question
+		currentPosition = 0;
+		difficulty = diff;
+		//getting the list of questions for current difficulty
+		currentQuestionsList = gc.loadQuesitons().get(diff);
+		//iff the list is empty show blank fields.
+		if(currentQuestionsList==null)
+		{
+			addNewQuestion();
+			pagesField.setText("0/0");
+		}
+		//if the list is not empty display the first question
+		else {
+    		currentQuestion = currentQuestionsList.get(0);
+    		displayQuestion();
+    		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
+    		addBtn.setEnabled(true);
+    		saveBtn.setEnabled(false);
+    		deleteBtn.setEnabled(true);
+    		editBtn.setEnabled(true);
+		}
+		//enabling the buttons accordingly
+		if(diff.equals("1"))
+		{
+			easyBtn.setEnabled(false);
+			mediumBtn.setEnabled(true);
+			hardBtn.setEnabled(true);
+		}
+		else if(diff.equals("2"))
+		{
+			easyBtn.setEnabled(true);
+			mediumBtn.setEnabled(false);
+			hardBtn.setEnabled(true);
+		}
+		else
+		{
+			easyBtn.setEnabled(true);
+			mediumBtn.setEnabled(true);
+			hardBtn.setEnabled(false);
+		}
+	
+	}
+	//if there is 0 questions for a difficulty or we want to add a new question
 	private void addNewQuestion() {
+		//showing blank in the fields
 		editMode = false;
 		questionArea.setText("");
 		answer1Txt.setText("");
 		answer2Txt.setText("");
 		answer3Txt.setText("");
 		answer4Txt.setText("");
+		//make the fields editable
 		enableFields(true);
+		//set the buttons accordingly
 	    saveBtn.setEnabled(true);
 	    addBtn.setEnabled(false);
 	    editBtn.setEnabled(false);
@@ -816,8 +824,9 @@ public class QuizMaster extends JFrame {
 	    firstQuestionBtn.setEnabled(false);
 	    correctButtons.get(0).setSelected(true);
 	}
-	
+	//create question object for adding/editing question
 	protected Question createQuestion() throws IncompleteInputException  {
+	
 		String question = questionArea.getText();
 		String answer1 = answer1Txt.getText();
 		String answer2 = answer2Txt.getText();
@@ -830,6 +839,7 @@ public class QuizMaster extends JFrame {
 		answers.add(answer4);
 		String correctPosition = null;
 		String diff =null;
+		//getting the correct position number 
 		 Enumeration<AbstractButton> positionButtons = group.getElements();
 	     while (positionButtons.hasMoreElements()) {
 	         AbstractButton button = positionButtons.nextElement();
@@ -837,6 +847,7 @@ public class QuizMaster extends JFrame {
 	             correctPosition= button.getText(); // Cast is safe here because we know these are JRadioButtons
 	         }
 	     }
+	     //checking if player inserted input for all fields
 		if(question.equals("")|| answer1.equals("")||answer2.equals("")||answer3.equals("")	||answer4.equals(""))
 		{
 			throw new IncompleteInputException("please make sure you insert input in all fields");
@@ -844,6 +855,7 @@ public class QuizMaster extends JFrame {
 		Question q = new Question(question,answers,correctPosition,difficulty);
 		return q;
 	}
+	//enabling/disabling fields accordingly
 	private void enableFields(boolean flag) {
 		answer1Txt.setEditable(flag);
 	    questionArea.setEditable(flag);
@@ -855,8 +867,9 @@ public class QuizMaster extends JFrame {
 	    radioButton3.setEnabled(flag);
 	    radioButton4.setEnabled(flag);
     }
-	
+	//displaying current question
 	private void displayQuestion() {
+		//setting the fields with question information
 		questionArea.setText(currentQuestion.getQuestion());
 		answer1Txt.setText(currentQuestion.getAnswers().get(0));
 		answer2Txt.setText(currentQuestion.getAnswers().get(1));
@@ -869,6 +882,8 @@ public class QuizMaster extends JFrame {
 			else answersButtons.get(i).setEnabled(false);
 		}
 		answersButtons.get(Integer.valueOf(currentQuestion.getCorrect_ans())-1).setEnabled(true);;
+		
+		//setting the buttons according to the question list size
 		if(currentQuestionsList.size()<=1 || (currentPosition + 1== currentQuestionsList.size()))
 		{
 			nextBtn.setEnabled(false);
@@ -884,12 +899,14 @@ public class QuizMaster extends JFrame {
 			firstQuestionBtn.setEnabled(false);
 			backBtn.setEnabled(false);
 		}
+		
 		difficultyLabel.setVisible(false);
 	    difficultyButton1.setVisible(false);
 	    difficultyButton2.setVisible(false);
 	    difficultyButton3.setVisible(false);
 	}
 	
+	//customizing the radio buttons 
 	private void customizeRadioButton(JRadioButton radioButton, int x, int y) {
 	    radioButton.setBounds(x, y, 43, 38);
 	    radioButton.setOpaque(false);
@@ -899,7 +916,8 @@ public class QuizMaster extends JFrame {
 	    radioButton.setIcon(createRadioButtonIcon(false));
 	    radioButton.setSelectedIcon(createRadioButtonIcon(true));
 	}
-
+	
+	//customizing the radio buttons to look better
 	private Icon createRadioButtonIcon(boolean isSelected) {
         return new Icon() {
             @Override
