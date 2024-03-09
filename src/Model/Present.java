@@ -43,6 +43,7 @@ public class Present extends Object {
     	int rowMin;
     	int colMax;
     	int rowMax;
+    	//Checking if need to change rows
     	if(headCell.getCol()+10 > cols - 1 ) {
     		colMax = headCell.getCol()+10-cols;
     		rowMax = headCell.getRow()-1;

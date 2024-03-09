@@ -31,6 +31,7 @@ public class Ladder extends Object implements ObjectInterface{
 		
 	}
 	
+	//Defining the locations of the ladder on the board axis
 	public ArrayList<Integer> init(Graphics2D g, int cellWidth,int cellHeight) {
 		ArrayList<Integer> list = new ArrayList<>();
 		Cell headCell = this.getHeadCell();
@@ -48,6 +49,8 @@ public class Ladder extends Object implements ObjectInterface{
 	    list.add(endY);
 	    return list;
 	}
+	
+	//Rotation of image to fit board
 	public ArrayList<Double> reshape(ArrayList<Integer> list) {
 		//Calculate angle to rotate image
 	    double angleInRadians = Math.atan2(list.get(3) - list.get(1), list.get(2) - list.get(0)) + (105* Math.PI / 180.0) - (10* Math.PI / 180.0) ;
@@ -62,6 +65,8 @@ public class Ladder extends Object implements ObjectInterface{
 	    return reshaped;
 		
 	}
+	
+	
 	public void plot(ArrayList<Double> list,Graphics2D g, int cellWidth,int cellHeight) {
 		//Loading and scaling the image to fit board (Some of the calculations are for design implementations)
 	    BufferedImage snakeImage = this.getImage();

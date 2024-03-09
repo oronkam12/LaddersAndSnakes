@@ -1,19 +1,10 @@
 package Model;
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 public class Player {
 	private int row;
 	private int col;
 	private String name;
-//	private final Cell[][] board;
 	private Color color;
 	private boolean askedQ = false;
 	
@@ -23,7 +14,6 @@ public class Player {
 		this.row = row;
 		this.col = col;
 		this.name = name;
-//		this.board = board;
 		this.color = color;
 		
 	}
