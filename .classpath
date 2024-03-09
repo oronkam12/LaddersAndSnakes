@@ -8,8 +8,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="JUnitTests"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="C:/Users/BAR/Documents/GitHub/Zebra/TeamZebra/jackson-annotations-2.16.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/BAR/Documents/GitHub/Zebra/TeamZebra/jackson-core-2.16.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/BAR/Documents/GitHub/Zebra/TeamZebra/jackson-databind-2.16.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dell/Desktop/Snakes&amp;Ladders_Git - Copy/jackson-annotations-2.16.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dell/Desktop/Snakes&amp;Ladders_Git - Copy/jackson-core-2.16.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dell/Desktop/Snakes&amp;Ladders_Git - Copy/jackson-databind-2.16.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

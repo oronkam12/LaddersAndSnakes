@@ -327,8 +327,8 @@ public class QuizMaster extends JFrame {
         mediumBtn = new JButton("Medium");
         mediumBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		
         		displayQuestionsByDifficulty("2");
+        		abortBtn.setVisible(false);
         	}
 
         });
@@ -343,6 +343,7 @@ public class QuizMaster extends JFrame {
         easyBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		displayQuestionsByDifficulty("1");
+        		abortBtn.setVisible(false);
         	}
         });
         
@@ -358,7 +359,7 @@ public class QuizMaster extends JFrame {
         hardBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		displayQuestionsByDifficulty("3");
-
+        		abortBtn.setVisible(false);
         	}
         });
         hardBtn.setForeground(new Color(240, 230, 140));
@@ -380,25 +381,7 @@ public class QuizMaster extends JFrame {
 			    addBtn.setEnabled(true);
 			    editBtn.setEnabled(true);
 			    deleteBtn.setEnabled(true);
-			    if(difficulty.equals("1"))
-				{
-					easyBtn.setEnabled(false);
-					mediumBtn.setEnabled(true);
-					hardBtn.setEnabled(true);
-				}
-				else if(difficulty.equals("2"))
-				{
-					easyBtn.setEnabled(true);
-					mediumBtn.setEnabled(false);
-					hardBtn.setEnabled(true);
-				}
-				else
-				{
-					easyBtn.setEnabled(true);
-					mediumBtn.setEnabled(true);
-					hardBtn.setEnabled(false);
-				}
-
+        	    diffButtonsStatus();
 			    
 			    if(currentPosition+1==currentQuestionsList.size()) 
 				{
@@ -682,6 +665,7 @@ public class QuizMaster extends JFrame {
         		
         		//setting to display the first question of the list.
         		currentPosition = 0;
+				enableFields(false);
         		addBtn.setEnabled(true);
         	    editBtn.setEnabled(true);
         	    deleteBtn.setEnabled(true);
@@ -693,6 +677,7 @@ public class QuizMaster extends JFrame {
         	    abortBtn.setVisible(false);
         	    abortBtn.setEnabled(false);
         	    backBtn.setEnabled(true);
+        	    diffButtonsStatus();
         	    firstQuestionBtn.setEnabled(false);
         	    currentQuestionsList = questions.get(difficulty);
         	    if(currentQuestionsList!=null)
@@ -729,23 +714,25 @@ public class QuizMaster extends JFrame {
         deleteBtn = new JButton("Delete");
         deleteBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		currentPosition = 0;
-        		gc.deleteQuestion(currentQuestion.getQuestion(), path);
-        		questions = gc.loadQuesitons();
-        	    currentQuestionsList = questions.get(difficulty);
-        	    //if the question list for the difficulty is empty showing blank fields
-        	    if(currentQuestionsList==null)
-        	    {
-        	    	addNewQuestion();
-        			pagesField.setText("0/0");
-        	    }
         	    //else show first question from the list.
-        	    else {
-	        	    currentQuestion = currentQuestionsList.get(0);
-	        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
-	        		displayQuestion();
-        	    }
-        		JOptionPane.showMessageDialog(null, "question deleted succefully");
+    	    	int option = JOptionPane.showConfirmDialog(null, "Permanantly delete question?", "Confirmation", JOptionPane.YES_NO_OPTION);
+    	    	if (option == 0) {
+            		currentPosition = 0;
+            		gc.deleteQuestion(currentQuestion.getQuestion(), path);
+            		questions = gc.loadQuesitons();
+            	    currentQuestionsList = questions.get(difficulty);
+            	  //if the question list for the difficulty is empty showing blank fields
+            	    if(currentQuestionsList==null){
+            	    	addNewQuestion();
+            			pagesField.setText("0/0");
+            	    }
+            	    else {
+    	        	    currentQuestion = currentQuestionsList.get(0);
+    	        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
+    	        		displayQuestion();
+            	    }
+	        		JOptionPane.showMessageDialog(null, "question deleted succefully");
+    	    	}
         	}
         });
         deleteBtn.setForeground(new Color(240, 230, 140));
@@ -792,6 +779,7 @@ public class QuizMaster extends JFrame {
 		if(currentQuestionsList==null)
 		{
 			addNewQuestion();
+			searchBtn.setEnabled(false);
 			pagesField.setText("0/0");
 		}
 		//if the list is not empty display the first question
@@ -803,26 +791,11 @@ public class QuizMaster extends JFrame {
     		saveBtn.setEnabled(false);
     		deleteBtn.setEnabled(true);
     		editBtn.setEnabled(true);
+    		searchBtn.setEnabled(true);
 		}
 		//enabling the buttons accordingly
-		if(diff.equals("1"))
-		{
-			easyBtn.setEnabled(false);
-			mediumBtn.setEnabled(true);
-			hardBtn.setEnabled(true);
-		}
-		else if(diff.equals("2"))
-		{
-			easyBtn.setEnabled(true);
-			mediumBtn.setEnabled(false);
-			hardBtn.setEnabled(true);
-		}
-		else
-		{
-			easyBtn.setEnabled(true);
-			mediumBtn.setEnabled(true);
-			hardBtn.setEnabled(false);
-		}
+	    diffButtonsStatus();
+
 	
 	}
 	//if there is 0 questions for a difficulty or we want to add a new question
@@ -933,6 +906,27 @@ public class QuizMaster extends JFrame {
 	    difficultyButton1.setVisible(false);
 	    difficultyButton2.setVisible(false);
 	    difficultyButton3.setVisible(false);
+	}
+	
+	private void diffButtonsStatus() {
+		if(difficulty.equals("1"))
+		{
+			easyBtn.setEnabled(false);
+			mediumBtn.setEnabled(true);
+			hardBtn.setEnabled(true);
+		}
+		else if(difficulty.equals("2"))
+		{
+			easyBtn.setEnabled(true);
+			mediumBtn.setEnabled(false);
+			hardBtn.setEnabled(true);
+		}
+		else
+		{
+			easyBtn.setEnabled(true);
+			mediumBtn.setEnabled(true);
+			hardBtn.setEnabled(false);
+		}
 	}
 	
 	//customizing the radio buttons 
