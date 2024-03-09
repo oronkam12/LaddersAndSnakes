@@ -10,6 +10,11 @@
     "correct_ans" : "3",
     "difficulty" : "2"
   }, {
+    "question" : "What are Excess Requirements?",
+    "answers" : [ "Requirements that are essential for the software's functionality", "A requirement that describes functionality that already was described in the    document in one of the requirements or alternatively Functionality that is not part of the project at all", "Requirements that are vague and open to interpretation", "Requirements that are constantly changing during the development process" ],
+    "correct_ans" : "1",
+    "difficulty" : "1"
+  }, {
     "question" : "What is the typical outcome of a Software Requirements Review (SRR) meeting?",
     "answers" : [ "Finalizing the software design and architecture", "Identifying and resolving discrepancies or ambiguities in the requirements", "Executing the software development tasks according to the project plan", "Conducting user acceptance testing (UAT) to validate the software functionality" ],
     "correct_ans" : "2",
@@ -24,6 +29,11 @@
     "answers" : [ "ISO 9001", "ISO/IEC 27001 ", "CMMI-DEV", "SPICE" ],
     "correct_ans" : "4",
     "difficulty" : "3"
+  }, {
+    "question" : "Which type of testing involves examining the internal logic and structure of the software application?",
+    "answers" : [ "White box testing", "Black box testing", "Grey box testing", "Regression testing" ],
+    "correct_ans" : "1",
+    "difficulty" : "1"
   }, {
     "question" : "Which of the following SCRUM requirements best describe functional requirements?",
     "answers" : [ "As a player, I want intuitive navigation for easy feature accessing", "As a player, I want error messages display for effective issues resolution.", "As a user, I want to browse different options available, view the menu as a dropdown, and make orders", "As a player, I want a consistent and aesthetic layout for a smooth experience." ],
@@ -45,9 +55,19 @@
     "correct_ans" : "4",
     "difficulty" : "2"
   }, {
-    "question" : "lala",
-    "answers" : [ "sadsa", "dsad", "sadsad", "sadsad" ],
-    "correct_ans" : "1",
+    "question" : "Who is respnsible of defining the goals for the overall project?",
+    "answers" : [ "ScrumMaster", "Product Owner", "The Team", "All of the above" ],
+    "correct_ans" : "2",
+    "difficulty" : "1"
+  }, {
+    "question" : "What is the primary goal of Agile Methodology in software development? ",
+    "answers" : [ "To adhere strictly to a predetermined plan", "To respond to change and deliver working software incrementally", "\"To allocate resources based on a fixed timeline", "To prioritize documentation over collaboration" ],
+    "correct_ans" : "2",
+    "difficulty" : "1"
+  }, {
+    "question" : "A project management approach that involves breaking the project into phases and emphasizes continuous collaboration and improvement?",
+    "answers" : [ "Waterfall", "Agile", "SCRUM", "Critical Path Method" ],
+    "correct_ans" : "2",
     "difficulty" : "1"
   } ]
 }

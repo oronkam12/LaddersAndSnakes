@@ -849,7 +849,7 @@ public class GuiBoard extends JFrame {
 		final JOptionPane pane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE);
         final JDialog dialog = pane.createDialog(null, "A Wild Question Appeared!");
         // Create a Timer that will close the dialog after 1.5 seconds (1500 ms)
-        Timer timer = new Timer(3000, e -> dialog.dispose());
+        Timer timer = new Timer(1200, e -> dialog.dispose());
         timer.setRepeats(false);
         // Start the timer and make the dialog visible
         timer.start();

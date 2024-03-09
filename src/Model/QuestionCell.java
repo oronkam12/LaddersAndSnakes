@@ -85,6 +85,7 @@ public class QuestionCell extends Object{
 		player.setAskedQ(true);
 		ArrayList<Integer> newLocation = null;
 		
+		//Sending amount of steps to move forward if correct answer and difficulty 3
 		if (movement && difficulty.equals("3")) {
 			move = 1;
 			newLocation = checkLocation(move);
@@ -92,6 +93,7 @@ public class QuestionCell extends Object{
 			player.setRow(newLocation.get(1));
 			player.setAskedQ(false);
 		}
+		//Sending amount of steps to move back if wrong answer
 		else if (!movement) {
 			switch (difficulty) {
 			case "1":
@@ -115,6 +117,7 @@ public class QuestionCell extends Object{
 		}		
 	}
 	
+	//Checking player's answer correctness and location of player on the board
 	private ArrayList<Integer> checkLocation (int move) {		
 		int newCol = headCell.getCol();
 		int newRow = headCell.getRow();
@@ -122,7 +125,7 @@ public class QuestionCell extends Object{
 		
 		//wrong answers
 		if (newRow == rows - 1 && !movement) {
-			if (headCell.getCol() + move > cols - 1) {
+			if (headCell.getCol() + move > cols - 1) { //Checking if need to change row
 				newCol = cols - 1;
 				newRow = rows - 1;
 			}
@@ -131,7 +134,7 @@ public class QuestionCell extends Object{
 				newRow = headCell.getRow();
 			}
 		} else if (!movement) {
-			if (headCell.getCol() + move > cols - 1) {
+			if (headCell.getCol() + move > cols - 1) { //Checking if need to change row
 				newCol = headCell.getCol() + move - cols;
 				newRow = headCell.getRow() + 1;
 			}
@@ -143,7 +146,7 @@ public class QuestionCell extends Object{
 		//Correct answer for diff 3
 		if (movement && difficulty.equals("3")) {
 			
-			if (headCell.getCol() - move < 0) {
+			if (headCell.getCol() - move < 0) { //Checking if need to change row
 				newCol = cols - 1;
 				newRow = headCell.getRow() - move;
 			}
