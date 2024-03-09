@@ -54,25 +54,6 @@ public class QuizMaster extends JFrame {
     private ArrayList<JRadioButton> difficultyButtons = new ArrayList<>();
 
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					QuizMaster frame = new QuizMaster();
-					frame.setVisible(true);
-				} catch (Exception e) {	
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	private JList<String> questionList;
     private DefaultListModel<String> questionListModel;
     private JTextField textField;

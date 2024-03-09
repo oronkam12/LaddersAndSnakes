@@ -43,21 +43,6 @@ public class History extends JFrame {
 	private ArrayList<Match> matches = gc.getMatchesAsList(path);
 
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					History frame = new History();
-					
-					frame.setVisible(true);				
-				
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
  public History() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 800);
@@ -69,10 +54,8 @@ public class History extends JFrame {
         
         String[] columnNames = {"Match Number","Player's Name", "Game Time", "Difficulty"};
         
-        // Create the table model
         tableModel = new DefaultTableModel(columnNames, 0);
         
-        // Create the table with the model
         table = new JTable(tableModel);
         table.setEnabled(false);
         
@@ -97,14 +80,11 @@ public class History extends JFrame {
             }
         });
         
-        // Wrap the table in a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(200,300,400,371);
         scrollPane.setVisible(true);
-     // Assuming 'table' is your JTable instance
         table.setOpaque(false);
 
-        // Assuming 'scrollPane' is your JScrollPane instance containing the table
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.getVerticalScrollBar().setOpaque(false);
@@ -118,22 +98,21 @@ public class History extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 if (e.getSource() instanceof BoundedRangeModel) {
                     BoundedRangeModel model = (BoundedRangeModel) e.getSource();
+                    //hides the scrolling bar
                     if (model.getValueIsAdjusting()) {
-                        // When user starts scrolling, make scroll bars temporarily visible
                         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                     } else {
-                        // After scrolling stops, hide them again
                         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
                     }
+                    
                 }
             }
         };
 
         scrollPane.getVerticalScrollBar().getModel().addChangeListener(scrollBarListener);
         scrollPane.getHorizontalScrollBar().getModel().addChangeListener(scrollBarListener);
-        // Make sure the vertical scrollbar repaints after being made invisible
         scrollPane.getVerticalScrollBar().addComponentListener(new ComponentAdapter() {
             @Override
             public void componentHidden(ComponentEvent e) {
@@ -141,7 +120,7 @@ public class History extends JFrame {
             }
         });
         
-        
+        //determines how far the scrolling is
         table.addMouseWheelListener(new MouseWheelListener() {
         	 public void mouseWheelMoved(MouseWheelEvent e) {
                  JScrollBar scrollBar = scrollPane.getVerticalScrollBar();
@@ -154,7 +133,7 @@ public class History extends JFrame {
              }
          });
 
-     //    To make the table header background transparent (optional)
+     //    To make the table header background transparent 
         table.setDefaultRenderer(Object.class, new PrettyCellRenderer ());
         table.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -179,6 +158,7 @@ public class History extends JFrame {
 		contentPane.add(scrollPane);
 		contentPane.setComponentZOrder(scrollPane, 0); // This ensures the scrollPane is above the background label
 		
+		//iterate over matches  to display them 
 		for(int i =matches.size();i>0;i--)
 		{
 			Match match =matches.get(i-1);
@@ -198,10 +178,12 @@ public class History extends JFrame {
 		screenLabel.setVisible(true);
 		contentPane.add(screenLabel);        
 	}
+ //display a match
  public void addMatchHistory(int matchNumber, String playerName, String gameTime, String difficultyLevel) {
      // Add a row with the match details
      tableModel.addRow(new Object[]{matchNumber,playerName, gameTime, difficultyLevel});
  }
+ //making the table background transparent to see the background image
  public class PrettyCellRenderer extends DefaultTableCellRenderer {
 	    
 	    @Override
