@@ -727,6 +727,7 @@ public class QuizMaster extends JFrame {
             			pagesField.setText("0/0");
             	    }
             	    else {
+            	    	diffButtonsStatus();
     	        	    currentQuestion = currentQuestionsList.get(0);
     	        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
     	        		displayQuestion();
