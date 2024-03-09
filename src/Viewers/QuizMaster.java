@@ -392,21 +392,49 @@ public class QuizMaster extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//incase we were editing a question
 				editMode = false;
-				currentPosition = 0;
+				//currentPosition = 0;
 				currentQuestion = currentQuestionsList.get(currentPosition);
 				enableFields(false);
-				displayQuestion();
 			    saveBtn.setEnabled(false);
 			    addBtn.setEnabled(true);
 			    editBtn.setEnabled(true);
 			    deleteBtn.setEnabled(true);
-			    nextBtn.setEnabled(true);
-			    lastBtn.setEnabled(true);
+			    if(difficulty.equals("1"))
+				{
+					easyBtn.setEnabled(false);
+					mediumBtn.setEnabled(true);
+					hardBtn.setEnabled(true);
+				}
+				else if(difficulty.equals("2"))
+				{
+					easyBtn.setEnabled(true);
+					mediumBtn.setEnabled(false);
+					hardBtn.setEnabled(true);
+				}
+				else
+				{
+					easyBtn.setEnabled(true);
+					mediumBtn.setEnabled(true);
+					hardBtn.setEnabled(false);
+				}
+
+			    
+			    if(currentPosition+1==currentQuestionsList.size()) 
+				{
+					lastBtn.setEnabled(false);
+					nextBtn.setEnabled(false);
+				}
 			    searchBtn.setEnabled(true);
 				abortBtn.setVisible(false);
 				abortBtn.setEnabled(false);
-			    backBtn.setEnabled(true);
-			    firstQuestionBtn.setEnabled(true);
+				if(currentPosition > 0)
+				{
+					backBtn.setEnabled(true);
+					firstQuestionBtn.setEnabled(true);
+				}
+				displayQuestion();
+				
+
 			    pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
 			}
 		});
@@ -602,6 +630,9 @@ public class QuizMaster extends JFrame {
                 nextBtn.setEnabled(false);
                 lastBtn.setEnabled(false);
                 searchBtn.setEnabled(false);
+                easyBtn.setEnabled(false);
+                mediumBtn.setEnabled(false);
+                hardBtn.setEnabled(false);
                 abortBtn.setVisible(true);
                 abortBtn.setEnabled(true);
                 backBtn.setEnabled(false);
@@ -650,6 +681,20 @@ public class QuizMaster extends JFrame {
     			//if we add a new question
         		else
         		{
+        			//check if question already exists if so doesnt add the question
+        			for( ArrayList<Question> questionsList :questions.values())
+        			{
+        				for(Question existedQuestion: questionsList)
+        				{
+        					if(existedQuestion.getQuestion().equals(q.getQuestion()))
+        					{
+        	        			JOptionPane.showMessageDialog(null, "question already exists");
+        	        			return;
+
+        					}
+        						
+        				}
+        			}
         			gc.addQuestion(q, path);
         			JOptionPane.showMessageDialog(null, "question added succefully");
         		}
@@ -818,8 +863,11 @@ public class QuizMaster extends JFrame {
 	    nextBtn.setEnabled(false);
 	    lastBtn.setEnabled(false);
 	    searchBtn.setEnabled(false);
-	    abortBtn.setVisible(true);
-	    abortBtn.setEnabled(true);
+	    if(currentQuestionsList!=null)	  
+	    {
+	    	abortBtn.setVisible(true);
+	    	abortBtn.setEnabled(true);
+	    }
 	    backBtn.setEnabled(false);
 	    firstQuestionBtn.setEnabled(false);
 	    correctButtons.get(0).setSelected(true);
