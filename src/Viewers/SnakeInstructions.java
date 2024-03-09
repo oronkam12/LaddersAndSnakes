@@ -15,7 +15,7 @@ public class SnakeInstructions extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
+	 *  Displays instructions for snakes types on the game board
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

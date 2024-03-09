@@ -49,7 +49,7 @@ public class GameController {
         this.guiBoard = guiBoard;
     }
 
-
+// move player method (responsiable for the whole movements
     public void movePlayer(Player player, GuiBoard.BoardPanel boardPanel,int movement) {
         
         Timer moveTimer = new Timer(150, null); // Adjust the delay time in milliseconds (e.g., 500 for half a second)
@@ -67,6 +67,7 @@ public class GameController {
                 else {
                 	//----- in case passed last col of winning and need to go back -------
                 	if(movesLeft < 0) {
+                		// moving backwards step step for in case needs to move downwards in lines
                 		while(movesLeft!=0) {
                 			MoveBackWards(player,1,movesLeft);
                     		movesLeft = movesLeft+1;
@@ -165,6 +166,7 @@ public class GameController {
     //--------- checking snakes or ladders ----------------
 	public void isObject(Player player) {
 		Object o = null;
+//		specific case for questions (creating question object and handle the question
 		if (guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder()!=null) {
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof QuestionCell) {
 				if (!player.isAskedQ()) {
@@ -175,6 +177,7 @@ public class GameController {
 				}
 				return;
 			}
+//			checking other objects and move the player accordingly
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Snake)
 				o = (Snake)guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder();
 			if(guiBoard.getBoard()[player.getRow()][player.getCol()].getSnakeOrLadder() instanceof Ladder)
@@ -271,7 +274,7 @@ public class GameController {
 		    }
 	}
 	
-	
+//	creating new question on the landed cell.
 	public void handleRolledQuestion(String difficulty, Player player) {
 		Cell c = new Cell(player.getRow(), player.getCol(), getBoardCols(), null);
 		QuestionCell qc = new QuestionCell(c, c, getBoardRows(), getBoardCols(), difficulty);
@@ -279,7 +282,6 @@ public class GameController {
 		handleQuestion(qc, player);
 		return;	
 	}
-	
 	
 	public void displayAnswerStatus(String message) {
 		final JOptionPane pane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE);

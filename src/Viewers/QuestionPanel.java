@@ -18,6 +18,7 @@ import Model.Question;
 
 public class QuestionPanel extends JPanel {
     
+	// Represents a panel to display a question along with its answers
     private static final long serialVersionUID = 1L;
 
     public QuestionPanel(Question question, JList<String> jlist, String diffTranslated) {

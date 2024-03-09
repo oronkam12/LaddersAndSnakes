@@ -12,6 +12,10 @@ import java.awt.Color;
 
 public class DiceInstructions extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -34,6 +38,7 @@ public class DiceInstructions extends JFrame {
 	 * Create the frame.
 	 */
 	public DiceInstructions() {
+		// Set frame properties
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -54,6 +59,7 @@ public class DiceInstructions extends JFrame {
 		lblDiceTitle.setBounds(10, 11, 496, 29);
 		contentPane.add(lblDiceTitle);
 		
+		 // Text area for describing the effects of different dice rolls
 		JTextArea txtrNumber = new JTextArea();
 		txtrNumber.setEditable(false);
 		txtrNumber.setBackground(new Color(205, 133, 63));
@@ -62,6 +68,7 @@ public class DiceInstructions extends JFrame {
 		txtrNumber.setBounds(10, 170, 526, 171);
 		contentPane.add(txtrNumber);
 		
+		// Text area for describing the behavior of the dice
 		JTextArea txtrPossibilityAndBehavior = new JTextArea();
 		txtrPossibilityAndBehavior.setEditable(false);
 		txtrPossibilityAndBehavior.setBackground(new Color(205, 133, 63));

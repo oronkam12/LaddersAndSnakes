@@ -19,23 +19,40 @@ import java.awt.event.ActionEvent;
 public class GuiBoard extends JFrame {
 
     /**
-	 * 
+	 *  This class represents the graphical user interface for the Snakes and Ladders game board.
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	// Dimensions of the board
 	private final int rows;
     private final int cols;
+    
+    // Lists to hold snakes, ladders, and players
     private final ArrayList<Snake> snakes;
     private final ArrayList<Ladder> ladders;
+    
+    // 2D array to represent the game board cells
     private final Cell[][] board;
-    private boolean botFlag; // to create players only 1 time and not every board refresh
+    
+    // Flag to determine if players have been created
+    private boolean botFlag; 
+    
+    // Game controller to manage game logic
     private final GameController gameController;
+    
     private int cellWidth;
     private int cellHeight;
+    
+    // Lists to hold player names 
     private ArrayList<String> players;
     private ArrayList<Player> allPlayers;
+    
+    // For manage players Turns
     private Player currentPlayer;
     private JLabel[] playerLabels;
     private JLabel[] markTurnsLabels;
+    
+    // Buttons for game controls
     JButton btnPlay = new JButton();
     JButton btnPause = new JButton();
     JButton btnRestart = new JButton();
@@ -44,6 +61,7 @@ public class GuiBoard extends JFrame {
     JButton btnInfo = new JButton();
     JButton btnHomePage = new JButton();
 
+    // Count turn's time and count game's duration
     int CTsecond = 30, CTminute = 0, Dsecond = 0, Dminute = 0;
     String CTddSecond, CTddMinute, DddSecond, DddMinute;
     DecimalFormat dFormat = new DecimalFormat("00");
@@ -51,12 +69,28 @@ public class GuiBoard extends JFrame {
     JLabel lblTurnTime;
     public static Timer countDown;
     public static Timer duration;
-    public BoardPanel boardPanel;
-	private ImageIcon backgroundIcon;
 	public long startTime;
+	
+	// Reference to the last player
 	private Player lastPlayer;
 	
-    // constructor of Gui Board
+	// Panel to display the game board
+	public BoardPanel boardPanel;
+	
+	/**
+     * Constructor for the GuiBoard class.
+     * 
+     * @param rows         Number of rows in the game board.
+     * @param cols         Number of columns in the game board.
+     * @param snakes       List of snakes present in the game.
+     * @param ladders      List of ladders present in the game.
+     * @param board        2D array representing the game board cells.
+     * @param cellWidth    Width of each cell in pixels.
+     * @param cellHeight   Height of each cell in pixels.
+     * @param players      List of players' names.
+     * @param colors       List of players' colors.
+     */
+	
     public GuiBoard(int rows, int cols, ArrayList<Snake> snakes,ArrayList<Ladder>ladders, Cell[][] board,int cellWidth,int cellHeight, ArrayList<String> players ,ArrayList<String> colors) {
         this.rows = rows;
         this.cols = cols;
@@ -65,9 +99,11 @@ public class GuiBoard extends JFrame {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
         this.ladders = ladders;
-        this.players = players; // array of players string names
+        this.players = players; 
         this.botFlag = false;
-        this.allPlayers = new ArrayList<Player>(); // array of players objects
+        this.allPlayers = new ArrayList<Player>(); 
+        
+     // Create player objects and add them to the list
         for(int i=0;i<colors.size();i++) {
         	if(colors.get(i).equals("Red")) {
         		Player p = new Player(rows-1,cols-1,players.get(i),board,Color.RED);
@@ -94,33 +130,34 @@ public class GuiBoard extends JFrame {
 	            allPlayers.add(p);
         	}
         }
+        
+        // Start duration timer
         durationTimer();
         startTime = System.currentTimeMillis();
         duration.start();
         
+        // Set current player to the first player in the list
         this.currentPlayer = allPlayers.get(0);
         gameController = new GameController(this);
    
+        // Set up JFrame properties
         setTitle("Snakes and Ladders Board");
         setSize(1000,800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
         
-        
-        // creating custom swing Props
+        // Create panel to hold the game board
         JPanel panel = new JPanel();
         panel.setBounds(185, 135, 632, 590);
-        getContentPane().add(panel);  // Add the panel to the frame
-
+        getContentPane().add(panel);  
         // Add the BoardPanel to the panel, not directly to the content pane
         boardPanel = new BoardPanel(); 
         panel.add(boardPanel);
-        backgroundIcon = new ImageIcon("Assets/background.jpg");
+        new ImageIcon("Assets/background.jpg");
 
-        
+        // creating the display of players turns - names
         int enter = 0; 
-        // creating the display of players turns
         playerLabels = new JLabel[allPlayers.size()];
         for (int i = 0; i < allPlayers.size(); i++) {
         	String con = allPlayers.get(i).getName();
@@ -133,7 +170,8 @@ public class GuiBoard extends JFrame {
             playerLabels[i].setVisible(true);
             getContentPane().add(playerLabels[i]);
     }
-        
+       
+        // creating the display of players turns - mark names
        enter = 0;
        ImageIcon markerIcon = new ImageIcon("Images/markerIcon2.png"); 
        // creating the markers of the turns
@@ -147,10 +185,10 @@ public class GuiBoard extends JFrame {
     	   getContentPane().add(markTurnsLabels[i]);
        }
 
-       // color the first turn
+       // Color the first player's turn
        coloredName();
        
-        
+       	// Set up duration timer label and icons
         BufferedImage clockIcon = null;
         try {
         	clockIcon = ImageIO.read(new File("Images/clockIcon.png"));
@@ -185,7 +223,7 @@ public class GuiBoard extends JFrame {
         lblTimer.setFont(new Font("Snap ITC", Font.PLAIN, 16));
         getContentPane().add(lblTimer);
         
-        
+        // Set up dice roll buttons and icons
         JLabel lblRollDice2 = new JLabel("");
         lblRollDice2.setBounds(80, 550, 100, 100);
         getContentPane().add(lblRollDice2);
@@ -307,6 +345,7 @@ public class GuiBoard extends JFrame {
         
         getContentPane().add(btnDiceRoll);
         
+        // Set up home page button and icon
         btnHomePage = new JButton("");
         btnHomePage.setBounds(10, 10, 65, 65);
         ImageIcon homePageIcon = new ImageIcon("Images/btnHomePage.png");
@@ -332,7 +371,7 @@ public class GuiBoard extends JFrame {
             }
         });
         
-                      
+        // Set up mute and unmute buttons and icons              
         btnMute = new JButton("");
         btnMute.setBounds(790, 30, 65, 65);
         ImageIcon muteIcon = new ImageIcon("Images/btnMute.png");
@@ -361,6 +400,7 @@ public class GuiBoard extends JFrame {
             }
         });
         
+        // Start the music
         gameController.loadMusic("maplestoryMusic.wav");
         gameController.playMusic();
 
@@ -374,6 +414,7 @@ public class GuiBoard extends JFrame {
                       
         getContentPane().add(btnUnmute);
         
+        // Set up information button and icon
         btnInfo = new JButton("");
         btnInfo.setBounds(740, 30, 65, 65);
         ImageIcon infoIcon = new ImageIcon("Images/btnInformation.png");
@@ -403,6 +444,7 @@ public class GuiBoard extends JFrame {
 		});
         getContentPane().add(btnInfo);
         
+        // Set up restart button and icon
         btnRestart = new JButton("");
         btnRestart.setBounds(855, 215, 70, 70);
         ImageIcon restartIcon = new ImageIcon("Images/btnRestart.png");
@@ -457,6 +499,7 @@ public class GuiBoard extends JFrame {
 		});
         getContentPane().add(btnRestart);
         
+        // Set up play & pause buttons
         btnPlay = new JButton("");
         btnPlay.setBounds(855, 135, 70, 70);
         ImageIcon playIcon = new ImageIcon("Images/btnPlay.png");
@@ -529,7 +572,8 @@ public class GuiBoard extends JFrame {
 		});
     }
     
-	 public void coloredName() {
+    // Color the name of the current player
+	public void coloredName() {
     for (int i = 0; i < allPlayers.size(); i++) {
         Player player = allPlayers.get(i);
         if (player.equals(currentPlayer)) {
@@ -543,21 +587,26 @@ public class GuiBoard extends JFrame {
         }
     }
 }
-    
+    //  Checks if a question should be asked to the player based on the movement value and the number of columns on the game board.
+	// If a question should be asked, the appropriate question difficulty is determined and passed to the game controller.
     public boolean checkQuestion(int movement, Player player) {
+    	// For Easy game board
 		if(cols == 7) {
+			// If the movement is 5, roll an easy question
 			if(movement == 5) {
 				rolledQuestion("easy");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
 				return true;
 			}
+			// If the movement is 6, roll a medium question
 			else if(movement == 6) {
 				rolledQuestion("medium");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
 				return true;
 			}
+			// If the movement is 7, roll a hard question
 			else if (movement == 7){
 				rolledQuestion("hard");
 				player.setAskedQ(true);
@@ -565,19 +614,23 @@ public class GuiBoard extends JFrame {
 				return true;
 			}
 		}
+		// For Medium game board
 		else if(cols == 10) {
+			 // If the movement is 7 or 8, roll an easy question
 			if(movement == 7 || movement == 8) {
 				rolledQuestion("easy");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
 				return true;
 			}
+			// If the movement is 9 or 10, roll a medium question
 			else if(movement == 9||movement == 10) {
 				rolledQuestion("medium");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
 				return true;
 			}
+			// If the movement is 11 or 12, roll a hard question
 			else if(movement == 11 || movement == 12) {
 				rolledQuestion("hard");
 				player.setAskedQ(true);
@@ -585,19 +638,23 @@ public class GuiBoard extends JFrame {
 				return true;
 			}
 		}
+		// For Hard game board
 		else if(cols==13) {
+			 // If the movement is 7 or 8, roll an easy question
 			if(movement == 7 || movement == 8) {
 				rolledQuestion("easy");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("1", player);
 				return true;
 			}
+			// If the movement is 9 or 10, roll a medium question
 			else if(movement == 9 || movement == 10) {
 				rolledQuestion("medium");
 				player.setAskedQ(true);
 				gameController.handleRolledQuestion("2", player);
 				return true;
 			}
+			// If the movement is greater than 10 and less than 15, roll a hard question
 			else if(movement > 10 && movement < 15) {
 				rolledQuestion("hard");
 				player.setAskedQ(true);
@@ -605,10 +662,12 @@ public class GuiBoard extends JFrame {
 				return true;
 			}
 		}
+		
+		// If none of the conditions are met, return false (no question should be asked)
 		return false;
 	}
 
-    
+    // Determines the next player in the game.
     private Player nextPlayer(Player p) {
      	if(p == null) {
      		return allPlayers.get(0);
@@ -623,7 +682,7 @@ public class GuiBoard extends JFrame {
      	}
      }
     
-	// board creating as a class 
+    // Class representing the game board panel
 	public class BoardPanel extends JPanel {
         /**
 		 * 
@@ -634,7 +693,7 @@ public class GuiBoard extends JFrame {
 		private ImageIcon questionMarkIcon;
         public BoardPanel() {
         	
-        	// loading assets to the board
+        	// Loading assets to the board
         	try {
         		BufferedImage image = ImageIO.read(new File("Assets/crown.png"));
         	    Image resizedImage = image.getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH);
@@ -662,7 +721,7 @@ public class GuiBoard extends JFrame {
         	}
         }
         
-        // function to paint the board with colors (repaint) -- In every change repaint the board again.
+        // Function to paint the board with colors (repaint) -- In every change repaint the board again.
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -723,28 +782,10 @@ public class GuiBoard extends JFrame {
         public Dimension getPreferredSize() {
             return new Dimension(cols * cellWidth, rows * cellHeight);
         }
-       
-        private Color getColorForCell(int value) {
-            CellColor cellColor = CellColor.getColorForValue(value);
-            switch (cellColor) {
-                case RED:
-                    return Color.RED;
-                case BLUE:
-                    return Color.BLUE;
-                case GREEN:
-                    return Color.GREEN;
-                case CYAN:
-                    return Color.CYAN;
-                case PINK:
-                    return Color.PINK;
-                default:
-                    return Color.WHITE;
-            }
-        }
     }	
 	
+	// Activates the timer 
 	void timerActiovation(){
-	      //Timer activation
     	if (countDown != null && !countDown.isRunning() ) {
     		countdownTimer();
     		countDown.start();
@@ -762,6 +803,7 @@ public class GuiBoard extends JFrame {
     	}
 	}
 	
+	// Creates and starts the countdown timer
 	public void countdownTimer() {
 		countDown = new Timer(1000, new ActionListener() {
 			@Override
@@ -786,6 +828,7 @@ public class GuiBoard extends JFrame {
 		});
 	}
 	
+	// Handles the end of a player's turn.
 	public void turnEnded() {
 		String message = currentPlayer.getName() + " your time ran out! \n Turn passed to " + nextPlayer(currentPlayer).getName();
 		currentPlayer = nextPlayer(currentPlayer);
@@ -800,6 +843,7 @@ public class GuiBoard extends JFrame {
         dialog.setVisible(true);
 	}
 	
+	// Displays a message for rolling question
 	public void rolledQuestion(String difficulty) {
 		String message = "You rolled " + difficulty + " question.";
 		final JOptionPane pane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE);
@@ -812,7 +856,7 @@ public class GuiBoard extends JFrame {
         dialog.setVisible(true);
 	}
 	
-	
+	// Creates and starts the duration timer
 	public void durationTimer() {
 		duration = new Timer(1000, new ActionListener() {
 			@Override
@@ -834,7 +878,7 @@ public class GuiBoard extends JFrame {
 		});
 	}
 	
-	// getters and setters
+	// Getters and setters
     public Player getCurrentPlayer() {
 		return currentPlayer;
 	}

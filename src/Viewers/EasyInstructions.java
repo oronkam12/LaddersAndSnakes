@@ -43,6 +43,8 @@ public class EasyInstructions extends JFrame {
 		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		// Load images and display them using JLabels
 			
 		ImageIcon easyLogoImage = new ImageIcon("Images/easyLogo.png"); 
         JLabel easyLogoLabel = new JLabel(easyLogoImage);
