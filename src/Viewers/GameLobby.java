@@ -16,6 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 import Model.BoardCreation;
 import Model.BoardFactory;
@@ -127,11 +131,7 @@ public class GameLobby extends JFrame {
         numOfPlayerBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (numOfPlayerBox.getSelectedItem().equals("Bot")) {
-                    numOfPlayers = 1;
-                } else {
-                    numOfPlayers = Integer.valueOf((String) numOfPlayerBox.getSelectedItem());
-                }
+                numOfPlayers = Integer.valueOf((String) numOfPlayerBox.getSelectedItem());
                 clickedFlag = true;
                 flag = false;
                 updatePlayerComponents();
@@ -188,9 +188,11 @@ public class GameLobby extends JFrame {
 
                     // Text field for player name
                     CustomTextField playerNameTextField = new CustomTextField();
-                    playerNameTextField.setBounds(440, 460 + i * 30, 100, 20);
+                    playerNameTextField.setBounds(440, 460 + i * 30, 100, 20);                   
+                    ((AbstractDocument) playerNameTextField.getDocument()).setDocumentFilter(new MyDocumentFilter()); 
                     contentPane.add(playerNameTextField);
                     playersNames.add(playerNameTextField);
+                    
                 } else {
                     // Label for "Player name:"
                     JLabel nameLbl = new JLabel("Player name:");
@@ -252,7 +254,6 @@ public class GameLobby extends JFrame {
                             setVisible(false);
 
                         } catch (Exception ex) {
-                            ex.printStackTrace();
                             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
                         }
                     });
@@ -311,4 +312,28 @@ public class GameLobby extends JFrame {
         BoardCreation boardCreation = boardFactory.makeBoard(difficulty);
         return new GuiBoard(boardCreation.getRows(), boardCreation.getCols(), boardCreation.getSnakes(), boardCreation.getLadders(), boardCreation.getBoard(), boardCreation.getCellWidth(), boardCreation.getCellHeight(), players, colors);
     }    
+}
+
+class MyDocumentFilter extends DocumentFilter {
+
+    @Override
+    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        if (text.matches("[a-zA-Z]*" ) || text.matches("[0-9]*")) {
+            super.replace(fb, offset, length, text, attrs);
+        }
+        else {
+        	JOptionPane.showMessageDialog(null, "Only English Letters & Numbers Are Allowed!", "Error!", JOptionPane.ERROR_MESSAGE);	
+        }
+    	
+    }
+    
+    @Override
+    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+        if (string.matches("[a-zA-Z]*") || string.matches("[0-9]*")) {
+            super.insertString(fb, offset, string, attr);
+        }
+        else {
+        	JOptionPane.showMessageDialog(null, "Only English Letters & Numbers Are Allowed!", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

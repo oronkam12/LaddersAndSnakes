@@ -163,8 +163,8 @@ public class BoardCreation {
     	while(cell1.getSnakeOrLadder()!=null || (cell1.getCol()==0 && cell1.getRow()==0) || (cell1.getCol()== cols-1 && cell1.getRow()== rows-1))
     		cell1 = GenerateCell(row1);
     	int col = random.nextInt(this.rows-1);
-    	//
-    	while(Math.abs(col- cell1.getCol()) > (distance +1) && col-cell1.getCol()!=0 || board[row2][col].getSnakeOrLadder()!=null) {
+    	//For GUI purposes, not to stretch the image of the snake
+    	while(Math.abs(col- cell1.getCol()) > (distance + 1) || board[row2][col].getSnakeOrLadder()!=null) {
     		col = random.nextInt(this.rows-1);
     	}
     	Cell cell2 = new Cell(row2, col,board[row2][col].getValue(),null);

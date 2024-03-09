@@ -36,7 +36,7 @@
     "difficulty" : "1"
   }, {
     "question" : "Which of the following SCRUM requirements best describe functional requirements?",
-    "answers" : [ "As a player, I want intuitive navigation for easy feature accessing", "As a player, I want error messages display for effective issues resolution.", "As a user, I want to browse different options available, view the menu as a dropdown, and make orders", "As a player, I want a consistent and aesthetic layout for a smooth experience." ],
+    "answers" : [ "As a player, I want intuitive navigation for easy feature accessing", "As a player, I want error messages display for effective issues resolution.", "As a player, I want to browse different options available, view the menu as a dropdown, and make orders", "As a player, I want a consistent and aesthetic layout for a smooth experience." ],
     "correct_ans" : "3",
     "difficulty" : "3"
   }, {
@@ -51,7 +51,7 @@
     "difficulty" : "3"
   }, {
     "question" : "which one of the answers below are not related to AGILE:",
-    "answers" : [ ".Prioritizes flexibility,\ncollaboration, & customer\nsatisfaction.", "Quality, transparency, and\nopen communication are\nparamount.", "Teams adapt to changing\nrequirements and deliver\nincremental progress.", "Customer testing on the system after every delivery" ],
+    "answers" : [ "Prioritizes flexibility,\ncollaboration, & customer\nsatisfaction.", "Quality, transparency, and\nopen communication are\nparamount.", "Teams adapt to changing\nrequirements and deliver\nincremental progress.", "Customer testing on the system after every delivery" ],
     "correct_ans" : "4",
     "difficulty" : "2"
   }, {
@@ -61,7 +61,7 @@
     "difficulty" : "1"
   }, {
     "question" : "What is the primary goal of Agile Methodology in software development? ",
-    "answers" : [ "To adhere strictly to a predetermined plan", "To respond to change and deliver working software incrementally", "\"To allocate resources based on a fixed timeline", "To prioritize documentation over collaboration" ],
+    "answers" : [ "To adhere strictly to a predetermined plan", "To respond to change and deliver working software incrementally", "To allocate resources based on a fixed timeline", "To prioritize documentation over collaboration" ],
     "correct_ans" : "2",
     "difficulty" : "1"
   }, {

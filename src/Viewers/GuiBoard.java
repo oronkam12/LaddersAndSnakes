@@ -35,7 +35,7 @@ public class GuiBoard extends JFrame {
     private final Cell[][] board;
     
     // Flag to determine if players have been created
-    private boolean botFlag; 
+//    private boolean botFlag; 
     
     // Game controller to manage game logic
     private final GameController gameController;
@@ -100,7 +100,7 @@ public class GuiBoard extends JFrame {
         this.cellHeight = cellHeight;
         this.ladders = ladders;
         this.players = players; 
-        this.botFlag = false;
+//        this.botFlag = false;
         this.allPlayers = new ArrayList<Player>(); 
         
      // Create player objects and add them to the list
@@ -163,8 +163,8 @@ public class GuiBoard extends JFrame {
         	String con = allPlayers.get(i).getName();
             playerLabels[i] = new JLabel(con);
             playerLabels[i].setBounds(40, 250+enter, 100, 50);
-            playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 22));
-            playerLabels[i].setForeground(new Color(255, 250, 240));
+            playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 18));
+            playerLabels[i].setForeground(new Color(139, 69, 19));
             enter += 40; 
             
             playerLabels[i].setVisible(true);
@@ -253,7 +253,7 @@ public class GuiBoard extends JFrame {
             	        boardPanel.repaint();// repaint for ladders or snakes cases
         	        }      	        
         	        timerActiovation();
-        	        // Delay before bot's move or replacing turn 
+        	        // Delay before move or replacing turn 
         	        Timer timer = new Timer(150*(movement+1), new ActionListener() { // Adjust the delay time in milliseconds (e.g., 2000 for 2 seconds)
         	            @Override
         	            public void actionPerformed(ActionEvent e) {
@@ -265,13 +265,13 @@ public class GuiBoard extends JFrame {
     	                }
         	        });
         	        timer.setRepeats(false); // Ensure the timer only fires once
-        	        if (botFlag == false) {
+//        	        if (botFlag == false) {
         	        	lastPlayer = currentPlayer;
         	            currentPlayer = nextPlayer(currentPlayer);
         	            checkObjects();
                         boardPanel.repaint();
                         gameController.checkForWin(lastPlayer);
-        	        }
+//        	        }
         	        timer.start();
                     boardPanel.repaint();
         	 }
@@ -476,7 +476,7 @@ public class GuiBoard extends JFrame {
 		        currentPlayer = allPlayers.get(0);
 		        for(int i = 0; i < playerLabels.length; i++) {
     	        	if(currentPlayer.getName().equals(playerLabels[i].getText())) {
-    	        		playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 24));
+    	        		playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 18));
     	        		markTurnsLabels[i].setVisible(true);
     	        	}
     	        	else {
@@ -489,7 +489,7 @@ public class GuiBoard extends JFrame {
 					player.setRow(rows-1);
 					player.setCol(cols-1);
 				}
-
+				coloredName();
 				btnRestart.setVisible(false);
 				btnDiceRoll.setEnabled(true);
 				btnPlay.setVisible(false);
@@ -578,11 +578,11 @@ public class GuiBoard extends JFrame {
         Player player = allPlayers.get(i);
         if (player.equals(currentPlayer)) {
             playerLabels[i].setForeground(player.getColor()); // Set the color of the player's name
-            playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 26)); // Set the font style
+            playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 20)); // Set the font style
             markTurnsLabels[i].setVisible(true); // Show the marker for the current player
         } else {
-            playerLabels[i].setForeground(new Color(255, 250, 240)); // Set default color for other players
-            playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 22)); // Set default font style
+            playerLabels[i].setForeground(new Color(139, 69, 19)); // Set default color for other players
+            playerLabels[i].setFont(new Font("Snap ITC", Font.BOLD, 18)); // Set default font style
             markTurnsLabels[i].setVisible(false); // Hide the marker for other players
         }
     }
