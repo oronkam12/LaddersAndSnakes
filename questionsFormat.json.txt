@@ -20,11 +20,6 @@
     "correct_ans" : "2",
     "difficulty" : "3"
   }, {
-    "question" : "In a Client-Server architecture, what role does the client play in the communication process?",
-    "answers" : [ "The client initiates requests for services or resources from the server", "The client manages the distribution of data among multiple servers", "The client monitors and maintains the performance of the server hardware", "The client stores and manages the database records for the server" ],
-    "correct_ans" : "1",
-    "difficulty" : "2"
-  }, {
     "question" : "Which of the following standards is specifically tailored for assessing and improving software development processes?\n",
     "answers" : [ "ISO 9001", "ISO/IEC 27001 ", "CMMI-DEV", "SPICE" ],
     "correct_ans" : "4",

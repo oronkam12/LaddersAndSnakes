@@ -676,7 +676,7 @@ public class QuizMaster extends JFrame {
         	    searchBtn.setEnabled(true);
         	    abortBtn.setVisible(false);
         	    abortBtn.setEnabled(false);
-        	    backBtn.setEnabled(true);
+        	    backBtn.setEnabled(false);
         	    diffButtonsStatus();
         	    firstQuestionBtn.setEnabled(false);
         	    currentQuestionsList = questions.get(difficulty);
@@ -728,6 +728,8 @@ public class QuizMaster extends JFrame {
             	    }
             	    else {
             	    	diffButtonsStatus();
+            	    	backBtn.setEnabled(false);
+            	    	firstQuestionBtn.setEnabled(false);
     	        	    currentQuestion = currentQuestionsList.get(0);
     	        		pagesField.setText(Integer.toString(currentPosition+1) + "/"+ Integer.toString(currentQuestionsList.size()));
     	        		displayQuestion();
