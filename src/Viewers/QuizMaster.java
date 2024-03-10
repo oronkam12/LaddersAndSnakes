@@ -535,7 +535,7 @@ public class QuizMaster extends JFrame {
 				//goes through all the questions and search if a question included the term that is entered.
 				for(int i =0; i<allQuestions.size();i++)
 				{
-					if(allQuestions.get(i).getQuestion().contains(searchField.getText()))
+					if(allQuestions.get(i).getQuestion().toLowerCase().contains(searchField.getText().toLowerCase()))
 					{
 						questionsFound.add(allQuestions.get(i));
 						counter++;
